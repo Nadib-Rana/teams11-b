@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum ContentType {
+  TEXT
+  VOICE
+}
+
+enum PostType {
+  SILVER
+  GOLD
+  URGENT
+}
+
+
+enum NotificationType {
+  RESPONSE_TO_POST
+  REPLY_TO_MY_RESPONSE
+  NEW_FAVORITE
+}
+
+
+enum type{
+  DAILY 
+  STREAK
+  ONE_TIME
+}
+
+model User {
+  id             String        @id @default(uuid()) @db.Uuid
+  anonymousId    String        @unique @map("anonymous_id") // The device hash
+  
+  subscriptionId String?       @db.Uuid @map("subscription_id")
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+
+  level         Int      @default(1)
+  currentXp     Int      @default(0) @map("current_xp")
+ 
+  posts          Post[]
+  responses      Response[]
+  pushTokens     PushToken[]
+  purchases      Purchase[]
+  favorites      Favorite[]
+
+  // Notification related
+  notifications          Notification[] @relation("UserNotifications")
+  triggeredNotifications Notification[] @relation("TriggeredBy")
+  
+
+  createdAt      DateTime      @default(now()) @map("created_at")
+  lastActiveAt   DateTime?     @map("last_active_at")
+
+
+  missionProgress UserMissionProgress[]
+  streak          UserStreak?
+  inventory       UserInventory[]
+
+
+
+  @@map("users")
+}
+
+model Post {
+  id           String      @id @default(uuid()) @db.Uuid
+  userId       String      @db.Uuid @map("user_id")
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  categoryId   String      @db.Uuid @map("category_id")
+  category     Category    @relation(fields: [categoryId], references: [id])
+  
+  contentType  ContentType @map("content_type") 
+  textContent  String?     @map("text_content") @db.Text
+  voiceUrl     String?     @map("voice_url") @db.Text
+  
+  expiresAt    DateTime    @map("expires_at")
+  isDeleted    Boolean?     @default(false) @map("is_deleted")
+  createdAt    DateTime    @default(now()) @map("created_at")
+ 
+  isResponseDefaultHidden Boolean     @default(false) @map("is_response_default_hidden")
+  PostType     PostType   @default(SILVER) @map("post_type")
+  
+  responses    Response[]
+  favorites Favorite[]
+  notifications Notification[]
+
+  @@map("posts")
+  @@index([expiresAt])
+}
+
+
+model Response {
+  id           String      @id @default(uuid()) @db.Uuid
+  postId       String      @db.Uuid @map("post_id")
+  post         Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  userId       String      @db.Uuid @map("user_id")
+  user         User        @relation(fields: [userId], references: [id])
+  
+  contentType  ContentType @map("content_type")
+  textContent  String?     @map("text_content") @db.Text
+  voiceUrl     String?     @map("voice_url") @db.Text
+
+// nested response
+  parentResponseId String?    @map("parent_response_id") @db.Uuid
+  parentResponse   Response?  @relation("ResponseToResponse", fields: [parentResponseId], references: [id], onDelete: SetNull)
+  replies          Response[] @relation("ResponseToResponse")
+
+// For Notifications (2 relation)
+  notifications       Notification[] @relation("ResponseNotifications")
+  parentNotifications Notification[] @relation("ParentNotification")
+
+  
+  isHidden     Boolean     @default(false) @map("is_hidden")
+  createdAt    DateTime    @default(now()) @map("created_at")
+
+  @@index([postId, createdAt(Sort.Asc)]) 
+  @@index([parentResponseId, createdAt]) 
+  @@map("responses")
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  icon      String?
+  posts     Post[]
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("categories")
+}
+
+model Subscription {
+  id                String   @id @default(uuid()) @db.Uuid
+  name              String   
+  postExpiryHours   Int      @map("post_expiry_hours")
+  themeColor        String?  @map("theme_color")
+  price             Decimal  @db.Decimal(10, 2)
+  
+  users             User[]
+  purchases         Purchase[]
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  @@map("subscriptions")
+}
+
+model Purchase {
+  id             String       @id @default(uuid()) @db.Uuid
+  userId         String       @db.Uuid @map("user_id")
+  user           User         @relation(fields: [userId], references: [id])
+  
+  subscriptionId String       @db.Uuid @map("subscription_id")
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  
+  platform       String       
+  transactionId  String  @unique @map("transaction_id")
+  purchaseDate   DateTime     @map("purchase_date")
+  expiryDate     DateTime?    @map("expiry_date")
+  status         String       
+  
+  @@map("purchases")
+}
+
+model PushToken {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid @map("user_id")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  token String?   @map("device_token")
+  platform    String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("push_tokens")
+}
+
+model Favorite {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  postId    String   @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+// For Notifications (relation)
+  notifications Notification[] @relation("FavoriteNotifications")
+ 
+  @@unique([userId, postId])  
+  @@map("favorites")
+
+}
+
+model Notification {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @map("user_id") @db.Uuid
+  user   User   @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  type NotificationType
+
+  triggerUserId String @map("trigger_user_id") @db.Uuid
+  triggerUser   User   @relation("TriggeredBy", fields: [triggerUserId], references: [id])
+
+  postId String? @map("post_id") @db.Uuid
+  post   Post?   @relation(fields: [postId], references: [id], onDelete: SetNull)
+
+  responseId String?   @map("response_id") @db.Uuid
+  response   Response? @relation("ResponseNotifications", fields: [responseId], references: [id], onDelete: SetNull)
+  
+  parentResponseId String?   @map("parent_response_id") @db.Uuid
+  parentResponse   Response? @relation("ParentNotification", fields: [parentResponseId], references: [id], onDelete: SetNull)
+  
+  favoriteId String?   @map("favorite_id") @db.Uuid
+  favorite   Favorite? @relation("FavoriteNotifications", fields: [favoriteId], references: [id], onDelete: SetNull)
+   
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, createdAt(Sort.Desc)])
+  @@index([userId, isRead, createdAt(Sort.Desc)])
+  @@map("notifications")
+}
+
+
+model Mission {
+  id               String   @id @default(uuid()) @db.Uuid
+  title            String
+  slug             String?   @unique 
+  xpReward         Int      @default(0) @map("xp_reward")
+  requirementCount Int      @default(1) @map("requirement_count")
+  type             String   @default("DAILY") // DAILY, STREAK, SMART
+  
+  userProgress     UserMissionProgress[]
+
+  @@map("missions")
+}
+
+model UserMissionProgress {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid @map("user_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  missionId    String   @db.Uuid @map("mission_id")
+  mission      Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  
+  currentCount Int      @default(0) @map("current_count")
+  isCompleted  Boolean  @default(false) @map("is_completed")
+  lastUpdatedAt DateTime @default(now()) @updatedAt @map("last_updated_at")
+
+  @@unique([userId, missionId])
+  @@map("user_mission_progress")
+}
+
+model UserStreak {
+  userId          String   @id @db.Uuid @map("user_id")
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  currentStreak   Int      @default(0) @map("current_streak")
+  longestStreak   Int      @default(0) @map("longest_streak")
+  lastLoginDate   DateTime @default(now()) @map("last_login_date")
+
+  @@map("user_streaks")
+}
+
+model UserInventory {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  itemType  String   // "GOLD_BUBBLE_CREDIT", "URGENT_BUBBLE_CREDIT", "EXTENSION_48H"
+  quantity  Int      @default(0)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@unique([userId, itemType])
+  @@map("user_inventory")
+}
