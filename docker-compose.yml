@@ -22,7 +22,7 @@ services:
     container_name: minio_teams11_container
     restart: unless-stopped
     ports:
-      - "9000:9000"
+      - "9010:9010"
       - "9001:9001"
     environment:
       MINIO_ROOT_USER: minioadmin
@@ -30,6 +30,17 @@ services:
     volumes:
       - nest_minio:/data
     command: server /data --console-address ":9001"
+    networks:
+      - nest_network
+  redis:
+    image: redis:latest
+    container_name: nest_redis
+    restart: no
+    ports:
+      - "6379:6379" # Redis default port
+    volumes:
+      - nest_redis:/data
+    command: redis-server --save 60 1 --loglevel warning
     networks:
       - nest_network
 
@@ -41,4 +52,6 @@ volumes:
   nest_postgres:
     driver: local
   nest_minio:
+    driver: local
+  nest_redis:
     driver: local
