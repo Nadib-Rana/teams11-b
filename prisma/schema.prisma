@@ -9,274 +9,332 @@ datasource db {
 }
 
 
-enum ContentType {
-  TEXT
-  VOICE
+// --- Enums ---
+
+enum UserRole {
+  customer
+  vendor
+  staff
 }
 
-enum PostType {
-  SILVER
-  GOLD
-  URGENT
+enum BookingStatus {
+  pending
+  waiting
+  confirmed
+  cancelled
 }
 
-
-enum NotificationType {
-  RESPONSE_TO_POST
-  REPLY_TO_MY_RESPONSE
-  NEW_FAVORITE
+enum BookingType {
+  virtual
+  in_person
 }
 
-
-enum type{
-  DAILY 
-  STREAK
-  ONE_TIME
+enum ServiceType {
+  service
+  event
+  class
 }
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+}
+
+// --- Tables ---
 
 model User {
-  id             String        @id @default(uuid()) @db.Uuid
-  anonymousId    String        @unique @map("anonymous_id") // The device hash
-  
-  subscriptionId String?       @db.Uuid @map("subscription_id")
-  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  id            String    @id @default(uuid()) @db.Uuid
+  fullName      String?   @map("full_name")
+  email         String    @unique
+  password      String
+  role          UserRole
+  profileImage  String?   @map("profile_image")
+  createdAt     DateTime  @default(now()) @map("created_at")
 
-  level         Int      @default(1)
-  currentXp     Int      @default(0) @map("current_xp")
- 
-  posts          Post[]
-  responses      Response[]
-  pushTokens     PushToken[]
-  purchases      Purchase[]
-  favorites      Favorite[]
-
-  // Notification related
-  notifications          Notification[] @relation("UserNotifications")
-  triggeredNotifications Notification[] @relation("TriggeredBy")
-  
-
-  createdAt      DateTime      @default(now()) @map("created_at")
-  lastActiveAt   DateTime?     @map("last_active_at")
-
-
-  missionProgress UserMissionProgress[]
-  streak          UserStreak?
-  inventory       UserInventory[]
-
-
+  // Relations
+  customer             Customer?
+  vendor               Vendor?
+  staff                Staff?
+  notifications        Notification[]
+  notificationSettings NotificationSetting?
+  referralsMade        Referral[]           @relation("Referrer")
 
   @@map("users")
 }
 
-model Post {
-  id           String      @id @default(uuid()) @db.Uuid
-  userId       String      @db.Uuid @map("user_id")
-  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  categoryId   String      @db.Uuid @map("category_id")
-  category     Category    @relation(fields: [categoryId], references: [id])
-  
-  contentType  ContentType @map("content_type") 
-  textContent  String?     @map("text_content") @db.Text
-  voiceUrl     String?     @map("voice_url") @db.Text
-  
-  expiresAt    DateTime    @map("expires_at")
-  isDeleted    Boolean?     @default(false) @map("is_deleted")
-  createdAt    DateTime    @default(now()) @map("created_at")
- 
-  isResponseDefaultHidden Boolean     @default(false) @map("is_response_default_hidden")
-  PostType     PostType   @default(SILVER) @map("post_type")
-  
-  responses    Response[]
-  favorites Favorite[]
-  notifications Notification[]
+model Customer {
+  id           String    @id @default(uuid()) @db.Uuid
+  userId       String    @unique @map("user_id") @db.Uuid
+  user         User      @relation(fields: [userId], references: [id])
+  referralCode String?   @map("referral_code")
+  createdAt    DateTime  @default(now()) @map("created_at")
 
-  @@map("posts")
-  @@index([expiresAt])
+  // Relations
+  bookings    Booking[]
+  waitingList WaitingList[]
+  reviews     Review[]
+  favorites   Favorite[]
+
+  @@map("customers")
 }
 
+model Vendor {
+  id            String    @id @default(uuid()) @db.Uuid
+  userId        String    @unique @map("user_id") @db.Uuid
+  user          User      @relation(fields: [userId], references: [id])
+  referralCode  String?   @map("referral_code")
+  referredBy    String?   @map("referred_by") @db.Uuid
+  referralCount Int       @default(0) @map("referral_count")
+  bonusBalance  Decimal   @default(0) @map("bonus_balance") @db.Decimal(10, 2)
+  createdAt     DateTime  @default(now()) @map("created_at")
 
-model Response {
-  id           String      @id @default(uuid()) @db.Uuid
-  postId       String      @db.Uuid @map("post_id")
-  post         Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
-  
-  userId       String      @db.Uuid @map("user_id")
-  user         User        @relation(fields: [userId], references: [id])
-  
-  contentType  ContentType @map("content_type")
-  textContent  String?     @map("text_content") @db.Text
-  voiceUrl     String?     @map("voice_url") @db.Text
+  // Relations
+  businesses    Business[]
+  referralsRecv Referral[]     @relation("ReferredVendor")
+  subscriptions Subscription[]
+  payments      Payment[]
 
-// nested response
-  parentResponseId String?    @map("parent_response_id") @db.Uuid
-  parentResponse   Response?  @relation("ResponseToResponse", fields: [parentResponseId], references: [id], onDelete: SetNull)
-  replies          Response[] @relation("ResponseToResponse")
+  @@map("vendors")
+}
 
-// For Notifications (2 relation)
-  notifications       Notification[] @relation("ResponseNotifications")
-  parentNotifications Notification[] @relation("ParentNotification")
+model Business {
+  id          String    @id @default(uuid()) @db.Uuid
+  vendorId    String    @map("vendor_id") @db.Uuid
+  vendor      Vendor    @relation(fields: [vendorId], references: [id])
+  name        String
+  description String?
+  logo        String?
+  location    String?
+  createdAt   DateTime  @default(now()) @map("created_at")
 
-  
-  isHidden     Boolean     @default(false) @map("is_hidden")
-  createdAt    DateTime    @default(now()) @map("created_at")
+  // Relations
+  images     BusinessImage[]
+  staff      Staff[]
+  services   Service[]
+  bookings   Booking[]
+  guests     GuestCustomer[]
+  reviews    Review[]
+  favoritedBy Favorite[]
 
-  @@index([postId, createdAt(Sort.Asc)]) 
-  @@index([parentResponseId, createdAt]) 
-  @@map("responses")
+  @@map("businesses")
+}
+
+model BusinessImage {
+  id         String   @id @default(uuid()) @db.Uuid
+  businessId String   @map("business_id") @db.Uuid
+  business   Business @relation(fields: [businessId], references: [id])
+  imageUrl   String   @map("image_url")
+
+  @@map("business_images")
+}
+
+model Staff {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @unique @map("user_id") @db.Uuid
+  user        User     @relation(fields: [userId], references: [id])
+  businessId  String   @map("business_id") @db.Uuid
+  business    Business @relation(fields: [businessId], references: [id])
+  role        String?
+  specialties String?
+  workingDays String?  @map("working_days")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  services StaffService[]
+  bookings Booking[]
+
+  @@map("staff")
 }
 
 model Category {
-  id        String   @id @default(uuid()) @db.Uuid
-  name      String   @unique
-  icon      String?
-  posts     Post[]
-  createdAt DateTime @default(now()) @map("created_at")
+  id   String @id @default(uuid()) @db.Uuid
+  name String
+
+  // Relations
+  services Service[]
 
   @@map("categories")
 }
 
+model Service {
+  id          String      @id @default(uuid()) @db.Uuid
+  businessId  String      @map("business_id") @db.Uuid
+  business    Business    @relation(fields: [businessId], references: [id])
+  categoryId  String      @map("category_id") @db.Uuid
+  category    Category    @relation(fields: [categoryId], references: [id])
+  title       String
+  description String?
+  price       Decimal     @db.Decimal(10, 2)
+  duration    Int // Duration in minutes
+  color       String?
+  type        ServiceType
+
+  // Relations
+  staff       StaffService[]
+  bookings    Booking[]
+  waitingList WaitingList[]
+
+  @@map("services")
+}
+
+model StaffService {
+  staffId   String  @map("staff_id") @db.Uuid
+  staff     Staff   @relation(fields: [staffId], references: [id])
+  serviceId String  @map("service_id") @db.Uuid
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  @@id([staffId, serviceId])
+  @@map("staff_services")
+}
+
+model Booking {
+  id           String        @id @default(uuid()) @db.Uuid
+  customerId   String        @map("customer_id") @db.Uuid
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  businessId   String        @map("business_id") @db.Uuid
+  business     Business      @relation(fields: [businessId], references: [id])
+  serviceId    String        @map("service_id") @db.Uuid
+  service      Service       @relation(fields: [serviceId], references: [id])
+  staffId      String        @map("staff_id") @db.Uuid
+  staff        Staff         @relation(fields: [staffId], references: [id])
+  bookingType  BookingType   @map("booking_type")
+  status       BookingStatus
+  date         DateTime      @db.Date
+  startTime    DateTime      @map("start_time") @db.Time
+  endTime      DateTime      @map("end_time") @db.Time
+  cancelReason String?       @map("cancel_reason")
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  // Relations
+  payments Payment[]
+  reviews  Review[]
+
+  @@map("bookings")
+}
+
+model WaitingList {
+  id            String   @id @default(uuid()) @db.Uuid
+  customerId    String   @map("customer_id") @db.Uuid
+  customer      Customer @relation(fields: [customerId], references: [id])
+  serviceId     String   @map("service_id") @db.Uuid
+  service       Service  @relation(fields: [serviceId], references: [id])
+  preferredDate DateTime @map("preferred_date") @db.Date
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("waiting_list")
+}
+
+model GuestCustomer {
+  id         String   @id @default(uuid()) @db.Uuid
+  businessId String   @map("business_id") @db.Uuid
+  business   Business @relation(fields: [businessId], references: [id])
+  name       String
+  email      String?
+  image      String?
+  address    String?
+
+  @@map("guest_customers")
+}
+
+model Review {
+  id         String   @id @default(uuid()) @db.Uuid
+  bookingId  String   @map("booking_id") @db.Uuid
+  booking    Booking  @relation(fields: [bookingId], references: [id])
+  customerId String   @map("customer_id") @db.Uuid
+  customer   Customer @relation(fields: [customerId], references: [id])
+  businessId String   @map("business_id") @db.Uuid
+  business   Business @relation(fields: [businessId], references: [id])
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("reviews")
+}
+
+model Favorite {
+  id         String   @id @default(uuid()) @db.Uuid
+  customerId String   @map("customer_id") @db.Uuid
+  customer   Customer @relation(fields: [customerId], references: [id])
+  businessId String   @map("business_id") @db.Uuid
+  business   Business @relation(fields: [businessId], references: [id])
+
+  @@map("favorites")
+}
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notifications")
+}
+
+model NotificationSetting {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @unique @map("user_id") @db.Uuid
+  user              User    @relation(fields: [userId], references: [id])
+  emailNotification Boolean @default(true) @map("email_notifications")
+  pushNotification  Boolean @default(true) @map("push_notifications")
+  bookingReminders  Boolean @default(true) @map("booking_reminders")
+
+  @@map("notification_settings")
+}
+
+model Referral {
+  id               String   @id @default(uuid()) @db.Uuid
+  referrerUserId   String   @map("referrer_user_id") @db.Uuid
+  referrer         User     @relation("Referrer", fields: [referrerUserId], references: [id])
+  referredVendorId String   @map("referred_vendor_id") @db.Uuid
+  referredVendor   Vendor   @relation("ReferredVendor", fields: [referredVendorId], references: [id])
+  bonusAmount      Decimal  @map("bonus_amount") @db.Decimal(10, 2)
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@map("referrals")
+}
+
+model SubscriptionPlan {
+  id       String @id @default(uuid()) @db.Uuid
+  name     String
+  price    Decimal @db.Decimal(10, 2)
+  maxUsers Int    @map("max_users")
+  features String?
+
+  // Relations
+  subscriptions Subscription[]
+
+  @@map("subscription_plans")
+}
+
 model Subscription {
-  id                String   @id @default(uuid()) @db.Uuid
-  name              String   
-  postExpiryHours   Int      @map("post_expiry_hours")
-  themeColor        String?  @map("theme_color")
-  price             Decimal  @db.Decimal(10, 2)
-  
-  users             User[]
-  purchases         Purchase[]
-  createdAt         DateTime @default(now()) @map("created_at")
+  id        String   @id @default(uuid()) @db.Uuid
+  vendorId  String   @map("vendor_id") @db.Uuid
+  vendor    Vendor   @relation(fields: [vendorId], references: [id])
+  planId    String   @map("plan_id") @db.Uuid
+  plan      SubscriptionPlan @relation(fields: [planId], references: [id])
+  startDate DateTime @map("start_date") @db.Date
+  endDate   DateTime @map("end_date") @db.Date
+  status    String
 
   @@map("subscriptions")
 }
 
-model Purchase {
-  id             String       @id @default(uuid()) @db.Uuid
-  userId         String       @db.Uuid @map("user_id")
-  user           User         @relation(fields: [userId], references: [id])
-  
-  subscriptionId String       @db.Uuid @map("subscription_id")
-  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
-  
-  platform       String       
-  transactionId  String  @unique @map("transaction_id")
-  purchaseDate   DateTime     @map("purchase_date")
-  expiryDate     DateTime?    @map("expiry_date")
-  status         String       
-  
-  @@map("purchases")
-}
+model Payment {
+  id            String        @id @default(uuid()) @db.Uuid
+  bookingId     String?       @map("booking_id") @db.Uuid
+  booking       Booking?      @relation(fields: [bookingId], references: [id])
+  vendorId      String        @map("vendor_id") @db.Uuid
+  vendor        Vendor        @relation(fields: [vendorId], references: [id])
+  amount        Decimal       @db.Decimal(10, 2)
+  paymentMethod String        @map("payment_method")
+  paymentStatus PaymentStatus @map("payment_status")
+  transactionId String?       @map("transaction_id")
+  createdAt     DateTime      @default(now()) @map("created_at")
 
-model PushToken {
-  id          String   @id @default(uuid()) @db.Uuid
-  userId      String   @db.Uuid @map("user_id")
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  token String?   @map("device_token")
-  platform    String?
-  createdAt   DateTime @default(now()) @map("created_at")
-
-  @@map("push_tokens")
-}
-
-model Favorite {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @db.Uuid
-  postId    String   @db.Uuid
-  createdAt DateTime @default(now()) @map("created_at")
-
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-
-// For Notifications (relation)
-  notifications Notification[] @relation("FavoriteNotifications")
- 
-  @@unique([userId, postId])  
-  @@map("favorites")
-
-}
-
-model Notification {
-  id String @id @default(uuid()) @db.Uuid
-
-  userId String @map("user_id") @db.Uuid
-  user   User   @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
-
-  type NotificationType
-
-  triggerUserId String @map("trigger_user_id") @db.Uuid
-  triggerUser   User   @relation("TriggeredBy", fields: [triggerUserId], references: [id])
-
-  postId String? @map("post_id") @db.Uuid
-  post   Post?   @relation(fields: [postId], references: [id], onDelete: SetNull)
-
-  responseId String?   @map("response_id") @db.Uuid
-  response   Response? @relation("ResponseNotifications", fields: [responseId], references: [id], onDelete: SetNull)
-  
-  parentResponseId String?   @map("parent_response_id") @db.Uuid
-  parentResponse   Response? @relation("ParentNotification", fields: [parentResponseId], references: [id], onDelete: SetNull)
-  
-  favoriteId String?   @map("favorite_id") @db.Uuid
-  favorite   Favorite? @relation("FavoriteNotifications", fields: [favoriteId], references: [id], onDelete: SetNull)
-   
-  isRead    Boolean  @default(false) @map("is_read")
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@index([userId, createdAt(Sort.Desc)])
-  @@index([userId, isRead, createdAt(Sort.Desc)])
-  @@map("notifications")
-}
-
-
-model Mission {
-  id               String   @id @default(uuid()) @db.Uuid
-  title            String
-  slug             String?   @unique 
-  xpReward         Int      @default(0) @map("xp_reward")
-  requirementCount Int      @default(1) @map("requirement_count")
-  type             String   @default("DAILY") // DAILY, STREAK, SMART
-  
-  userProgress     UserMissionProgress[]
-
-  @@map("missions")
-}
-
-model UserMissionProgress {
-  id           String   @id @default(uuid()) @db.Uuid
-  userId       String   @db.Uuid @map("user_id")
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  missionId    String   @db.Uuid @map("mission_id")
-  mission      Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
-  
-  currentCount Int      @default(0) @map("current_count")
-  isCompleted  Boolean  @default(false) @map("is_completed")
-  lastUpdatedAt DateTime @default(now()) @updatedAt @map("last_updated_at")
-
-  @@unique([userId, missionId])
-  @@map("user_mission_progress")
-}
-
-model UserStreak {
-  userId          String   @id @db.Uuid @map("user_id")
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  currentStreak   Int      @default(0) @map("current_streak")
-  longestStreak   Int      @default(0) @map("longest_streak")
-  lastLoginDate   DateTime @default(now()) @map("last_login_date")
-
-  @@map("user_streaks")
-}
-
-model UserInventory {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @db.Uuid @map("user_id")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  itemType  String   // "GOLD_BUBBLE_CREDIT", "URGENT_BUBBLE_CREDIT", "EXTENSION_48H"
-  quantity  Int      @default(0)
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-
-  @@unique([userId, itemType])
-  @@map("user_inventory")
+  @@map("payments")
 }
