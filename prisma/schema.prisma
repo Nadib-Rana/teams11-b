@@ -10,7 +10,6 @@ datasource db {
 
 
 // --- Enums ---
-
 enum UserRole {
   customer
   vendor
@@ -41,7 +40,13 @@ enum PaymentStatus {
   failed
 }
 
-// --- Tables ---
+enum TokenType {
+  email_verification
+  password_reset
+  login_otp
+}
+
+// --- Models ---
 
 model User {
   id            String    @id @default(uuid()) @db.Uuid
@@ -50,6 +55,7 @@ model User {
   password      String
   role          UserRole
   profileImage  String?   @map("profile_image")
+  isVerified    Boolean   @default(false) @map("is_verified")
   createdAt     DateTime  @default(now()) @map("created_at")
 
   // Relations
@@ -58,9 +64,23 @@ model User {
   staff                Staff?
   notifications        Notification[]
   notificationSettings NotificationSetting?
-  referralsMade        Referral[]           @relation("Referrer")
+  referralsMade        Referral[] @relation("Referrer")
+  verificationTokens   VerificationToken[]
 
   @@map("users")
+}
+
+model VerificationToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  user      User      @relation(fields: [userId], references: [id])
+  token     String    @unique
+  type      TokenType
+  expiresAt DateTime
+  used      Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  @@map("verification_tokens")
 }
 
 model Customer {
@@ -91,7 +111,7 @@ model Vendor {
 
   // Relations
   businesses    Business[]
-  referralsRecv Referral[]     @relation("ReferredVendor")
+  referralsRecv Referral[] @relation("ReferredVendor")
   subscriptions Subscription[]
   payments      Payment[]
 
@@ -192,12 +212,16 @@ model Booking {
   id           String        @id @default(uuid()) @db.Uuid
   customerId   String        @map("customer_id") @db.Uuid
   customer     Customer      @relation(fields: [customerId], references: [id])
+
   businessId   String        @map("business_id") @db.Uuid
   business     Business      @relation(fields: [businessId], references: [id])
+
   serviceId    String        @map("service_id") @db.Uuid
   service      Service       @relation(fields: [serviceId], references: [id])
+
   staffId      String        @map("staff_id") @db.Uuid
   staff        Staff         @relation(fields: [staffId], references: [id])
+
   bookingType  BookingType   @map("booking_type")
   status       BookingStatus
   date         DateTime      @db.Date
@@ -207,8 +231,8 @@ model Booking {
   createdAt    DateTime      @default(now()) @map("created_at")
 
   // Relations
-  payments Payment[]
   reviews  Review[]
+  payments Payment[]
 
   @@map("bookings")
 }
@@ -305,7 +329,6 @@ model SubscriptionPlan {
   maxUsers Int    @map("max_users")
   features String?
 
-  // Relations
   subscriptions Subscription[]
 
   @@map("subscription_plans")
