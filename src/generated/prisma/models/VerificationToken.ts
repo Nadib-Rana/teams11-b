@@ -407,6 +407,10 @@ export type EnumTokenTypeFieldUpdateOperationsInput = {
   set?: $Enums.TokenType
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type VerificationTokenCreateWithoutUserInput = {
   id?: string
   token: string

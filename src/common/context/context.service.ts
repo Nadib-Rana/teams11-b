@@ -3,11 +3,11 @@
  * * Provides a clean, injectable service to get/set values
  * in the AsyncLocalStorage store.
  */
-import { Injectable, Logger } from '@nestjs/common';
-import { requestContext, RequestContextStore } from './storage';
+import { Injectable, Logger } from "@nestjs/common";
+import { requestContext, RequestContextStore } from "./storage";
 
 // Define a constant key for our request ID
-export const REQUEST_ID_KEY = 'requestId';
+export const REQUEST_ID_KEY = "requestId";
 
 @Injectable()
 export class ContextService {
@@ -18,7 +18,7 @@ export class ContextService {
     if (!store) {
       // This should not happen if the middleware is set up correctly
       this.logger.warn(
-        'AsyncLocalStorage store not found. Middleware may be missing.',
+        "AsyncLocalStorage store not found. Middleware may be missing.",
       );
       // Return a dummy map to prevent crashes, though this indicates an issue.
       return new Map();

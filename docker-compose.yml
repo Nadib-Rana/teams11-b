@@ -4,14 +4,13 @@ services:
   postgres:
     image: postgres:17
     container_name: postgres_teams11_container
-    # unless-stopped
-    restart: no
+    restart: unless-stopped
     environment:
       POSTGRES_USER: nest_js
       POSTGRES_PASSWORD: nest_js
       POSTGRES_DB: nest_js
     ports:
-      - "6091:5432"
+      - "6096:5432" # Local access (optional)
     volumes:
       - nest_postgres:/var/lib/postgresql/data
     networks:
@@ -32,12 +31,13 @@ services:
     command: server /data --console-address ":9001"
     networks:
       - nest_network
+
   redis:
     image: redis:latest
     container_name: nest_redis
-    restart: no
+    restart: unless-stopped
     ports:
-      - "6379:6379" # Redis default port
+      - "6379:6379"
     volumes:
       - nest_redis:/data
     command: redis-server --save 60 1 --loglevel warning

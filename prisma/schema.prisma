@@ -55,7 +55,7 @@ model User {
   password      String
   role          UserRole
   profileImage  String?   @map("profile_image")
-  isVerified    Boolean   @default(false) @map("is_verified")
+  isVerified    Boolean?   @default(false) @map("is_verified")
   createdAt     DateTime  @default(now()) @map("created_at")
 
   // Relations

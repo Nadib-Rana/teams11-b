@@ -29,6 +29,8 @@ export class AuthService {
       data: { fullName, email, password: hashedPassword, role },
     });
 
+    console.log(user);
+
     // Create verification token
     const token = randomBytes(32).toString("hex");
     await this.prisma.verificationToken.create({
