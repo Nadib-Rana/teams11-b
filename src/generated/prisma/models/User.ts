@@ -20,92 +20,76 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
-export type UserAvgAggregateOutputType = {
-  level: number | null
-  currentXp: number | null
-}
-
-export type UserSumAggregateOutputType = {
-  level: number | null
-  currentXp: number | null
-}
-
 export type UserMinAggregateOutputType = {
   id: string | null
-  anonymousId: string | null
-  subscriptionId: string | null
-  level: number | null
-  currentXp: number | null
+  fullName: string | null
+  email: string | null
+  password: string | null
+  role: $Enums.UserRole | null
+  profileImage: string | null
+  isVerified: boolean | null
   createdAt: Date | null
-  lastActiveAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  anonymousId: string | null
-  subscriptionId: string | null
-  level: number | null
-  currentXp: number | null
+  fullName: string | null
+  email: string | null
+  password: string | null
+  role: $Enums.UserRole | null
+  profileImage: string | null
+  isVerified: boolean | null
   createdAt: Date | null
-  lastActiveAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  anonymousId: number
-  subscriptionId: number
-  level: number
-  currentXp: number
+  fullName: number
+  email: number
+  password: number
+  role: number
+  profileImage: number
+  isVerified: number
   createdAt: number
-  lastActiveAt: number
   _all: number
 }
 
 
-export type UserAvgAggregateInputType = {
-  level?: true
-  currentXp?: true
-}
-
-export type UserSumAggregateInputType = {
-  level?: true
-  currentXp?: true
-}
-
 export type UserMinAggregateInputType = {
   id?: true
-  anonymousId?: true
-  subscriptionId?: true
-  level?: true
-  currentXp?: true
+  fullName?: true
+  email?: true
+  password?: true
+  role?: true
+  profileImage?: true
+  isVerified?: true
   createdAt?: true
-  lastActiveAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  anonymousId?: true
-  subscriptionId?: true
-  level?: true
-  currentXp?: true
+  fullName?: true
+  email?: true
+  password?: true
+  role?: true
+  profileImage?: true
+  isVerified?: true
   createdAt?: true
-  lastActiveAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  anonymousId?: true
-  subscriptionId?: true
-  level?: true
-  currentXp?: true
+  fullName?: true
+  email?: true
+  password?: true
+  role?: true
+  profileImage?: true
+  isVerified?: true
   createdAt?: true
-  lastActiveAt?: true
   _all?: true
 }
 
@@ -147,18 +131,6 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: UserAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: UserSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -189,23 +161,20 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
-  _avg?: UserAvgAggregateInputType
-  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
 
 export type UserGroupByOutputType = {
   id: string
-  anonymousId: string
-  subscriptionId: string | null
-  level: number
-  currentXp: number
+  fullName: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage: string | null
+  isVerified: boolean | null
   createdAt: Date
-  lastActiveAt: Date | null
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -230,83 +199,73 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.UuidFilter<"User"> | string
-  anonymousId?: Prisma.StringFilter<"User"> | string
-  subscriptionId?: Prisma.UuidNullableFilter<"User"> | string | null
-  level?: Prisma.IntFilter<"User"> | number
-  currentXp?: Prisma.IntFilter<"User"> | number
+  fullName?: Prisma.StringNullableFilter<"User"> | string | null
+  email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
-  posts?: Prisma.PostListRelationFilter
-  responses?: Prisma.ResponseListRelationFilter
-  pushTokens?: Prisma.PushTokenListRelationFilter
-  purchases?: Prisma.PurchaseListRelationFilter
-  favorites?: Prisma.FavoriteListRelationFilter
+  customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
+  vendor?: Prisma.XOR<Prisma.VendorNullableScalarRelationFilter, Prisma.VendorWhereInput> | null
+  staff?: Prisma.XOR<Prisma.StaffNullableScalarRelationFilter, Prisma.StaffWhereInput> | null
   notifications?: Prisma.NotificationListRelationFilter
-  triggeredNotifications?: Prisma.NotificationListRelationFilter
-  missionProgress?: Prisma.UserMissionProgressListRelationFilter
-  streak?: Prisma.XOR<Prisma.UserStreakNullableScalarRelationFilter, Prisma.UserStreakWhereInput> | null
-  inventory?: Prisma.UserInventoryListRelationFilter
+  notificationSettings?: Prisma.XOR<Prisma.NotificationSettingNullableScalarRelationFilter, Prisma.NotificationSettingWhereInput> | null
+  referralsMade?: Prisma.ReferralListRelationFilter
+  verificationTokens?: Prisma.VerificationTokenListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  anonymousId?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
+  fullName?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  subscription?: Prisma.SubscriptionOrderByWithRelationInput
-  posts?: Prisma.PostOrderByRelationAggregateInput
-  responses?: Prisma.ResponseOrderByRelationAggregateInput
-  pushTokens?: Prisma.PushTokenOrderByRelationAggregateInput
-  purchases?: Prisma.PurchaseOrderByRelationAggregateInput
-  favorites?: Prisma.FavoriteOrderByRelationAggregateInput
+  customer?: Prisma.CustomerOrderByWithRelationInput
+  vendor?: Prisma.VendorOrderByWithRelationInput
+  staff?: Prisma.StaffOrderByWithRelationInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
-  triggeredNotifications?: Prisma.NotificationOrderByRelationAggregateInput
-  missionProgress?: Prisma.UserMissionProgressOrderByRelationAggregateInput
-  streak?: Prisma.UserStreakOrderByWithRelationInput
-  inventory?: Prisma.UserInventoryOrderByRelationAggregateInput
+  notificationSettings?: Prisma.NotificationSettingOrderByWithRelationInput
+  referralsMade?: Prisma.ReferralOrderByRelationAggregateInput
+  verificationTokens?: Prisma.VerificationTokenOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  anonymousId?: string
+  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  subscriptionId?: Prisma.UuidNullableFilter<"User"> | string | null
-  level?: Prisma.IntFilter<"User"> | number
-  currentXp?: Prisma.IntFilter<"User"> | number
+  fullName?: Prisma.StringNullableFilter<"User"> | string | null
+  password?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  profileImage?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
-  posts?: Prisma.PostListRelationFilter
-  responses?: Prisma.ResponseListRelationFilter
-  pushTokens?: Prisma.PushTokenListRelationFilter
-  purchases?: Prisma.PurchaseListRelationFilter
-  favorites?: Prisma.FavoriteListRelationFilter
+  customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
+  vendor?: Prisma.XOR<Prisma.VendorNullableScalarRelationFilter, Prisma.VendorWhereInput> | null
+  staff?: Prisma.XOR<Prisma.StaffNullableScalarRelationFilter, Prisma.StaffWhereInput> | null
   notifications?: Prisma.NotificationListRelationFilter
-  triggeredNotifications?: Prisma.NotificationListRelationFilter
-  missionProgress?: Prisma.UserMissionProgressListRelationFilter
-  streak?: Prisma.XOR<Prisma.UserStreakNullableScalarRelationFilter, Prisma.UserStreakWhereInput> | null
-  inventory?: Prisma.UserInventoryListRelationFilter
-}, "id" | "anonymousId">
+  notificationSettings?: Prisma.XOR<Prisma.NotificationSettingNullableScalarRelationFilter, Prisma.NotificationSettingWhereInput> | null
+  referralsMade?: Prisma.ReferralListRelationFilter
+  verificationTokens?: Prisma.VerificationTokenListRelationFilter
+}, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  anonymousId?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
+  fullName?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
-  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
-  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -314,161 +273,151 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"User"> | string
-  anonymousId?: Prisma.StringWithAggregatesFilter<"User"> | string
-  subscriptionId?: Prisma.UuidNullableWithAggregatesFilter<"User"> | string | null
-  level?: Prisma.IntWithAggregatesFilter<"User"> | number
-  currentXp?: Prisma.IntWithAggregatesFilter<"User"> | number
+  fullName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isVerified?: Prisma.BoolNullableWithAggregatesFilter<"User"> | boolean | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  lastActiveAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  anonymousId?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrder
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  lastActiveAt?: Prisma.SortOrder
-}
-
-export type UserAvgOrderByAggregateInput = {
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  anonymousId?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrder
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  lastActiveAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  anonymousId?: Prisma.SortOrder
-  subscriptionId?: Prisma.SortOrder
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  role?: Prisma.SortOrder
+  profileImage?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  lastActiveAt?: Prisma.SortOrder
-}
-
-export type UserSumOrderByAggregateInput = {
-  level?: Prisma.SortOrder
-  currentXp?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -476,161 +425,85 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type UserListRelationFilter = {
-  every?: Prisma.UserWhereInput
-  some?: Prisma.UserWhereInput
-  none?: Prisma.UserWhereInput
-}
-
-export type UserOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type StringFieldUpdateOperationsInput = {
   set?: string
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type UserCreateNestedOneWithoutPostsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutVerificationTokensInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerificationTokensInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutPostsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput
-  upsert?: Prisma.UserUpsertWithoutPostsInput
+export type UserUpdateOneRequiredWithoutVerificationTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerificationTokensInput
+  upsert?: Prisma.UserUpsertWithoutVerificationTokensInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPostsInput, Prisma.UserUpdateWithoutPostsInput>, Prisma.UserUncheckedUpdateWithoutPostsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerificationTokensInput, Prisma.UserUpdateWithoutVerificationTokensInput>, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
 }
 
-export type UserCreateNestedOneWithoutResponsesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutResponsesInput, Prisma.UserUncheckedCreateWithoutResponsesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutResponsesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutResponsesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutResponsesInput, Prisma.UserUncheckedCreateWithoutResponsesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutResponsesInput
-  upsert?: Prisma.UserUpsertWithoutResponsesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutResponsesInput, Prisma.UserUpdateWithoutResponsesInput>, Prisma.UserUncheckedUpdateWithoutResponsesInput>
-}
-
-export type UserCreateNestedManyWithoutSubscriptionInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput> | Prisma.UserCreateWithoutSubscriptionInput[] | Prisma.UserUncheckedCreateWithoutSubscriptionInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput | Prisma.UserCreateOrConnectWithoutSubscriptionInput[]
-  createMany?: Prisma.UserCreateManySubscriptionInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-}
-
-export type UserUncheckedCreateNestedManyWithoutSubscriptionInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput> | Prisma.UserCreateWithoutSubscriptionInput[] | Prisma.UserUncheckedCreateWithoutSubscriptionInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput | Prisma.UserCreateOrConnectWithoutSubscriptionInput[]
-  createMany?: Prisma.UserCreateManySubscriptionInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-}
-
-export type UserUpdateManyWithoutSubscriptionNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput> | Prisma.UserCreateWithoutSubscriptionInput[] | Prisma.UserUncheckedCreateWithoutSubscriptionInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput | Prisma.UserCreateOrConnectWithoutSubscriptionInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutSubscriptionInput | Prisma.UserUpsertWithWhereUniqueWithoutSubscriptionInput[]
-  createMany?: Prisma.UserCreateManySubscriptionInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutSubscriptionInput | Prisma.UserUpdateWithWhereUniqueWithoutSubscriptionInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutSubscriptionInput | Prisma.UserUpdateManyWithWhereWithoutSubscriptionInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-}
-
-export type UserUncheckedUpdateManyWithoutSubscriptionNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput> | Prisma.UserCreateWithoutSubscriptionInput[] | Prisma.UserUncheckedCreateWithoutSubscriptionInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionInput | Prisma.UserCreateOrConnectWithoutSubscriptionInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutSubscriptionInput | Prisma.UserUpsertWithWhereUniqueWithoutSubscriptionInput[]
-  createMany?: Prisma.UserCreateManySubscriptionInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutSubscriptionInput | Prisma.UserUpdateWithWhereUniqueWithoutSubscriptionInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutSubscriptionInput | Prisma.UserUpdateManyWithWhereWithoutSubscriptionInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-}
-
-export type UserCreateNestedOneWithoutPurchasesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPurchasesInput, Prisma.UserUncheckedCreateWithoutPurchasesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPurchasesInput
+export type UserCreateNestedOneWithoutCustomerInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerInput, Prisma.UserUncheckedCreateWithoutCustomerInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutPurchasesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPurchasesInput, Prisma.UserUncheckedCreateWithoutPurchasesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPurchasesInput
-  upsert?: Prisma.UserUpsertWithoutPurchasesInput
+export type UserUpdateOneRequiredWithoutCustomerNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerInput, Prisma.UserUncheckedCreateWithoutCustomerInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerInput
+  upsert?: Prisma.UserUpsertWithoutCustomerInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPurchasesInput, Prisma.UserUpdateWithoutPurchasesInput>, Prisma.UserUncheckedUpdateWithoutPurchasesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCustomerInput, Prisma.UserUpdateWithoutCustomerInput>, Prisma.UserUncheckedUpdateWithoutCustomerInput>
 }
 
-export type UserCreateNestedOneWithoutPushTokensInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPushTokensInput, Prisma.UserUncheckedCreateWithoutPushTokensInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPushTokensInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutPushTokensNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPushTokensInput, Prisma.UserUncheckedCreateWithoutPushTokensInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPushTokensInput
-  upsert?: Prisma.UserUpsertWithoutPushTokensInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPushTokensInput, Prisma.UserUpdateWithoutPushTokensInput>, Prisma.UserUncheckedUpdateWithoutPushTokensInput>
-}
-
-export type UserCreateNestedOneWithoutFavoritesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoritesInput
+export type UserCreateNestedOneWithoutVendorInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVendorInput, Prisma.UserUncheckedCreateWithoutVendorInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVendorInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutFavoritesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoritesInput
-  upsert?: Prisma.UserUpsertWithoutFavoritesInput
+export type UserUpdateOneRequiredWithoutVendorNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVendorInput, Prisma.UserUncheckedCreateWithoutVendorInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVendorInput
+  upsert?: Prisma.UserUpsertWithoutVendorInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoritesInput, Prisma.UserUpdateWithoutFavoritesInput>, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVendorInput, Prisma.UserUpdateWithoutVendorInput>, Prisma.UserUncheckedUpdateWithoutVendorInput>
+}
+
+export type UserCreateNestedOneWithoutStaffInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStaffInput, Prisma.UserUncheckedCreateWithoutStaffInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStaffInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStaffNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStaffInput, Prisma.UserUncheckedCreateWithoutStaffInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStaffInput
+  upsert?: Prisma.UserUpsertWithoutStaffInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStaffInput, Prisma.UserUpdateWithoutStaffInput>, Prisma.UserUncheckedUpdateWithoutStaffInput>
 }
 
 export type UserCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserCreateNestedOneWithoutTriggeredNotificationsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTriggeredNotificationsInput, Prisma.UserUncheckedCreateWithoutTriggeredNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTriggeredNotificationsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
@@ -642,677 +515,407 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
-export type UserUpdateOneRequiredWithoutTriggeredNotificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTriggeredNotificationsInput, Prisma.UserUncheckedCreateWithoutTriggeredNotificationsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTriggeredNotificationsInput
-  upsert?: Prisma.UserUpsertWithoutTriggeredNotificationsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTriggeredNotificationsInput, Prisma.UserUpdateWithoutTriggeredNotificationsInput>, Prisma.UserUncheckedUpdateWithoutTriggeredNotificationsInput>
-}
-
-export type UserCreateNestedOneWithoutMissionProgressInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutMissionProgressInput, Prisma.UserUncheckedCreateWithoutMissionProgressInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMissionProgressInput
+export type UserCreateNestedOneWithoutNotificationSettingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutMissionProgressNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutMissionProgressInput, Prisma.UserUncheckedCreateWithoutMissionProgressInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMissionProgressInput
-  upsert?: Prisma.UserUpsertWithoutMissionProgressInput
+export type UserUpdateOneRequiredWithoutNotificationSettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationSettingsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMissionProgressInput, Prisma.UserUpdateWithoutMissionProgressInput>, Prisma.UserUncheckedUpdateWithoutMissionProgressInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationSettingsInput, Prisma.UserUpdateWithoutNotificationSettingsInput>, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
 }
 
-export type UserCreateNestedOneWithoutStreakInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutStreakInput, Prisma.UserUncheckedCreateWithoutStreakInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStreakInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutStreakNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutStreakInput, Prisma.UserUncheckedCreateWithoutStreakInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStreakInput
-  upsert?: Prisma.UserUpsertWithoutStreakInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStreakInput, Prisma.UserUpdateWithoutStreakInput>, Prisma.UserUncheckedUpdateWithoutStreakInput>
-}
-
-export type UserCreateNestedOneWithoutInventoryInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutInventoryInput, Prisma.UserUncheckedCreateWithoutInventoryInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInventoryInput
+export type UserCreateNestedOneWithoutReferralsMadeInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferralsMadeInput, Prisma.UserUncheckedCreateWithoutReferralsMadeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferralsMadeInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutInventoryNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutInventoryInput, Prisma.UserUncheckedCreateWithoutInventoryInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInventoryInput
-  upsert?: Prisma.UserUpsertWithoutInventoryInput
+export type UserUpdateOneRequiredWithoutReferralsMadeNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReferralsMadeInput, Prisma.UserUncheckedCreateWithoutReferralsMadeInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReferralsMadeInput
+  upsert?: Prisma.UserUpsertWithoutReferralsMadeInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInventoryInput, Prisma.UserUpdateWithoutInventoryInput>, Prisma.UserUncheckedUpdateWithoutInventoryInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReferralsMadeInput, Prisma.UserUpdateWithoutReferralsMadeInput>, Prisma.UserUncheckedUpdateWithoutReferralsMadeInput>
 }
 
-export type UserCreateWithoutPostsInput = {
+export type UserCreateWithoutVerificationTokensInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
 }
 
-export type UserUncheckedCreateWithoutPostsInput = {
+export type UserUncheckedCreateWithoutVerificationTokensInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
 }
 
-export type UserCreateOrConnectWithoutPostsInput = {
+export type UserCreateOrConnectWithoutVerificationTokensInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
 }
 
-export type UserUpsertWithoutPostsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>
+export type UserUpsertWithoutVerificationTokensInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVerificationTokensInput, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerificationTokensInput, Prisma.UserUncheckedCreateWithoutVerificationTokensInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutPostsInput = {
+export type UserUpdateToOneWithWhereWithoutVerificationTokensInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVerificationTokensInput, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
 }
 
-export type UserUpdateWithoutPostsInput = {
+export type UserUpdateWithoutVerificationTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
 }
 
-export type UserUncheckedUpdateWithoutPostsInput = {
+export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
 }
 
-export type UserCreateWithoutResponsesInput = {
+export type UserCreateWithoutCustomerInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutResponsesInput = {
+export type UserUncheckedCreateWithoutCustomerInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutResponsesInput = {
+export type UserCreateOrConnectWithoutCustomerInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutResponsesInput, Prisma.UserUncheckedCreateWithoutResponsesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerInput, Prisma.UserUncheckedCreateWithoutCustomerInput>
 }
 
-export type UserUpsertWithoutResponsesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutResponsesInput, Prisma.UserUncheckedUpdateWithoutResponsesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutResponsesInput, Prisma.UserUncheckedCreateWithoutResponsesInput>
+export type UserUpsertWithoutCustomerInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCustomerInput, Prisma.UserUncheckedUpdateWithoutCustomerInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerInput, Prisma.UserUncheckedCreateWithoutCustomerInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutResponsesInput = {
+export type UserUpdateToOneWithWhereWithoutCustomerInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutResponsesInput, Prisma.UserUncheckedUpdateWithoutResponsesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCustomerInput, Prisma.UserUncheckedUpdateWithoutCustomerInput>
 }
 
-export type UserUpdateWithoutResponsesInput = {
+export type UserUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutResponsesInput = {
+export type UserUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutSubscriptionInput = {
+export type UserCreateWithoutVendorInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutSubscriptionInput = {
+export type UserUncheckedCreateWithoutVendorInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutSubscriptionInput = {
+export type UserCreateOrConnectWithoutVendorInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVendorInput, Prisma.UserUncheckedCreateWithoutVendorInput>
 }
 
-export type UserCreateManySubscriptionInputEnvelope = {
-  data: Prisma.UserCreateManySubscriptionInput | Prisma.UserCreateManySubscriptionInput[]
-  skipDuplicates?: boolean
-}
-
-export type UserUpsertWithWhereUniqueWithoutSubscriptionInput = {
-  where: Prisma.UserWhereUniqueInput
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionInput, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionInput, Prisma.UserUncheckedCreateWithoutSubscriptionInput>
-}
-
-export type UserUpdateWithWhereUniqueWithoutSubscriptionInput = {
-  where: Prisma.UserWhereUniqueInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionInput, Prisma.UserUncheckedUpdateWithoutSubscriptionInput>
-}
-
-export type UserUpdateManyWithWhereWithoutSubscriptionInput = {
-  where: Prisma.UserScalarWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutSubscriptionInput>
-}
-
-export type UserScalarWhereInput = {
-  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  OR?: Prisma.UserScalarWhereInput[]
-  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.UuidFilter<"User"> | string
-  anonymousId?: Prisma.StringFilter<"User"> | string
-  subscriptionId?: Prisma.UuidNullableFilter<"User"> | string | null
-  level?: Prisma.IntFilter<"User"> | number
-  currentXp?: Prisma.IntFilter<"User"> | number
-  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-}
-
-export type UserCreateWithoutPurchasesInput = {
-  id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutPurchasesInput = {
-  id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutPurchasesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutPurchasesInput, Prisma.UserUncheckedCreateWithoutPurchasesInput>
-}
-
-export type UserUpsertWithoutPurchasesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutPurchasesInput, Prisma.UserUncheckedUpdateWithoutPurchasesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutPurchasesInput, Prisma.UserUncheckedCreateWithoutPurchasesInput>
+export type UserUpsertWithoutVendorInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVendorInput, Prisma.UserUncheckedUpdateWithoutVendorInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVendorInput, Prisma.UserUncheckedCreateWithoutVendorInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutPurchasesInput = {
+export type UserUpdateToOneWithWhereWithoutVendorInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutPurchasesInput, Prisma.UserUncheckedUpdateWithoutPurchasesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVendorInput, Prisma.UserUncheckedUpdateWithoutVendorInput>
 }
 
-export type UserUpdateWithoutPurchasesInput = {
+export type UserUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutPurchasesInput = {
+export type UserUncheckedUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutPushTokensInput = {
+export type UserCreateWithoutStaffInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutPushTokensInput = {
+export type UserUncheckedCreateWithoutStaffInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutPushTokensInput = {
+export type UserCreateOrConnectWithoutStaffInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutPushTokensInput, Prisma.UserUncheckedCreateWithoutPushTokensInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStaffInput, Prisma.UserUncheckedCreateWithoutStaffInput>
 }
 
-export type UserUpsertWithoutPushTokensInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutPushTokensInput, Prisma.UserUncheckedUpdateWithoutPushTokensInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutPushTokensInput, Prisma.UserUncheckedCreateWithoutPushTokensInput>
+export type UserUpsertWithoutStaffInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStaffInput, Prisma.UserUncheckedUpdateWithoutStaffInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStaffInput, Prisma.UserUncheckedCreateWithoutStaffInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutPushTokensInput = {
+export type UserUpdateToOneWithWhereWithoutStaffInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutPushTokensInput, Prisma.UserUncheckedUpdateWithoutPushTokensInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStaffInput, Prisma.UserUncheckedUpdateWithoutStaffInput>
 }
 
-export type UserUpdateWithoutPushTokensInput = {
+export type UserUpdateWithoutStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutPushTokensInput = {
+export type UserUncheckedUpdateWithoutStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutFavoritesInput = {
-  id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutFavoritesInput = {
-  id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutFavoritesInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
-}
-
-export type UserUpsertWithoutFavoritesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoritesInput, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFavoritesInput, Prisma.UserUncheckedCreateWithoutFavoritesInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutFavoritesInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoritesInput, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
-}
-
-export type UserUpdateWithoutFavoritesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutFavoritesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
-}
-
-export type UserCreateWithoutTriggeredNotificationsInput = {
-  id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutTriggeredNotificationsInput = {
-  id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutTriggeredNotificationsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutTriggeredNotificationsInput, Prisma.UserUncheckedCreateWithoutTriggeredNotificationsInput>
 }
 
 export type UserUpsertWithoutNotificationsInput = {
@@ -1328,421 +931,204 @@ export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
 
 export type UserUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserUpsertWithoutTriggeredNotificationsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutTriggeredNotificationsInput, Prisma.UserUncheckedUpdateWithoutTriggeredNotificationsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutTriggeredNotificationsInput, Prisma.UserUncheckedCreateWithoutTriggeredNotificationsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutTriggeredNotificationsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutTriggeredNotificationsInput, Prisma.UserUncheckedUpdateWithoutTriggeredNotificationsInput>
-}
-
-export type UserUpdateWithoutTriggeredNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutTriggeredNotificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutMissionProgressInput = {
+export type UserCreateWithoutNotificationSettingsInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutMissionProgressInput = {
+export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutMissionProgressInput = {
+export type UserCreateOrConnectWithoutNotificationSettingsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutMissionProgressInput, Prisma.UserUncheckedCreateWithoutMissionProgressInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
 }
 
-export type UserUpsertWithoutMissionProgressInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutMissionProgressInput, Prisma.UserUncheckedUpdateWithoutMissionProgressInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutMissionProgressInput, Prisma.UserUncheckedCreateWithoutMissionProgressInput>
+export type UserUpsertWithoutNotificationSettingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationSettingsInput, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutMissionProgressInput = {
+export type UserUpdateToOneWithWhereWithoutNotificationSettingsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutMissionProgressInput, Prisma.UserUncheckedUpdateWithoutMissionProgressInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationSettingsInput, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
 }
 
-export type UserUpdateWithoutMissionProgressInput = {
+export type UserUpdateWithoutNotificationSettingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutMissionProgressInput = {
+export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutStreakInput = {
+export type UserCreateWithoutReferralsMadeInput = {
   id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  inventory?: Prisma.UserInventoryCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutStreakInput = {
+export type UserUncheckedCreateWithoutReferralsMadeInput = {
   id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  profileImage?: string | null
+  isVerified?: boolean | null
   createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  inventory?: Prisma.UserInventoryUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutStreakInput = {
+export type UserCreateOrConnectWithoutReferralsMadeInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutStreakInput, Prisma.UserUncheckedCreateWithoutStreakInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferralsMadeInput, Prisma.UserUncheckedCreateWithoutReferralsMadeInput>
 }
 
-export type UserUpsertWithoutStreakInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutStreakInput, Prisma.UserUncheckedUpdateWithoutStreakInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutStreakInput, Prisma.UserUncheckedCreateWithoutStreakInput>
+export type UserUpsertWithoutReferralsMadeInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReferralsMadeInput, Prisma.UserUncheckedUpdateWithoutReferralsMadeInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReferralsMadeInput, Prisma.UserUncheckedCreateWithoutReferralsMadeInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutStreakInput = {
+export type UserUpdateToOneWithWhereWithoutReferralsMadeInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutStreakInput, Prisma.UserUncheckedUpdateWithoutStreakInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReferralsMadeInput, Prisma.UserUncheckedUpdateWithoutReferralsMadeInput>
 }
 
-export type UserUpdateWithoutStreakInput = {
+export type UserUpdateWithoutReferralsMadeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutStreakInput = {
+export type UserUncheckedUpdateWithoutReferralsMadeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutInventoryInput = {
-  id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsersInput
-  posts?: Prisma.PostCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakCreateNestedOneWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutInventoryInput = {
-  id?: string
-  anonymousId: string
-  subscriptionId?: string | null
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutUserInput
-  responses?: Prisma.ResponseUncheckedCreateNestedManyWithoutUserInput
-  pushTokens?: Prisma.PushTokenUncheckedCreateNestedManyWithoutUserInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
-  triggeredNotifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTriggerUserInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedCreateNestedManyWithoutUserInput
-  streak?: Prisma.UserStreakUncheckedCreateNestedOneWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutInventoryInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutInventoryInput, Prisma.UserUncheckedCreateWithoutInventoryInput>
-}
-
-export type UserUpsertWithoutInventoryInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutInventoryInput, Prisma.UserUncheckedUpdateWithoutInventoryInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutInventoryInput, Prisma.UserUncheckedCreateWithoutInventoryInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutInventoryInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutInventoryInput, Prisma.UserUncheckedUpdateWithoutInventoryInput>
-}
-
-export type UserUpdateWithoutInventoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  subscription?: Prisma.SubscriptionUpdateOneWithoutUsersNestedInput
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutInventoryInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-}
-
-export type UserCreateManySubscriptionInput = {
-  id?: string
-  anonymousId: string
-  level?: number
-  currentXp?: number
-  createdAt?: Date | string
-  lastActiveAt?: Date | string | null
-}
-
-export type UserUpdateWithoutSubscriptionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutSubscriptionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  posts?: Prisma.PostUncheckedUpdateManyWithoutUserNestedInput
-  responses?: Prisma.ResponseUncheckedUpdateManyWithoutUserNestedInput
-  pushTokens?: Prisma.PushTokenUncheckedUpdateManyWithoutUserNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
-  triggeredNotifications?: Prisma.NotificationUncheckedUpdateManyWithoutTriggerUserNestedInput
-  missionProgress?: Prisma.UserMissionProgressUncheckedUpdateManyWithoutUserNestedInput
-  streak?: Prisma.UserStreakUncheckedUpdateOneWithoutUserNestedInput
-  inventory?: Prisma.UserInventoryUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateManyWithoutSubscriptionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  anonymousId?: Prisma.StringFieldUpdateOperationsInput | string
-  level?: Prisma.IntFieldUpdateOperationsInput | number
-  currentXp?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1751,27 +1137,15 @@ export type UserUncheckedUpdateManyWithoutSubscriptionInput = {
  */
 
 export type UserCountOutputType = {
-  posts: number
-  responses: number
-  pushTokens: number
-  purchases: number
-  favorites: number
   notifications: number
-  triggeredNotifications: number
-  missionProgress: number
-  inventory: number
+  referralsMade: number
+  verificationTokens: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  posts?: boolean | UserCountOutputTypeCountPostsArgs
-  responses?: boolean | UserCountOutputTypeCountResponsesArgs
-  pushTokens?: boolean | UserCountOutputTypeCountPushTokensArgs
-  purchases?: boolean | UserCountOutputTypeCountPurchasesArgs
-  favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
-  triggeredNotifications?: boolean | UserCountOutputTypeCountTriggeredNotificationsArgs
-  missionProgress?: boolean | UserCountOutputTypeCountMissionProgressArgs
-  inventory?: boolean | UserCountOutputTypeCountInventoryArgs
+  referralsMade?: boolean | UserCountOutputTypeCountReferralsMadeArgs
+  verificationTokens?: boolean | UserCountOutputTypeCountVerificationTokensArgs
 }
 
 /**
@@ -1787,41 +1161,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PostWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountResponsesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ResponseWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountPushTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PushTokenWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountPurchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PurchaseWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FavoriteWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationWhereInput
 }
@@ -1829,124 +1168,104 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountTriggeredNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationWhereInput
+export type UserCountOutputTypeCountReferralsMadeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReferralWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountMissionProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserMissionProgressWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountInventoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserInventoryWhereInput
+export type UserCountOutputTypeCountVerificationTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VerificationTokenWhereInput
 }
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  anonymousId?: boolean
-  subscriptionId?: boolean
-  level?: boolean
-  currentXp?: boolean
+  fullName?: boolean
+  email?: boolean
+  password?: boolean
+  role?: boolean
+  profileImage?: boolean
+  isVerified?: boolean
   createdAt?: boolean
-  lastActiveAt?: boolean
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
-  posts?: boolean | Prisma.User$postsArgs<ExtArgs>
-  responses?: boolean | Prisma.User$responsesArgs<ExtArgs>
-  pushTokens?: boolean | Prisma.User$pushTokensArgs<ExtArgs>
-  purchases?: boolean | Prisma.User$purchasesArgs<ExtArgs>
-  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
+  customer?: boolean | Prisma.User$customerArgs<ExtArgs>
+  vendor?: boolean | Prisma.User$vendorArgs<ExtArgs>
+  staff?: boolean | Prisma.User$staffArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
-  triggeredNotifications?: boolean | Prisma.User$triggeredNotificationsArgs<ExtArgs>
-  missionProgress?: boolean | Prisma.User$missionProgressArgs<ExtArgs>
-  streak?: boolean | Prisma.User$streakArgs<ExtArgs>
-  inventory?: boolean | Prisma.User$inventoryArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
+  referralsMade?: boolean | Prisma.User$referralsMadeArgs<ExtArgs>
+  verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  anonymousId?: boolean
-  subscriptionId?: boolean
-  level?: boolean
-  currentXp?: boolean
+  fullName?: boolean
+  email?: boolean
+  password?: boolean
+  role?: boolean
+  profileImage?: boolean
+  isVerified?: boolean
   createdAt?: boolean
-  lastActiveAt?: boolean
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  anonymousId?: boolean
-  subscriptionId?: boolean
-  level?: boolean
-  currentXp?: boolean
+  fullName?: boolean
+  email?: boolean
+  password?: boolean
+  role?: boolean
+  profileImage?: boolean
+  isVerified?: boolean
   createdAt?: boolean
-  lastActiveAt?: boolean
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  anonymousId?: boolean
-  subscriptionId?: boolean
-  level?: boolean
-  currentXp?: boolean
+  fullName?: boolean
+  email?: boolean
+  password?: boolean
+  role?: boolean
+  profileImage?: boolean
+  isVerified?: boolean
   createdAt?: boolean
-  lastActiveAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "anonymousId" | "subscriptionId" | "level" | "currentXp" | "createdAt" | "lastActiveAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "password" | "role" | "profileImage" | "isVerified" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
-  posts?: boolean | Prisma.User$postsArgs<ExtArgs>
-  responses?: boolean | Prisma.User$responsesArgs<ExtArgs>
-  pushTokens?: boolean | Prisma.User$pushTokensArgs<ExtArgs>
-  purchases?: boolean | Prisma.User$purchasesArgs<ExtArgs>
-  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
+  customer?: boolean | Prisma.User$customerArgs<ExtArgs>
+  vendor?: boolean | Prisma.User$vendorArgs<ExtArgs>
+  staff?: boolean | Prisma.User$staffArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
-  triggeredNotifications?: boolean | Prisma.User$triggeredNotificationsArgs<ExtArgs>
-  missionProgress?: boolean | Prisma.User$missionProgressArgs<ExtArgs>
-  streak?: boolean | Prisma.User$streakArgs<ExtArgs>
-  inventory?: boolean | Prisma.User$inventoryArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
+  referralsMade?: boolean | Prisma.User$referralsMadeArgs<ExtArgs>
+  verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
-}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subscription?: boolean | Prisma.User$subscriptionArgs<ExtArgs>
-}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
-    posts: Prisma.$PostPayload<ExtArgs>[]
-    responses: Prisma.$ResponsePayload<ExtArgs>[]
-    pushTokens: Prisma.$PushTokenPayload<ExtArgs>[]
-    purchases: Prisma.$PurchasePayload<ExtArgs>[]
-    favorites: Prisma.$FavoritePayload<ExtArgs>[]
+    customer: Prisma.$CustomerPayload<ExtArgs> | null
+    vendor: Prisma.$VendorPayload<ExtArgs> | null
+    staff: Prisma.$StaffPayload<ExtArgs> | null
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
-    triggeredNotifications: Prisma.$NotificationPayload<ExtArgs>[]
-    missionProgress: Prisma.$UserMissionProgressPayload<ExtArgs>[]
-    streak: Prisma.$UserStreakPayload<ExtArgs> | null
-    inventory: Prisma.$UserInventoryPayload<ExtArgs>[]
+    notificationSettings: Prisma.$NotificationSettingPayload<ExtArgs> | null
+    referralsMade: Prisma.$ReferralPayload<ExtArgs>[]
+    verificationTokens: Prisma.$VerificationTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    anonymousId: string
-    subscriptionId: string | null
-    level: number
-    currentXp: number
+    fullName: string | null
+    email: string
+    password: string
+    role: $Enums.UserRole
+    profileImage: string | null
+    isVerified: boolean | null
     createdAt: Date
-    lastActiveAt: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2341,17 +1660,13 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  subscription<T extends Prisma.User$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  responses<T extends Prisma.User$responsesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$responsesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  pushTokens<T extends Prisma.User$pushTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pushTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  purchases<T extends Prisma.User$purchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customer<T extends Prisma.User$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customerArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  vendor<T extends Prisma.User$vendorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$vendorArgs<ExtArgs>>): Prisma.Prisma__VendorClient<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  staff<T extends Prisma.User$staffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$staffArgs<ExtArgs>>): Prisma.Prisma__StaffClient<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  triggeredNotifications<T extends Prisma.User$triggeredNotificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$triggeredNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  missionProgress<T extends Prisma.User$missionProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$missionProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserMissionProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  streak<T extends Prisma.User$streakArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$streakArgs<ExtArgs>>): Prisma.Prisma__UserStreakClient<runtime.Types.Result.GetResult<Prisma.$UserStreakPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  inventory<T extends Prisma.User$inventoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$inventoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserInventoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationSettings<T extends Prisma.User$notificationSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationSettingsArgs<ExtArgs>>): Prisma.Prisma__NotificationSettingClient<runtime.Types.Result.GetResult<Prisma.$NotificationSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  referralsMade<T extends Prisma.User$referralsMadeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verificationTokens<T extends Prisma.User$verificationTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verificationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2382,12 +1697,13 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly anonymousId: Prisma.FieldRef<"User", 'String'>
-  readonly subscriptionId: Prisma.FieldRef<"User", 'String'>
-  readonly level: Prisma.FieldRef<"User", 'Int'>
-  readonly currentXp: Prisma.FieldRef<"User", 'Int'>
+  readonly fullName: Prisma.FieldRef<"User", 'String'>
+  readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly role: Prisma.FieldRef<"User", 'UserRole'>
+  readonly profileImage: Prisma.FieldRef<"User", 'String'>
+  readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly lastActiveAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -2637,10 +1953,6 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2711,10 +2023,6 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2784,142 +2092,60 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.subscription
+ * User.customer
  */
-export type User$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$customerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Subscription
+   * Select specific fields to fetch from the Customer
    */
-  select?: Prisma.SubscriptionSelect<ExtArgs> | null
+  select?: Prisma.CustomerSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Subscription
+   * Omit specific fields from the Customer
    */
-  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
+  omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SubscriptionInclude<ExtArgs> | null
-  where?: Prisma.SubscriptionWhereInput
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  where?: Prisma.CustomerWhereInput
 }
 
 /**
- * User.posts
+ * User.vendor
  */
-export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$vendorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Post
+   * Select specific fields to fetch from the Vendor
    */
-  select?: Prisma.PostSelect<ExtArgs> | null
+  select?: Prisma.VendorSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Post
+   * Omit specific fields from the Vendor
    */
-  omit?: Prisma.PostOmit<ExtArgs> | null
+  omit?: Prisma.VendorOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PostInclude<ExtArgs> | null
-  where?: Prisma.PostWhereInput
-  orderBy?: Prisma.PostOrderByWithRelationInput | Prisma.PostOrderByWithRelationInput[]
-  cursor?: Prisma.PostWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PostScalarFieldEnum | Prisma.PostScalarFieldEnum[]
+  include?: Prisma.VendorInclude<ExtArgs> | null
+  where?: Prisma.VendorWhereInput
 }
 
 /**
- * User.responses
+ * User.staff
  */
-export type User$responsesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$staffArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Response
+   * Select specific fields to fetch from the Staff
    */
-  select?: Prisma.ResponseSelect<ExtArgs> | null
+  select?: Prisma.StaffSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Response
+   * Omit specific fields from the Staff
    */
-  omit?: Prisma.ResponseOmit<ExtArgs> | null
+  omit?: Prisma.StaffOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ResponseInclude<ExtArgs> | null
-  where?: Prisma.ResponseWhereInput
-  orderBy?: Prisma.ResponseOrderByWithRelationInput | Prisma.ResponseOrderByWithRelationInput[]
-  cursor?: Prisma.ResponseWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ResponseScalarFieldEnum | Prisma.ResponseScalarFieldEnum[]
-}
-
-/**
- * User.pushTokens
- */
-export type User$pushTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PushToken
-   */
-  select?: Prisma.PushTokenSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PushToken
-   */
-  omit?: Prisma.PushTokenOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PushTokenInclude<ExtArgs> | null
-  where?: Prisma.PushTokenWhereInput
-  orderBy?: Prisma.PushTokenOrderByWithRelationInput | Prisma.PushTokenOrderByWithRelationInput[]
-  cursor?: Prisma.PushTokenWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PushTokenScalarFieldEnum | Prisma.PushTokenScalarFieldEnum[]
-}
-
-/**
- * User.purchases
- */
-export type User$purchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Purchase
-   */
-  select?: Prisma.PurchaseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Purchase
-   */
-  omit?: Prisma.PurchaseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PurchaseInclude<ExtArgs> | null
-  where?: Prisma.PurchaseWhereInput
-  orderBy?: Prisma.PurchaseOrderByWithRelationInput | Prisma.PurchaseOrderByWithRelationInput[]
-  cursor?: Prisma.PurchaseWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PurchaseScalarFieldEnum | Prisma.PurchaseScalarFieldEnum[]
-}
-
-/**
- * User.favorites
- */
-export type User$favoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Favorite
-   */
-  select?: Prisma.FavoriteSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Favorite
-   */
-  omit?: Prisma.FavoriteOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FavoriteInclude<ExtArgs> | null
-  where?: Prisma.FavoriteWhereInput
-  orderBy?: Prisma.FavoriteOrderByWithRelationInput | Prisma.FavoriteOrderByWithRelationInput[]
-  cursor?: Prisma.FavoriteWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FavoriteScalarFieldEnum | Prisma.FavoriteScalarFieldEnum[]
+  include?: Prisma.StaffInclude<ExtArgs> | null
+  where?: Prisma.StaffWhereInput
 }
 
 /**
@@ -2947,94 +2173,70 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * User.triggeredNotifications
+ * User.notificationSettings
  */
-export type User$triggeredNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$notificationSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Notification
+   * Select specific fields to fetch from the NotificationSetting
    */
-  select?: Prisma.NotificationSelect<ExtArgs> | null
+  select?: Prisma.NotificationSettingSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Notification
+   * Omit specific fields from the NotificationSetting
    */
-  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  omit?: Prisma.NotificationSettingOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.NotificationInclude<ExtArgs> | null
-  where?: Prisma.NotificationWhereInput
-  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+  include?: Prisma.NotificationSettingInclude<ExtArgs> | null
+  where?: Prisma.NotificationSettingWhereInput
 }
 
 /**
- * User.missionProgress
+ * User.referralsMade
  */
-export type User$missionProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$referralsMadeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UserMissionProgress
+   * Select specific fields to fetch from the Referral
    */
-  select?: Prisma.UserMissionProgressSelect<ExtArgs> | null
+  select?: Prisma.ReferralSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UserMissionProgress
+   * Omit specific fields from the Referral
    */
-  omit?: Prisma.UserMissionProgressOmit<ExtArgs> | null
+  omit?: Prisma.ReferralOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserMissionProgressInclude<ExtArgs> | null
-  where?: Prisma.UserMissionProgressWhereInput
-  orderBy?: Prisma.UserMissionProgressOrderByWithRelationInput | Prisma.UserMissionProgressOrderByWithRelationInput[]
-  cursor?: Prisma.UserMissionProgressWhereUniqueInput
+  include?: Prisma.ReferralInclude<ExtArgs> | null
+  where?: Prisma.ReferralWhereInput
+  orderBy?: Prisma.ReferralOrderByWithRelationInput | Prisma.ReferralOrderByWithRelationInput[]
+  cursor?: Prisma.ReferralWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UserMissionProgressScalarFieldEnum | Prisma.UserMissionProgressScalarFieldEnum[]
+  distinct?: Prisma.ReferralScalarFieldEnum | Prisma.ReferralScalarFieldEnum[]
 }
 
 /**
- * User.streak
+ * User.verificationTokens
  */
-export type User$streakArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$verificationTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UserStreak
+   * Select specific fields to fetch from the VerificationToken
    */
-  select?: Prisma.UserStreakSelect<ExtArgs> | null
+  select?: Prisma.VerificationTokenSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UserStreak
+   * Omit specific fields from the VerificationToken
    */
-  omit?: Prisma.UserStreakOmit<ExtArgs> | null
+  omit?: Prisma.VerificationTokenOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserStreakInclude<ExtArgs> | null
-  where?: Prisma.UserStreakWhereInput
-}
-
-/**
- * User.inventory
- */
-export type User$inventoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserInventory
-   */
-  select?: Prisma.UserInventorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the UserInventory
-   */
-  omit?: Prisma.UserInventoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInventoryInclude<ExtArgs> | null
-  where?: Prisma.UserInventoryWhereInput
-  orderBy?: Prisma.UserInventoryOrderByWithRelationInput | Prisma.UserInventoryOrderByWithRelationInput[]
-  cursor?: Prisma.UserInventoryWhereUniqueInput
+  include?: Prisma.VerificationTokenInclude<ExtArgs> | null
+  where?: Prisma.VerificationTokenWhereInput
+  orderBy?: Prisma.VerificationTokenOrderByWithRelationInput | Prisma.VerificationTokenOrderByWithRelationInput[]
+  cursor?: Prisma.VerificationTokenWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UserInventoryScalarFieldEnum | Prisma.UserInventoryScalarFieldEnum[]
+  distinct?: Prisma.VerificationTokenScalarFieldEnum | Prisma.VerificationTokenScalarFieldEnum[]
 }
 
 /**

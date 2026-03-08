@@ -27,22 +27,16 @@ export type AggregateCategory = {
 export type CategoryMinAggregateOutputType = {
   id: string | null
   name: string | null
-  icon: string | null
-  createdAt: Date | null
 }
 
 export type CategoryMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  icon: string | null
-  createdAt: Date | null
 }
 
 export type CategoryCountAggregateOutputType = {
   id: number
   name: number
-  icon: number
-  createdAt: number
   _all: number
 }
 
@@ -50,22 +44,16 @@ export type CategoryCountAggregateOutputType = {
 export type CategoryMinAggregateInputType = {
   id?: true
   name?: true
-  icon?: true
-  createdAt?: true
 }
 
 export type CategoryMaxAggregateInputType = {
   id?: true
   name?: true
-  icon?: true
-  createdAt?: true
 }
 
 export type CategoryCountAggregateInputType = {
   id?: true
   name?: true
-  icon?: true
-  createdAt?: true
   _all?: true
 }
 
@@ -144,8 +132,6 @@ export type CategoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type CategoryGroupByOutputType = {
   id: string
   name: string
-  icon: string | null
-  createdAt: Date
   _count: CategoryCountAggregateOutputType | null
   _min: CategoryMinAggregateOutputType | null
   _max: CategoryMaxAggregateOutputType | null
@@ -172,35 +158,27 @@ export type CategoryWhereInput = {
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   id?: Prisma.UuidFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
-  icon?: Prisma.StringNullableFilter<"Category"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
-  posts?: Prisma.PostListRelationFilter
+  services?: Prisma.ServiceListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  icon?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  posts?: Prisma.PostOrderByRelationAggregateInput
+  services?: Prisma.ServiceOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  name?: string
   AND?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   OR?: Prisma.CategoryWhereInput[]
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
-  icon?: Prisma.StringNullableFilter<"Category"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
-  posts?: Prisma.PostListRelationFilter
-}, "id" | "name">
+  name?: Prisma.StringFilter<"Category"> | string
+  services?: Prisma.ServiceListRelationFilter
+}, "id">
 
 export type CategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  icon?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   _count?: Prisma.CategoryCountOrderByAggregateInput
   _max?: Prisma.CategoryMaxOrderByAggregateInput
   _min?: Prisma.CategoryMinOrderByAggregateInput
@@ -212,61 +190,60 @@ export type CategoryScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CategoryScalarWhereWithAggregatesInput | Prisma.CategoryScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Category"> | string
   name?: Prisma.StringWithAggregatesFilter<"Category"> | string
-  icon?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
 }
 
 export type CategoryCreateInput = {
   id?: string
   name: string
-  icon?: string | null
-  createdAt?: Date | string
-  posts?: Prisma.PostCreateNestedManyWithoutCategoryInput
+  services?: Prisma.ServiceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
   id?: string
   name: string
-  icon?: string | null
-  createdAt?: Date | string
-  posts?: Prisma.PostUncheckedCreateNestedManyWithoutCategoryInput
+  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  posts?: Prisma.PostUpdateManyWithoutCategoryNestedInput
+  services?: Prisma.ServiceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  posts?: Prisma.PostUncheckedUpdateManyWithoutCategoryNestedInput
+  services?: Prisma.ServiceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
   id?: string
   name: string
-  icon?: string | null
-  createdAt?: Date | string
 }
 
 export type CategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CategoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CategoryCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+}
+
+export type CategoryMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+}
+
+export type CategoryMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
 }
 
 export type CategoryScalarRelationFilter = {
@@ -274,83 +251,54 @@ export type CategoryScalarRelationFilter = {
   isNot?: Prisma.CategoryWhereInput
 }
 
-export type CategoryCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  icon?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type CategoryMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  icon?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type CategoryMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  icon?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type CategoryCreateNestedOneWithoutPostsInput = {
-  create?: Prisma.XOR<Prisma.CategoryCreateWithoutPostsInput, Prisma.CategoryUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutPostsInput
+export type CategoryCreateNestedOneWithoutServicesInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutServicesInput, Prisma.CategoryUncheckedCreateWithoutServicesInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutServicesInput
   connect?: Prisma.CategoryWhereUniqueInput
 }
 
-export type CategoryUpdateOneRequiredWithoutPostsNestedInput = {
-  create?: Prisma.XOR<Prisma.CategoryCreateWithoutPostsInput, Prisma.CategoryUncheckedCreateWithoutPostsInput>
-  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutPostsInput
-  upsert?: Prisma.CategoryUpsertWithoutPostsInput
+export type CategoryUpdateOneRequiredWithoutServicesNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutServicesInput, Prisma.CategoryUncheckedCreateWithoutServicesInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutServicesInput
+  upsert?: Prisma.CategoryUpsertWithoutServicesInput
   connect?: Prisma.CategoryWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutPostsInput, Prisma.CategoryUpdateWithoutPostsInput>, Prisma.CategoryUncheckedUpdateWithoutPostsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutServicesInput, Prisma.CategoryUpdateWithoutServicesInput>, Prisma.CategoryUncheckedUpdateWithoutServicesInput>
 }
 
-export type CategoryCreateWithoutPostsInput = {
+export type CategoryCreateWithoutServicesInput = {
   id?: string
   name: string
-  icon?: string | null
-  createdAt?: Date | string
 }
 
-export type CategoryUncheckedCreateWithoutPostsInput = {
+export type CategoryUncheckedCreateWithoutServicesInput = {
   id?: string
   name: string
-  icon?: string | null
-  createdAt?: Date | string
 }
 
-export type CategoryCreateOrConnectWithoutPostsInput = {
+export type CategoryCreateOrConnectWithoutServicesInput = {
   where: Prisma.CategoryWhereUniqueInput
-  create: Prisma.XOR<Prisma.CategoryCreateWithoutPostsInput, Prisma.CategoryUncheckedCreateWithoutPostsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutServicesInput, Prisma.CategoryUncheckedCreateWithoutServicesInput>
 }
 
-export type CategoryUpsertWithoutPostsInput = {
-  update: Prisma.XOR<Prisma.CategoryUpdateWithoutPostsInput, Prisma.CategoryUncheckedUpdateWithoutPostsInput>
-  create: Prisma.XOR<Prisma.CategoryCreateWithoutPostsInput, Prisma.CategoryUncheckedCreateWithoutPostsInput>
+export type CategoryUpsertWithoutServicesInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutServicesInput, Prisma.CategoryUncheckedUpdateWithoutServicesInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutServicesInput, Prisma.CategoryUncheckedCreateWithoutServicesInput>
   where?: Prisma.CategoryWhereInput
 }
 
-export type CategoryUpdateToOneWithWhereWithoutPostsInput = {
+export type CategoryUpdateToOneWithWhereWithoutServicesInput = {
   where?: Prisma.CategoryWhereInput
-  data: Prisma.XOR<Prisma.CategoryUpdateWithoutPostsInput, Prisma.CategoryUncheckedUpdateWithoutPostsInput>
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutServicesInput, Prisma.CategoryUncheckedUpdateWithoutServicesInput>
 }
 
-export type CategoryUpdateWithoutPostsInput = {
+export type CategoryUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CategoryUncheckedUpdateWithoutPostsInput = {
+export type CategoryUncheckedUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -359,11 +307,11 @@ export type CategoryUncheckedUpdateWithoutPostsInput = {
  */
 
 export type CategoryCountOutputType = {
-  posts: number
+  services: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  posts?: boolean | CategoryCountOutputTypeCountPostsArgs
+  services?: boolean | CategoryCountOutputTypeCountServicesArgs
 }
 
 /**
@@ -379,44 +327,36 @@ export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * CategoryCountOutputType without action
  */
-export type CategoryCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PostWhereInput
+export type CategoryCountOutputTypeCountServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ServiceWhereInput
 }
 
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  icon?: boolean
-  createdAt?: boolean
-  posts?: boolean | Prisma.Category$postsArgs<ExtArgs>
+  services?: boolean | Prisma.Category$servicesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  icon?: boolean
-  createdAt?: boolean
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  icon?: boolean
-  createdAt?: boolean
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectScalar = {
   id?: boolean
   name?: boolean
-  icon?: boolean
-  createdAt?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "icon" | "createdAt", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  posts?: boolean | Prisma.Category$postsArgs<ExtArgs>
+  services?: boolean | Prisma.Category$servicesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -425,13 +365,11 @@ export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Category"
   objects: {
-    posts: Prisma.$PostPayload<ExtArgs>[]
+    services: Prisma.$ServicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    icon: string | null
-    createdAt: Date
   }, ExtArgs["result"]["category"]>
   composites: {}
 }
@@ -826,7 +764,7 @@ readonly fields: CategoryFieldRefs;
  */
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  posts<T extends Prisma.Category$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  services<T extends Prisma.Category$servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -858,8 +796,6 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
 export interface CategoryFieldRefs {
   readonly id: Prisma.FieldRef<"Category", 'String'>
   readonly name: Prisma.FieldRef<"Category", 'String'>
-  readonly icon: Prisma.FieldRef<"Category", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Category", 'DateTime'>
 }
     
 
@@ -1248,27 +1184,27 @@ export type CategoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Category.posts
+ * Category.services
  */
-export type Category$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Category$servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Post
+   * Select specific fields to fetch from the Service
    */
-  select?: Prisma.PostSelect<ExtArgs> | null
+  select?: Prisma.ServiceSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Post
+   * Omit specific fields from the Service
    */
-  omit?: Prisma.PostOmit<ExtArgs> | null
+  omit?: Prisma.ServiceOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PostInclude<ExtArgs> | null
-  where?: Prisma.PostWhereInput
-  orderBy?: Prisma.PostOrderByWithRelationInput | Prisma.PostOrderByWithRelationInput[]
-  cursor?: Prisma.PostWhereUniqueInput
+  include?: Prisma.ServiceInclude<ExtArgs> | null
+  where?: Prisma.ServiceWhereInput
+  orderBy?: Prisma.ServiceOrderByWithRelationInput | Prisma.ServiceOrderByWithRelationInput[]
+  cursor?: Prisma.ServiceWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.PostScalarFieldEnum | Prisma.PostScalarFieldEnum[]
+  distinct?: Prisma.ServiceScalarFieldEnum | Prisma.ServiceScalarFieldEnum[]
 }
 
 /**

@@ -1,67 +1,79 @@
 /**
  * src/common/exceptions/http.exceptions.ts
- * * This file contains specific, reusable HTTP exceptions
- * * that extend our custom BaseException.
- * * UPDATED: All constructors now accept 'instruction' and 'details'
- * * fields as the last parameters (details is unknown).
+ *
+ * Collection of reusable HTTP exceptions extending BaseException.
+ * Each exception provides:
+ * - message
+ * - error code
+ * - optional validation errors
+ * - optional instruction for frontend
+ * - optional details for debugging
  */
 
-import { HttpStatus } from '@nestjs/common';
-import { BaseException } from './base.exception';
-import { ErrorDetail } from '../dto/api-error-response.dto';
+import { HttpStatus } from "@nestjs/common";
+import { BaseException } from "./base.exception";
+import { ErrorDetail } from "../dto/api-error-response.dto";
 
-// --- 400 - Bad Request ---
+// ------------------------------------------------
+// 400 - Bad Request
+// ------------------------------------------------
 export class BadRequestException extends BaseException {
   constructor(
-    message = 'Bad request',
-    code = 'BAD_REQUEST',
+    message: string = "Bad request",
+    code: string = "BAD_REQUEST",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(message, HttpStatus.BAD_REQUEST, code, errors, instruction, details);
   }
 }
 
-// --- 401 - Unauthorized ---
+// ------------------------------------------------
+// 401 - Unauthorized
+// ------------------------------------------------
 export class UnauthorizedException extends BaseException {
   constructor(
-    message = 'Authentication required',
-    code = 'AUTHENTICATION_ERROR',
+    message: string = "Authentication required",
+    code: string = "AUTHENTICATION_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(message, HttpStatus.UNAUTHORIZED, code, errors, instruction, details);
   }
 }
 
-// --- 403 - Forbidden ---
+// ------------------------------------------------
+// 403 - Forbidden
+// ------------------------------------------------
 export class ForbiddenException extends BaseException {
   constructor(
-    message = 'Insufficient permissions',
-    code = 'AUTHORIZATION_ERROR',
+    message: string = "Insufficient permissions",
+    code: string = "AUTHORIZATION_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(message, HttpStatus.FORBIDDEN, code, errors, instruction, details);
   }
 }
 
-// --- 404 - Not Found ---
+// ------------------------------------------------
+// 404 - Not Found
+// ------------------------------------------------
 export class NotFoundException extends BaseException {
   constructor(
-    resource = 'Resource',
+    resource: string = "Resource",
     message?: string,
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(
-      message || `${resource} not found`,
+      message ?? `${resource} not found`,
       HttpStatus.NOT_FOUND,
-      'NOT_FOUND',
+      "NOT_FOUND",
       errors,
       instruction,
       details,
@@ -69,27 +81,31 @@ export class NotFoundException extends BaseException {
   }
 }
 
-// --- 409 - Conflict ---
+// ------------------------------------------------
+// 409 - Conflict
+// ------------------------------------------------
 export class ConflictException extends BaseException {
   constructor(
-    message = 'Resource conflict',
-    code = 'CONFLICT_ERROR',
+    message: string = "Resource conflict",
+    code: string = "CONFLICT_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(message, HttpStatus.CONFLICT, code, errors, instruction, details);
   }
 }
 
-// --- 413 - Payload Too Large ---
+// ------------------------------------------------
+// 413 - Payload Too Large
+// ------------------------------------------------
 export class PayloadTooLargeException extends BaseException {
   constructor(
-    message = 'Payload too large',
-    code = 'PAYLOAD_TOO_LARGE',
+    message: string = "Payload too large",
+    code: string = "PAYLOAD_TOO_LARGE",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(
       message,
@@ -102,14 +118,16 @@ export class PayloadTooLargeException extends BaseException {
   }
 }
 
-// --- 429 - Too Many Requests ---
+// ------------------------------------------------
+// 429 - Too Many Requests
+// ------------------------------------------------
 export class RateLimitException extends BaseException {
   constructor(
-    message = 'Too many requests',
-    code = 'RATE_LIMIT_ERROR',
+    message: string = "Too many requests",
+    code: string = "RATE_LIMIT_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(
       message,
@@ -122,14 +140,16 @@ export class RateLimitException extends BaseException {
   }
 }
 
-// --- 500 - Internal Server ---
+// ------------------------------------------------
+// 500 - Internal Server Error
+// ------------------------------------------------
 export class InternalServerException extends BaseException {
   constructor(
-    message = 'Internal server error',
-    code = 'INTERNAL_ERROR',
+    message: string = "Internal server error",
+    code: string = "INTERNAL_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(
       message,
@@ -142,27 +162,31 @@ export class InternalServerException extends BaseException {
   }
 }
 
-// --- 502 - Bad Gateway ---
+// ------------------------------------------------
+// 502 - External Service Error
+// ------------------------------------------------
 export class ExternalServiceException extends BaseException {
   constructor(
-    message = 'External service error',
-    code = 'EXTERNAL_SERVICE_ERROR',
+    message: string = "External service error",
+    code: string = "EXTERNAL_SERVICE_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(message, HttpStatus.BAD_GATEWAY, code, errors, instruction, details);
   }
 }
 
-// --- 504 - Gateway Timeout ---
+// ------------------------------------------------
+// 504 - Timeout
+// ------------------------------------------------
 export class TimeoutException extends BaseException {
   constructor(
-    message = 'Request timeout',
-    code = 'TIMEOUT_ERROR',
+    message: string = "Request timeout",
+    code: string = "TIMEOUT_ERROR",
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED
-    details?: unknown, // <-- CHANGED to unknown
+    instruction?: string,
+    details?: unknown,
   ) {
     super(
       message,
