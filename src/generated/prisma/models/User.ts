@@ -172,7 +172,7 @@ export type UserGroupByOutputType = {
   password: string
   role: $Enums.UserRole
   profileImage: string | null
-  isVerified: boolean | null
+  isVerified: boolean
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -204,7 +204,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
-  isVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   vendor?: Prisma.XOR<Prisma.VendorNullableScalarRelationFilter, Prisma.VendorWhereInput> | null
@@ -222,7 +222,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
-  isVerified?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
   vendor?: Prisma.VendorOrderByWithRelationInput
@@ -243,7 +243,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   profileImage?: Prisma.StringNullableFilter<"User"> | string | null
-  isVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   vendor?: Prisma.XOR<Prisma.VendorNullableScalarRelationFilter, Prisma.VendorWhereInput> | null
@@ -261,7 +261,7 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   profileImage?: Prisma.SortOrderInput | Prisma.SortOrder
-  isVerified?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -278,7 +278,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   profileImage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  isVerified?: Prisma.BoolNullableWithAggregatesFilter<"User"> | boolean | null
+  isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -289,7 +289,7 @@ export type UserCreateInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
@@ -307,7 +307,7 @@ export type UserUncheckedCreateInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
@@ -325,7 +325,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
@@ -343,7 +343,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
@@ -361,7 +361,7 @@ export type UserCreateManyInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
 }
 
@@ -372,7 +372,7 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -383,7 +383,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -437,8 +437,8 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
 }
 
-export type NullableBoolFieldUpdateOperationsInput = {
-  set?: boolean | null
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -550,7 +550,7 @@ export type UserCreateWithoutVerificationTokensInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
@@ -567,7 +567,7 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
@@ -600,7 +600,7 @@ export type UserUpdateWithoutVerificationTokensInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
@@ -617,7 +617,7 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
@@ -634,7 +634,7 @@ export type UserCreateWithoutCustomerInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
   staff?: Prisma.StaffCreateNestedOneWithoutUserInput
@@ -651,7 +651,7 @@ export type UserUncheckedCreateWithoutCustomerInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
   staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
@@ -684,7 +684,7 @@ export type UserUpdateWithoutCustomerInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
   staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
@@ -701,7 +701,7 @@ export type UserUncheckedUpdateWithoutCustomerInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
   staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
@@ -718,7 +718,7 @@ export type UserCreateWithoutVendorInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   staff?: Prisma.StaffCreateNestedOneWithoutUserInput
@@ -735,7 +735,7 @@ export type UserUncheckedCreateWithoutVendorInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
@@ -768,7 +768,7 @@ export type UserUpdateWithoutVendorInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
@@ -785,7 +785,7 @@ export type UserUncheckedUpdateWithoutVendorInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
@@ -802,7 +802,7 @@ export type UserCreateWithoutStaffInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
@@ -819,7 +819,7 @@ export type UserUncheckedCreateWithoutStaffInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
@@ -852,7 +852,7 @@ export type UserUpdateWithoutStaffInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
@@ -869,7 +869,7 @@ export type UserUncheckedUpdateWithoutStaffInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
@@ -886,7 +886,7 @@ export type UserCreateWithoutNotificationsInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
@@ -903,7 +903,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
@@ -936,7 +936,7 @@ export type UserUpdateWithoutNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
@@ -953,7 +953,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
@@ -970,7 +970,7 @@ export type UserCreateWithoutNotificationSettingsInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
@@ -987,7 +987,7 @@ export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
@@ -1020,7 +1020,7 @@ export type UserUpdateWithoutNotificationSettingsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
@@ -1037,7 +1037,7 @@ export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
@@ -1054,7 +1054,7 @@ export type UserCreateWithoutReferralsMadeInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
@@ -1071,7 +1071,7 @@ export type UserUncheckedCreateWithoutReferralsMadeInput = {
   password: string
   role: $Enums.UserRole
   profileImage?: string | null
-  isVerified?: boolean | null
+  isVerified?: boolean
   createdAt?: Date | string
   customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
   vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
@@ -1104,7 +1104,7 @@ export type UserUpdateWithoutReferralsMadeInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
@@ -1121,7 +1121,7 @@ export type UserUncheckedUpdateWithoutReferralsMadeInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
   vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
@@ -1264,7 +1264,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     role: $Enums.UserRole
     profileImage: string | null
-    isVerified: boolean | null
+    isVerified: boolean
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}

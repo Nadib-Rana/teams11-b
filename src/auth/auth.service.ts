@@ -6,15 +6,22 @@ import {
 import { PrismaService } from "../common/context/prisma.service";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
-import { randomBytes } from "crypto";
+import { randomInt } from "crypto";
 import { RegisterDto } from "./dto/register.dto";
+import { MailerService } from "@nestjs-modules/mailer"; // এটি ইম্পোর্ট করা হয়েছে
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private mailerService: MailerService,
   ) {}
+
+  // Helper: generate 6-digit numeric OTP
+  private generateOTP(): string {
+    return "" + randomInt(100000, 999999);
+  }
 
   // Register user
   async register(data: RegisterDto) {
@@ -29,35 +36,46 @@ export class AuthService {
       data: { fullName, email, password: hashedPassword, role },
     });
 
-    console.log(user);
-
-    // Create verification token
-    const token = randomBytes(32).toString("hex");
+    // Generate numeric OTP
+    const token = this.generateOTP();
     await this.prisma.verificationToken.create({
       data: {
         userId: user.id,
         token,
         type: "email_verification",
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24h
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // OTP 5 min valid
       },
     });
 
-    // Send email (use nodemailer)
-    console.log(`Send verification email to ${email}: ${token}`);
+    // Send opt to main
+    try {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: "Welcome to Atech Solution!",
+        template: "./verification",
+        context: {
+          name: fullName,
+          otp: token,
+        },
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
 
-    return { message: "User registered. Check your email for verification." };
+    return { message: "User registered. Check your email for OTP." };
   }
 
-  // Verify email
+  // Verify email / OTP
   async verifyEmail(token: string) {
-    const verification = await this.prisma.verificationToken.findUnique({
-      where: { token },
+    const verification = await this.prisma.verificationToken.findFirst({
+      where: { token, used: false },
     });
+
     if (!verification || verification.type !== "email_verification")
-      throw new BadRequestException("Invalid token");
+      throw new BadRequestException("Invalid OTP");
 
     if (verification.expiresAt < new Date())
-      throw new BadRequestException("Token expired");
+      throw new BadRequestException("OTP expired");
 
     await this.prisma.user.update({
       where: { id: verification.userId },
@@ -92,30 +110,45 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email } });
     if (!user) throw new BadRequestException("User not found");
 
-    const token = randomBytes(32).toString("hex");
+    const token = this.generateOTP();
     await this.prisma.verificationToken.create({
       data: {
         userId: user.id,
         token,
         type: "password_reset",
-        expiresAt: new Date(Date.now() + 60 * 60 * 1000), // 1h
+        expiresAt: new Date(Date.now() + 10 * 60 * 1000),
       },
     });
 
-    console.log(`Send password reset email to ${email}: ${token}`);
-    return { message: "Password reset email sent." };
+    // পাসওয়ার্ড রিসেট ইমেইল
+    try {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: "Password Reset OTP - Atech",
+        template: "./verification",
+        context: {
+          name: user.fullName,
+          otp: token,
+        },
+      });
+    } catch (error) {
+      console.error("Reset mail failed:", error);
+    }
+
+    return { message: "Password reset OTP sent." };
   }
 
   // Reset password
   async resetPassword(token: string, newPassword: string) {
-    const verification = await this.prisma.verificationToken.findUnique({
-      where: { token },
+    const verification = await this.prisma.verificationToken.findFirst({
+      where: { token, used: false },
     });
+
     if (!verification || verification.type !== "password_reset")
-      throw new BadRequestException("Invalid token");
+      throw new BadRequestException("Invalid OTP");
 
     if (verification.expiresAt < new Date())
-      throw new BadRequestException("Token expired");
+      throw new BadRequestException("OTP expired");
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
