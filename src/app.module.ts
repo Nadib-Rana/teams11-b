@@ -6,13 +6,19 @@ import { RequestIdMiddleware } from "./common/middleware/request-id.middleware";
 import { APP_INTERCEPTOR, Reflector } from "@nestjs/core";
 import { ResponseStandardizationInterceptor } from "./common/interceptors/response-standardization.interceptor";
 import { AuthModule } from "./auth/auth.module";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { getMailConfig } from "./mail/mail.config";
+import { MailerModule } from "@nestjs-modules/mailer";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ".env",
+    }),
+    MailerModule.forRootAsync({
+      useFactory: getMailConfig,
+      inject: [ConfigService],
     }),
     ContextModule,
     AuthModule,
