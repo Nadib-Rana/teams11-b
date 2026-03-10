@@ -114,7 +114,7 @@ Service fields:
 
 ### Booking Types
 
-- Virtual
+- Virtual (Zoom)
 - In-person
 
 ### Booking Data
@@ -210,11 +210,6 @@ Example:
 Referrer | Joined Vendors
 UserA | 3
 UserB | 10
-
-Reward example:
-
-UserB receives a bonus:
-10 × $5 = $50
 
 ---
 
@@ -415,13 +410,12 @@ Types:
 
 The system supports multiple subscription plans.
 
-| Feature Category | Feature Name         | Starter | Duo      | Small Team | Enterprise |
-| ---------------- | -------------------- | ------- | -------- | ---------- | ---------- |
-| Capacity         | Max Staff            | 1       | 2        | 5          | 10+        |
-| Core             | Booking Types        | Yes     | Yes      | Yes        | Yes        |
-| Payments         | Payment Gateways     | Limited | Standard | Advanced   | Full       |
-| Growth           | Referral System      | Yes     | Yes      | Yes        | Yes        |
-| Advanced         | Waiting List Feature | No      | Yes      | Yes        | Yes        |
+| Feature Category | Feature Name         | Starter | Duo | Small Team | Enterprise |
+| ---------------- | -------------------- | ------- | --- | ---------- | ---------- |
+| Capacity         | Max Staff            | 1       | 2   | 5          | 10+        |
+| Core             | Booking Types        | Yes     | Yes | Yes        | Yes        |
+| Growth           | Referral System      | Yes     | Yes | Yes        | Yes        |
+| Advanced         | Waiting List Feature | No      | Yes | Yes        | Yes        |
 
 ---
 
@@ -433,12 +427,11 @@ https://dbdiagram.io/d/Teams11-69a9e654a3f0aa31e1f9e5ff
 
 ---
 
-# Technology Stack (Suggested)
+# Technology Stack
 
 Frontend
 
-- React / Next.js
-- TailwindCSS
+- flutter
 
 Backend
 
