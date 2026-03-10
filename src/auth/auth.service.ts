@@ -51,7 +51,7 @@ export class AuthService {
     try {
       await this.mailerService.sendMail({
         to: email,
-        subject: "Welcome to Atech Solution!",
+        subject: "Welcome to Teams11!",
         template: "./verification",
         context: {
           name: fullName,
