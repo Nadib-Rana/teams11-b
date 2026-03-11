@@ -8,7 +8,7 @@ import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
 import { randomInt } from "crypto";
 import { RegisterDto } from "./dto/register.dto";
-import { MailerService } from "@nestjs-modules/mailer"; // এটি ইম্পোর্ট করা হয়েছে
+import { MailerService } from "@nestjs-modules/mailer";
 
 @Injectable()
 export class AuthService {
@@ -32,9 +32,21 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create user and associated profile in a transaction
     const user = await this.prisma.user.create({
       data: { fullName, email, password: hashedPassword, role },
     });
+
+    // Create role-specific profile
+    if (role === "vendor") {
+      await this.prisma.vendor.create({
+        data: { userId: user.id },
+      });
+    } else if (role === "customer") {
+      await this.prisma.customer.create({
+        data: { userId: user.id },
+      });
+    }
 
     // Generate numeric OTP
     const token = this.generateOTP();
@@ -90,11 +102,21 @@ export class AuthService {
     return { message: "Email verified successfully." };
   }
 
-  // Login
-  async login(email: string, password: string) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
+  // Login (accept email or phone as identifier; staff bypass verification)
+  async login(identifier: string | undefined, password: string) {
+    if (!identifier) {
+      throw new BadRequestException("Email or phone must be provided");
+    }
+    const user = await this.prisma.user.findFirst({
+      where: {
+        OR: [{ email: identifier }, { phone: identifier }],
+      },
+    });
     if (!user) throw new UnauthorizedException("Invalid credentials");
-    if (!user.isVerified) throw new UnauthorizedException("Email not verified");
+
+    if (user.role !== "staff" && !user.isVerified) {
+      throw new UnauthorizedException("Email not verified");
+    }
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) throw new UnauthorizedException("Invalid credentials");
@@ -124,7 +146,7 @@ export class AuthService {
     try {
       await this.mailerService.sendMail({
         to: email,
-        subject: "Password Reset OTP - Atech",
+        subject: "Password Reset OTP",
         template: "./verification",
         context: {
           name: user.fullName,

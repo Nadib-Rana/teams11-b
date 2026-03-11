@@ -18,4 +18,8 @@ export class RegisterDto {
 
   @IsEnum(UserRole)
   role: UserRole;
+
+  // @IsString()
+  // @IsOptional()
+  // phone?: string;
 }

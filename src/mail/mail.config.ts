@@ -20,7 +20,7 @@ export const getMailConfig = (configService: ConfigService): MailerOptions => {
     },
 
     defaults: {
-      from: `"Atech Support" <${configService.get<string>("MAIL_FROM")}>`,
+      from: `"Teams11 Support" <${configService.get<string>("MAIL_FROM")}>`,
     },
     template: {
       // process.cwd() ব্যবহার করলে এটি প্রজেক্টের রুট ডিরেক্টরিতে 'templates' ফোল্ডার খুঁজবে
