@@ -10,7 +10,7 @@ import {
 } from "@nestjs/common";
 import { BusinessService } from "./business.service";
 import { CreateBusinessDto } from "./dto/create-business.dto";
-import { JwtStrategy } from "../auth/jwt.strategy";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
 import { GetUser } from "../auth/decorators/get-user.decorator";
@@ -20,9 +20,12 @@ export class BusinessController {
   constructor(private readonly businessService: BusinessService) {}
 
   @Post()
-  @UseGuards(JwtStrategy, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor") // Only vendors can create businesses
-  async create(@GetUser("id") userId: string, @Body() dto: CreateBusinessDto) {
+  async create(
+    @GetUser("userId") userId: string,
+    @Body() dto: CreateBusinessDto,
+  ) {
     return this.businessService.create(userId, dto);
   }
 
@@ -32,9 +35,9 @@ export class BusinessController {
   }
 
   @Get("my-business")
-  @UseGuards(JwtStrategy, RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
-  async getMyBusiness(@GetUser("id") userId: string) {
+  async getMyBusiness(@GetUser("userId") userId: string) {
     return this.businessService.findByVendor(userId);
   }
 
