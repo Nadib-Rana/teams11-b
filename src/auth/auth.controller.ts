@@ -22,7 +22,9 @@ export class AuthController {
 
   @Post("login")
   login(@Body() dto: LoginDto) {
-    return this.authService.login(dto.email, dto.password);
+    // choose email or phone; validation ensures at least one is present
+    const identifier = dto.email ?? dto.phone;
+    return this.authService.login(identifier, dto.password);
   }
 
   @Post("request-password-reset")

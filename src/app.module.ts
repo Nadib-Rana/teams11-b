@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { getMailConfig } from "./mail/mail.config";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { BusinessModule } from "./business/business.module";
+import { StaffModule } from "./staff/staff.module";
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { BusinessModule } from "./business/business.module";
     ContextModule,
     AuthModule,
     BusinessModule,
+    StaffModule,
   ],
   controllers: [AppController],
   providers: [
