@@ -27,16 +27,19 @@ export type AggregateCategory = {
 export type CategoryMinAggregateOutputType = {
   id: string | null
   name: string | null
+  image: string | null
 }
 
 export type CategoryMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  image: string | null
 }
 
 export type CategoryCountAggregateOutputType = {
   id: number
   name: number
+  image: number
   _all: number
 }
 
@@ -44,16 +47,19 @@ export type CategoryCountAggregateOutputType = {
 export type CategoryMinAggregateInputType = {
   id?: true
   name?: true
+  image?: true
 }
 
 export type CategoryMaxAggregateInputType = {
   id?: true
   name?: true
+  image?: true
 }
 
 export type CategoryCountAggregateInputType = {
   id?: true
   name?: true
+  image?: true
   _all?: true
 }
 
@@ -132,6 +138,7 @@ export type CategoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type CategoryGroupByOutputType = {
   id: string
   name: string
+  image: string
   _count: CategoryCountAggregateOutputType | null
   _min: CategoryMinAggregateOutputType | null
   _max: CategoryMaxAggregateOutputType | null
@@ -158,12 +165,16 @@ export type CategoryWhereInput = {
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   id?: Prisma.UuidFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
+  image?: Prisma.StringFilter<"Category"> | string
+  businesses?: Prisma.BusinessListRelationFilter
   services?: Prisma.ServiceListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  businesses?: Prisma.BusinessOrderByRelationAggregateInput
   services?: Prisma.ServiceOrderByRelationAggregateInput
 }
 
@@ -173,12 +184,15 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CategoryWhereInput[]
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   name?: Prisma.StringFilter<"Category"> | string
+  image?: Prisma.StringFilter<"Category"> | string
+  businesses?: Prisma.BusinessListRelationFilter
   services?: Prisma.ServiceListRelationFilter
 }, "id">
 
 export type CategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   _count?: Prisma.CategoryCountOrderByAggregateInput
   _max?: Prisma.CategoryMaxOrderByAggregateInput
   _min?: Prisma.CategoryMinOrderByAggregateInput
@@ -190,65 +204,101 @@ export type CategoryScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CategoryScalarWhereWithAggregatesInput | Prisma.CategoryScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Category"> | string
   name?: Prisma.StringWithAggregatesFilter<"Category"> | string
+  image?: Prisma.StringWithAggregatesFilter<"Category"> | string
 }
 
 export type CategoryCreateInput = {
   id?: string
   name: string
+  image: string
+  businesses?: Prisma.BusinessCreateNestedManyWithoutCategoryInput
   services?: Prisma.ServiceCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
   id?: string
   name: string
+  image: string
+  businesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutCategoryInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  businesses?: Prisma.BusinessUpdateManyWithoutCategoryNestedInput
   services?: Prisma.ServiceUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  businesses?: Prisma.BusinessUncheckedUpdateManyWithoutCategoryNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
   id?: string
   name: string
+  image: string
 }
 
 export type CategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CategoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type CategoryNullableScalarRelationFilter = {
+  is?: Prisma.CategoryWhereInput | null
+  isNot?: Prisma.CategoryWhereInput | null
 }
 
 export type CategoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  image?: Prisma.SortOrder
 }
 
 export type CategoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  image?: Prisma.SortOrder
 }
 
 export type CategoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  image?: Prisma.SortOrder
 }
 
 export type CategoryScalarRelationFilter = {
   is?: Prisma.CategoryWhereInput
   isNot?: Prisma.CategoryWhereInput
+}
+
+export type CategoryCreateNestedOneWithoutBusinessesInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutBusinessesInput, Prisma.CategoryUncheckedCreateWithoutBusinessesInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutBusinessesInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutBusinessesNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutBusinessesInput, Prisma.CategoryUncheckedCreateWithoutBusinessesInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutBusinessesInput
+  upsert?: Prisma.CategoryUpsertWithoutBusinessesInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutBusinessesInput, Prisma.CategoryUpdateWithoutBusinessesInput>, Prisma.CategoryUncheckedUpdateWithoutBusinessesInput>
 }
 
 export type CategoryCreateNestedOneWithoutServicesInput = {
@@ -265,14 +315,62 @@ export type CategoryUpdateOneRequiredWithoutServicesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutServicesInput, Prisma.CategoryUpdateWithoutServicesInput>, Prisma.CategoryUncheckedUpdateWithoutServicesInput>
 }
 
+export type CategoryCreateWithoutBusinessesInput = {
+  id?: string
+  name: string
+  image: string
+  services?: Prisma.ServiceCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutBusinessesInput = {
+  id?: string
+  name: string
+  image: string
+  services?: Prisma.ServiceUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutBusinessesInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutBusinessesInput, Prisma.CategoryUncheckedCreateWithoutBusinessesInput>
+}
+
+export type CategoryUpsertWithoutBusinessesInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutBusinessesInput, Prisma.CategoryUncheckedUpdateWithoutBusinessesInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutBusinessesInput, Prisma.CategoryUncheckedCreateWithoutBusinessesInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutBusinessesInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutBusinessesInput, Prisma.CategoryUncheckedUpdateWithoutBusinessesInput>
+}
+
+export type CategoryUpdateWithoutBusinessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  services?: Prisma.ServiceUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutBusinessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  services?: Prisma.ServiceUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
 export type CategoryCreateWithoutServicesInput = {
   id?: string
   name: string
+  image: string
+  businesses?: Prisma.BusinessCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutServicesInput = {
   id?: string
   name: string
+  image: string
+  businesses?: Prisma.BusinessUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutServicesInput = {
@@ -294,11 +392,15 @@ export type CategoryUpdateToOneWithWhereWithoutServicesInput = {
 export type CategoryUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  businesses?: Prisma.BusinessUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.StringFieldUpdateOperationsInput | string
+  businesses?: Prisma.BusinessUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 
@@ -307,10 +409,12 @@ export type CategoryUncheckedUpdateWithoutServicesInput = {
  */
 
 export type CategoryCountOutputType = {
+  businesses: number
   services: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  businesses?: boolean | CategoryCountOutputTypeCountBusinessesArgs
   services?: boolean | CategoryCountOutputTypeCountServicesArgs
 }
 
@@ -327,6 +431,13 @@ export type CategoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * CategoryCountOutputType without action
  */
+export type CategoryCountOutputTypeCountBusinessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BusinessWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
 export type CategoryCountOutputTypeCountServicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ServiceWhereInput
 }
@@ -335,6 +446,8 @@ export type CategoryCountOutputTypeCountServicesArgs<ExtArgs extends runtime.Typ
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  image?: boolean
+  businesses?: boolean | Prisma.Category$businessesArgs<ExtArgs>
   services?: boolean | Prisma.Category$servicesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
@@ -342,20 +455,24 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  image?: boolean
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  image?: boolean
 }, ExtArgs["result"]["category"]>
 
 export type CategorySelectScalar = {
   id?: boolean
   name?: boolean
+  image?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "image", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  businesses?: boolean | Prisma.Category$businessesArgs<ExtArgs>
   services?: boolean | Prisma.Category$servicesArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -365,11 +482,13 @@ export type CategoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Category"
   objects: {
+    businesses: Prisma.$BusinessPayload<ExtArgs>[]
     services: Prisma.$ServicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    image: string
   }, ExtArgs["result"]["category"]>
   composites: {}
 }
@@ -764,6 +883,7 @@ readonly fields: CategoryFieldRefs;
  */
 export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  businesses<T extends Prisma.Category$businessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$businessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   services<T extends Prisma.Category$servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -796,6 +916,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
 export interface CategoryFieldRefs {
   readonly id: Prisma.FieldRef<"Category", 'String'>
   readonly name: Prisma.FieldRef<"Category", 'String'>
+  readonly image: Prisma.FieldRef<"Category", 'String'>
 }
     
 
@@ -1181,6 +1302,30 @@ export type CategoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Categories to delete.
    */
   limit?: number
+}
+
+/**
+ * Category.businesses
+ */
+export type Category$businessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Business
+   */
+  select?: Prisma.BusinessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Business
+   */
+  omit?: Prisma.BusinessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BusinessInclude<ExtArgs> | null
+  where?: Prisma.BusinessWhereInput
+  orderBy?: Prisma.BusinessOrderByWithRelationInput | Prisma.BusinessOrderByWithRelationInput[]
+  cursor?: Prisma.BusinessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BusinessScalarFieldEnum | Prisma.BusinessScalarFieldEnum[]
 }
 
 /**

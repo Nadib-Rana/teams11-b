@@ -7,6 +7,7 @@ import {
   UseGuards,
   Param,
   ParseUUIDPipe,
+  Query,
 } from "@nestjs/common";
 import { BusinessService } from "./business.service";
 import { CreateBusinessDto } from "./dto/create-business.dto";
@@ -19,6 +20,7 @@ import { GetUser } from "../auth/decorators/get-user.decorator";
 export class BusinessController {
   constructor(private readonly businessService: BusinessService) {}
 
+  //create businesses
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor") // Only vendors can create businesses
@@ -30,8 +32,8 @@ export class BusinessController {
   }
 
   @Get()
-  async getAll() {
-    return this.businessService.findAll();
+  async getAll(@Query("categoryId") categoryId?: string) {
+    return this.businessService.findAll(categoryId);
   }
 
   @Get("my-business")
