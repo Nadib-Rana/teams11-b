@@ -15,6 +15,7 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
 import { GetUser } from "../auth/decorators/get-user.decorator";
+import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 
 @Controller("businesses")
 export class BusinessController {
@@ -22,6 +23,7 @@ export class BusinessController {
 
   //create businesses
   @Post()
+  @ResponseMessage("Create businesses successfully.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor") // Only vendors can create businesses
   async create(
@@ -32,11 +34,13 @@ export class BusinessController {
   }
 
   @Get()
+  @ResponseMessage("Businesses get successfully.")
   async getAll(@Query("categoryId") categoryId?: string) {
     return this.businessService.findAll(categoryId);
   }
 
   @Get("my-business")
+  @ResponseMessage("My Businesses Information get successfully")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async getMyBusiness(@GetUser("userId") userId: string) {

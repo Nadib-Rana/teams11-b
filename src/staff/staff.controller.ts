@@ -23,6 +23,7 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
 import { GetUser } from "../auth/decorators/get-user.decorator";
+import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 
 @Controller("staff")
 export class StaffController {
@@ -37,6 +38,7 @@ export class StaffController {
    * @returns Created staff profile with user info
    */
   @Post()
+  @ResponseMessage("Created staff member for your business.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async create(@Body() dto: CreateStaffDto) {
@@ -51,6 +53,7 @@ export class StaffController {
    * @returns Array of staff profiles with user and service details
    */
   @Get()
+  @ResponseMessage("All staff members in this platform")
   async findAll(@Query("businessId") businessId?: string) {
     return this.staffService.findAll(businessId);
   }

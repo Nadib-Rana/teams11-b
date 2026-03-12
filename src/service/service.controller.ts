@@ -23,6 +23,7 @@ import { UpdateServiceDto } from "./dto/update-service.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
+import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 
 @Controller("services")
 export class ServiceController {
@@ -38,6 +39,7 @@ export class ServiceController {
    */
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
+  @ResponseMessage("Create Service successfully !")
   @Roles("vendor")
   async create(@Body() dto: CreateServiceDto) {
     return this.serviceService.create(dto);
@@ -53,6 +55,7 @@ export class ServiceController {
    * @returns Array of services
    */
   @Get()
+  @ResponseMessage("All Service Show successfully !")
   async findAll(
     @Query("businessId") businessId?: string,
     @Query("categoryId") categoryId?: string,
@@ -69,6 +72,7 @@ export class ServiceController {
    * @returns Service details with business, category, staff, and recent bookings
    */
   @Get(":id")
+  @ResponseMessage("Service Get successfully !")
   async findOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.serviceService.findOne(id);
   }
@@ -83,6 +87,7 @@ export class ServiceController {
    * @returns Updated service profile
    */
   @Put(":id")
+  @ResponseMessage("Service oparation successfully !")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async update(
@@ -101,6 +106,7 @@ export class ServiceController {
    * @returns Deletion confirmation
    */
   @Delete(":id")
+  @ResponseMessage("Delete Service successfully !")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async delete(@Param("id", ParseUUIDPipe) id: string) {
@@ -115,6 +121,7 @@ export class ServiceController {
    * @returns Array of services in the business
    */
   @Get("business/:businessId")
+  @ResponseMessage("All services for a onely for your business.")
   async getByBusiness(@Param("businessId", ParseUUIDPipe) businessId: string) {
     return this.serviceService.getServicesByBusiness(businessId);
   }
@@ -127,6 +134,7 @@ export class ServiceController {
    * @returns Array of services in the category
    */
   @Get("category/:categoryId")
+  @ResponseMessage("Filter all services in a specific category.")
   async getByCategory(@Param("categoryId", ParseUUIDPipe) categoryId: string) {
     return this.serviceService.getServicesByCategory(categoryId);
   }
