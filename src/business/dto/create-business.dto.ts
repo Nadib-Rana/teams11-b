@@ -1,14 +1,21 @@
 // src/business/dto/create-business.dto.ts
-import { IsString, IsOptional, IsNotEmpty, IsArray } from "class-validator";
+
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from "class-validator";
 
 export class CreateBusinessDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  category: string;
+  @IsUUID()
+  @IsOptional()
+  category?: string; // UUID of the business category (optional)
 
   @IsString()
   @IsOptional()

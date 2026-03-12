@@ -1,14 +1,14 @@
-// src/business/business.service.ts
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "../common/context/prisma.service"; // Adjust path
+import { PrismaService } from "../common/context/prisma.service";
 import { CreateBusinessDto } from "./dto/create-business.dto";
+import { Prisma } from "src/generated/prisma/client";
 
 @Injectable()
 export class BusinessService {
   constructor(private prisma: PrismaService) {}
 
   async create(userId: string, dto: CreateBusinessDto) {
-    // 1. Find the Vendor associated with this User ID
+    // ১. ইউজারের সাথে যুক্ত ভেন্ডর প্রোফাইলটি খুঁজে বের করা
     const vendor = await this.prisma.vendor.findUnique({
       where: { userId },
     });
@@ -17,32 +17,54 @@ export class BusinessService {
       throw new NotFoundException("Vendor profile not found for this user.");
     }
 
-    // 2. Create the Business
+    // ২. ডেটা অবজেক্ট তৈরি করা (Type-Safe way)
+    const data: Prisma.BusinessCreateInput = {
+      name: dto.name,
+      description: dto.description,
+      logo: dto.logo,
+      location: dto.location,
+      // রিলেশনশিপের ক্ষেত্রে 'connect' ব্যবহার করতে হবে
+      vendor: { connect: { id: vendor.id } },
+      // ইমেজ থাকলে সেগুলো একই ট্রানজ্যাকশনে তৈরি করা
+      images:
+        dto.images && dto.images.length > 0
+          ? {
+              create: dto.images.map((url) => ({ imageUrl: url })),
+            }
+          : undefined,
+    };
+
+    // ৩. ক্যাটাগরি চেক এবং কানেক্ট করা
+    if (dto.category) {
+      const category = await this.prisma.category.findUnique({
+        where: { id: dto.category },
+      });
+      if (!category) {
+        throw new NotFoundException("Category not found");
+      }
+
+      // এখানে সরাসরি 'categoryId' লেখা যাবে না, 'category' অবজেক্টের ভেতর 'connect' করতে হবে
+      data.category = { connect: { id: dto.category } };
+    }
+
     return this.prisma.business.create({
-      data: {
-        name: dto.name,
-        description: dto.description,
-        logo: dto.logo,
-        location: dto.location,
-        vendorId: vendor.id,
-        // If images are provided, create them in the same transaction
-        images:
-          dto.images && dto.images.length > 0
-            ? {
-                create: dto.images.map((url) => ({ imageUrl: url })),
-              }
-            : undefined,
-      },
+      data,
       include: {
         images: true,
+        category: true,
       },
     });
   }
 
-  async findAll() {
+  async findAll(categoryId?: string) {
+    // 'any' এর বদলে Prisma-র টাইপ ব্যবহার করা হয়েছে
+    const where: Prisma.BusinessWhereInput = categoryId ? { categoryId } : {};
+
     return this.prisma.business.findMany({
+      where,
       include: {
         images: true,
+        category: true,
         _count: { select: { services: true, staff: true } },
       },
     });
@@ -53,6 +75,7 @@ export class BusinessService {
       where: { id },
       include: {
         images: true,
+        category: true,
         services: true,
         staff: {
           include: { user: { select: { fullName: true, profileImage: true } } },
