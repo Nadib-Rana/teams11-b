@@ -67,6 +67,7 @@ export class StaffController {
    * @returns Dashboard data: today's bookings count, active customers, booking details
    */
   @Get("dashboard/overview")
+  @ResponseMessage("Your personal dashboard overview as a Staff")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("staff")
   async getDashboard(@GetUser("userId") userId: string) {
@@ -81,6 +82,7 @@ export class StaffController {
    * @returns Staff profile with user info, business details, services, and bookings
    */
   @Get(":id")
+  @ResponseMessage("Detailed information about a specific staff member.")
   async findOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.staffService.findOne(id);
   }
@@ -94,6 +96,7 @@ export class StaffController {
    * @returns Updated staff profile
    */
   @Put(":id")
+  @ResponseMessage("Updated staff member information successfully")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor", "staff")
   async update(
@@ -111,6 +114,7 @@ export class StaffController {
    * @returns Deleted staff profile summary
    */
   @Delete(":id")
+  @ResponseMessage("Removed staff member record from the system.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async delete(@Param("id", ParseUUIDPipe) id: string) {
@@ -127,6 +131,7 @@ export class StaffController {
    * @returns Created service assignment
    */
   @Post(":staffId/services/:serviceId")
+  @ResponseMessage("Created service assignment successfully.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async assignService(
@@ -145,6 +150,7 @@ export class StaffController {
    * @returns Deletion confirmation
    */
   @Delete(":staffId/services/:serviceId")
+  @ResponseMessage("Deletion complete successfully !")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async removeService(
