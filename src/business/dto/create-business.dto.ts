@@ -7,6 +7,10 @@ export class CreateBusinessDto {
   name: string;
 
   @IsString()
+  @IsNotEmpty()
+  category: string;
+
+  @IsString()
   @IsOptional()
   description?: string;
 
@@ -21,5 +25,5 @@ export class CreateBusinessDto {
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  images?: string[]; // Array of image URLs for BusinessImage model
+  images?: string[];
 }

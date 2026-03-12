@@ -2071,6 +2071,7 @@ export type VendorScalarFieldEnum = (typeof VendorScalarFieldEnum)[keyof typeof 
 export const BusinessScalarFieldEnum = {
   id: 'id',
   vendorId: 'vendorId',
+  categoryId: 'categoryId',
   name: 'name',
   description: 'description',
   logo: 'logo',
@@ -2105,7 +2106,8 @@ export type StaffScalarFieldEnum = (typeof StaffScalarFieldEnum)[keyof typeof St
 
 export const CategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  image: 'image'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
