@@ -17,6 +17,7 @@ export enum BookingType {
  * CreateBookingDto
  * Contains all required and optional fields for creating a new booking.
  */
+
 export class CreateBookingDto {
   @IsUUID()
   @IsNotEmpty()
@@ -31,8 +32,7 @@ export class CreateBookingDto {
   businessId: string;
 
   @IsUUID()
-  @IsNotEmpty()
-  staffId: string;
+  staffId?: string;
 
   @IsEnum(BookingType)
   @IsNotEmpty()

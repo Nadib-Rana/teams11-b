@@ -26,8 +26,7 @@ export class CreateServiceDto {
   businessId: string;
 
   @IsUUID()
-  @IsNotEmpty()
-  categoryId: string;
+  categoryId?: string;
 
   @IsString()
   @IsNotEmpty()

@@ -163,7 +163,7 @@ model Staff {
   business    Business @relation(fields: [businessId], references: [id])
   role        String?
   specialties String?
-  workingDays String?  @map("working_days")
+  workingDays Json?    @map("working_days")
   createdAt   DateTime @default(now()) @map("created_at")
 
   // Relations
@@ -189,8 +189,8 @@ model Service {
   id          String      @id @default(uuid()) @db.Uuid
   businessId  String      @map("business_id") @db.Uuid
   business    Business    @relation(fields: [businessId], references: [id])
-  categoryId  String      @map("category_id") @db.Uuid
-  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String?      @map("category_id") @db.Uuid
+  category    Category?    @relation(fields: [categoryId], references: [id])
   title       String
   description String?
   price       Decimal     @db.Decimal(10, 2)
@@ -227,8 +227,8 @@ model Booking {
   serviceId    String        @map("service_id") @db.Uuid
   service      Service       @relation(fields: [serviceId], references: [id])
 
-  staffId      String        @map("staff_id") @db.Uuid
-  staff        Staff         @relation(fields: [staffId], references: [id])
+  staffId      String?        @map("staff_id") @db.Uuid
+  staff        Staff?         @relation(fields: [staffId], references: [id])
 
   bookingType  BookingType   @map("booking_type")
   status       BookingStatus
@@ -280,7 +280,7 @@ model Review {
   rating     Int
   comment    String?
   createdAt  DateTime @default(now()) @map("created_at")
-
+  
   @@map("reviews")
 }
 

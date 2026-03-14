@@ -5,6 +5,6 @@ export class StaffEntity {
   businessId: string;
   role?: string;
   specialties?: string;
-  workingDays?: string;
+  workingDays?: Record<string, boolean>;
   createdAt: Date;
 }

@@ -30,7 +30,6 @@ export type StaffMinAggregateOutputType = {
   businessId: string | null
   role: string | null
   specialties: string | null
-  workingDays: string | null
   createdAt: Date | null
 }
 
@@ -40,7 +39,6 @@ export type StaffMaxAggregateOutputType = {
   businessId: string | null
   role: string | null
   specialties: string | null
-  workingDays: string | null
   createdAt: Date | null
 }
 
@@ -62,7 +60,6 @@ export type StaffMinAggregateInputType = {
   businessId?: true
   role?: true
   specialties?: true
-  workingDays?: true
   createdAt?: true
 }
 
@@ -72,7 +69,6 @@ export type StaffMaxAggregateInputType = {
   businessId?: true
   role?: true
   specialties?: true
-  workingDays?: true
   createdAt?: true
 }
 
@@ -165,7 +161,7 @@ export type StaffGroupByOutputType = {
   businessId: string
   role: string | null
   specialties: string | null
-  workingDays: string | null
+  workingDays: runtime.JsonValue | null
   createdAt: Date
   _count: StaffCountAggregateOutputType | null
   _min: StaffMinAggregateOutputType | null
@@ -196,7 +192,7 @@ export type StaffWhereInput = {
   businessId?: Prisma.UuidFilter<"Staff"> | string
   role?: Prisma.StringNullableFilter<"Staff"> | string | null
   specialties?: Prisma.StringNullableFilter<"Staff"> | string | null
-  workingDays?: Prisma.StringNullableFilter<"Staff"> | string | null
+  workingDays?: Prisma.JsonNullableFilter<"Staff">
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   business?: Prisma.XOR<Prisma.BusinessScalarRelationFilter, Prisma.BusinessWhereInput>
@@ -227,7 +223,7 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   businessId?: Prisma.UuidFilter<"Staff"> | string
   role?: Prisma.StringNullableFilter<"Staff"> | string | null
   specialties?: Prisma.StringNullableFilter<"Staff"> | string | null
-  workingDays?: Prisma.StringNullableFilter<"Staff"> | string | null
+  workingDays?: Prisma.JsonNullableFilter<"Staff">
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   business?: Prisma.XOR<Prisma.BusinessScalarRelationFilter, Prisma.BusinessWhereInput>
@@ -257,7 +253,7 @@ export type StaffScalarWhereWithAggregatesInput = {
   businessId?: Prisma.UuidWithAggregatesFilter<"Staff"> | string
   role?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
   specialties?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
-  workingDays?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
+  workingDays?: Prisma.JsonNullableWithAggregatesFilter<"Staff">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Staff"> | Date | string
 }
 
@@ -265,7 +261,7 @@ export type StaffCreateInput = {
   id?: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
   business: Prisma.BusinessCreateNestedOneWithoutStaffInput
@@ -279,7 +275,7 @@ export type StaffUncheckedCreateInput = {
   businessId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutStaffInput
@@ -289,7 +285,7 @@ export type StaffUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
   business?: Prisma.BusinessUpdateOneRequiredWithoutStaffNestedInput
@@ -303,7 +299,7 @@ export type StaffUncheckedUpdateInput = {
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutStaffNestedInput
@@ -315,7 +311,7 @@ export type StaffCreateManyInput = {
   businessId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -323,7 +319,7 @@ export type StaffUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -333,7 +329,7 @@ export type StaffUncheckedUpdateManyInput = {
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -368,7 +364,6 @@ export type StaffMaxOrderByAggregateInput = {
   businessId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   specialties?: Prisma.SortOrder
-  workingDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -378,7 +373,6 @@ export type StaffMinOrderByAggregateInput = {
   businessId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   specialties?: Prisma.SortOrder
-  workingDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -481,10 +475,12 @@ export type StaffCreateNestedOneWithoutBookingsInput = {
   connect?: Prisma.StaffWhereUniqueInput
 }
 
-export type StaffUpdateOneRequiredWithoutBookingsNestedInput = {
+export type StaffUpdateOneWithoutBookingsNestedInput = {
   create?: Prisma.XOR<Prisma.StaffCreateWithoutBookingsInput, Prisma.StaffUncheckedCreateWithoutBookingsInput>
   connectOrCreate?: Prisma.StaffCreateOrConnectWithoutBookingsInput
   upsert?: Prisma.StaffUpsertWithoutBookingsInput
+  disconnect?: Prisma.StaffWhereInput | boolean
+  delete?: Prisma.StaffWhereInput | boolean
   connect?: Prisma.StaffWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutBookingsInput, Prisma.StaffUpdateWithoutBookingsInput>, Prisma.StaffUncheckedUpdateWithoutBookingsInput>
 }
@@ -493,7 +489,7 @@ export type StaffCreateWithoutUserInput = {
   id?: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   business: Prisma.BusinessCreateNestedOneWithoutStaffInput
   services?: Prisma.StaffServiceCreateNestedManyWithoutStaffInput
@@ -505,7 +501,7 @@ export type StaffUncheckedCreateWithoutUserInput = {
   businessId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutStaffInput
@@ -531,7 +527,7 @@ export type StaffUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   business?: Prisma.BusinessUpdateOneRequiredWithoutStaffNestedInput
   services?: Prisma.StaffServiceUpdateManyWithoutStaffNestedInput
@@ -543,7 +539,7 @@ export type StaffUncheckedUpdateWithoutUserInput = {
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutStaffNestedInput
@@ -553,7 +549,7 @@ export type StaffCreateWithoutBusinessInput = {
   id?: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
   services?: Prisma.StaffServiceCreateNestedManyWithoutStaffInput
@@ -565,7 +561,7 @@ export type StaffUncheckedCreateWithoutBusinessInput = {
   userId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutStaffInput
@@ -606,7 +602,7 @@ export type StaffScalarWhereInput = {
   businessId?: Prisma.UuidFilter<"Staff"> | string
   role?: Prisma.StringNullableFilter<"Staff"> | string | null
   specialties?: Prisma.StringNullableFilter<"Staff"> | string | null
-  workingDays?: Prisma.StringNullableFilter<"Staff"> | string | null
+  workingDays?: Prisma.JsonNullableFilter<"Staff">
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
 }
 
@@ -614,7 +610,7 @@ export type StaffCreateWithoutServicesInput = {
   id?: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
   business: Prisma.BusinessCreateNestedOneWithoutStaffInput
@@ -627,7 +623,7 @@ export type StaffUncheckedCreateWithoutServicesInput = {
   businessId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutStaffInput
 }
@@ -652,7 +648,7 @@ export type StaffUpdateWithoutServicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
   business?: Prisma.BusinessUpdateOneRequiredWithoutStaffNestedInput
@@ -665,7 +661,7 @@ export type StaffUncheckedUpdateWithoutServicesInput = {
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutStaffNestedInput
 }
@@ -674,7 +670,7 @@ export type StaffCreateWithoutBookingsInput = {
   id?: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutStaffInput
   business: Prisma.BusinessCreateNestedOneWithoutStaffInput
@@ -687,7 +683,7 @@ export type StaffUncheckedCreateWithoutBookingsInput = {
   businessId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   services?: Prisma.StaffServiceUncheckedCreateNestedManyWithoutStaffInput
 }
@@ -712,7 +708,7 @@ export type StaffUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
   business?: Prisma.BusinessUpdateOneRequiredWithoutStaffNestedInput
@@ -725,7 +721,7 @@ export type StaffUncheckedUpdateWithoutBookingsInput = {
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
 }
@@ -735,7 +731,7 @@ export type StaffCreateManyBusinessInput = {
   userId: string
   role?: string | null
   specialties?: string | null
-  workingDays?: string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
@@ -743,7 +739,7 @@ export type StaffUpdateWithoutBusinessInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
   services?: Prisma.StaffServiceUpdateManyWithoutStaffNestedInput
@@ -755,7 +751,7 @@ export type StaffUncheckedUpdateWithoutBusinessInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   services?: Prisma.StaffServiceUncheckedUpdateManyWithoutStaffNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutStaffNestedInput
@@ -766,7 +762,7 @@ export type StaffUncheckedUpdateManyWithoutBusinessInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   specialties?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  workingDays?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -890,7 +886,7 @@ export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     businessId: string
     role: string | null
     specialties: string | null
-    workingDays: string | null
+    workingDays: runtime.JsonValue | null
     createdAt: Date
   }, ExtArgs["result"]["staff"]>
   composites: {}
@@ -1324,7 +1320,7 @@ export interface StaffFieldRefs {
   readonly businessId: Prisma.FieldRef<"Staff", 'String'>
   readonly role: Prisma.FieldRef<"Staff", 'String'>
   readonly specialties: Prisma.FieldRef<"Staff", 'String'>
-  readonly workingDays: Prisma.FieldRef<"Staff", 'String'>
+  readonly workingDays: Prisma.FieldRef<"Staff", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Staff", 'DateTime'>
 }
     

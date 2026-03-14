@@ -280,11 +280,6 @@ export type CategoryMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
 }
 
-export type CategoryScalarRelationFilter = {
-  is?: Prisma.CategoryWhereInput
-  isNot?: Prisma.CategoryWhereInput
-}
-
 export type CategoryCreateNestedOneWithoutBusinessesInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutBusinessesInput, Prisma.CategoryUncheckedCreateWithoutBusinessesInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutBusinessesInput
@@ -307,10 +302,12 @@ export type CategoryCreateNestedOneWithoutServicesInput = {
   connect?: Prisma.CategoryWhereUniqueInput
 }
 
-export type CategoryUpdateOneRequiredWithoutServicesNestedInput = {
+export type CategoryUpdateOneWithoutServicesNestedInput = {
   create?: Prisma.XOR<Prisma.CategoryCreateWithoutServicesInput, Prisma.CategoryUncheckedCreateWithoutServicesInput>
   connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutServicesInput
   upsert?: Prisma.CategoryUpsertWithoutServicesInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
   connect?: Prisma.CategoryWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutServicesInput, Prisma.CategoryUpdateWithoutServicesInput>, Prisma.CategoryUncheckedUpdateWithoutServicesInput>
 }

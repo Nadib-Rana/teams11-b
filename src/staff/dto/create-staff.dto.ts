@@ -6,7 +6,11 @@ import {
   IsUUID,
   IsEmail,
   MinLength,
+  IsObject,
+  ValidateNested,
 } from "class-validator";
+import { Type } from "class-transformer";
+import { WorkingDaysDto } from "./working-days.dto";
 
 export class CreateStaffDto {
   // user information (we may create a new user if one doesn't exist)
@@ -39,7 +43,9 @@ export class CreateStaffDto {
   @IsOptional()
   specialties?: string;
 
-  @IsString()
   @IsOptional()
-  workingDays?: string;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => WorkingDaysDto)
+  workingDays?: WorkingDaysDto;
 }
