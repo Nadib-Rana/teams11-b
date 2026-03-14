@@ -210,7 +210,7 @@ export type ServiceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type ServiceGroupByOutputType = {
   id: string
   businessId: string
-  categoryId: string
+  categoryId: string | null
   title: string
   description: string | null
   price: runtime.Decimal
@@ -245,7 +245,7 @@ export type ServiceWhereInput = {
   NOT?: Prisma.ServiceWhereInput | Prisma.ServiceWhereInput[]
   id?: Prisma.UuidFilter<"Service"> | string
   businessId?: Prisma.UuidFilter<"Service"> | string
-  categoryId?: Prisma.UuidFilter<"Service"> | string
+  categoryId?: Prisma.UuidNullableFilter<"Service"> | string | null
   title?: Prisma.StringFilter<"Service"> | string
   description?: Prisma.StringNullableFilter<"Service"> | string | null
   price?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -253,7 +253,7 @@ export type ServiceWhereInput = {
   color?: Prisma.StringNullableFilter<"Service"> | string | null
   type?: Prisma.EnumServiceTypeFilter<"Service"> | $Enums.ServiceType
   business?: Prisma.XOR<Prisma.BusinessScalarRelationFilter, Prisma.BusinessWhereInput>
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   staff?: Prisma.StaffServiceListRelationFilter
   bookings?: Prisma.BookingListRelationFilter
   waitingList?: Prisma.WaitingListListRelationFilter
@@ -262,7 +262,7 @@ export type ServiceWhereInput = {
 export type ServiceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   businessId?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -282,7 +282,7 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ServiceWhereInput[]
   NOT?: Prisma.ServiceWhereInput | Prisma.ServiceWhereInput[]
   businessId?: Prisma.UuidFilter<"Service"> | string
-  categoryId?: Prisma.UuidFilter<"Service"> | string
+  categoryId?: Prisma.UuidNullableFilter<"Service"> | string | null
   title?: Prisma.StringFilter<"Service"> | string
   description?: Prisma.StringNullableFilter<"Service"> | string | null
   price?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -290,7 +290,7 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
   color?: Prisma.StringNullableFilter<"Service"> | string | null
   type?: Prisma.EnumServiceTypeFilter<"Service"> | $Enums.ServiceType
   business?: Prisma.XOR<Prisma.BusinessScalarRelationFilter, Prisma.BusinessWhereInput>
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   staff?: Prisma.StaffServiceListRelationFilter
   bookings?: Prisma.BookingListRelationFilter
   waitingList?: Prisma.WaitingListListRelationFilter
@@ -299,7 +299,7 @@ export type ServiceWhereUniqueInput = Prisma.AtLeast<{
 export type ServiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   businessId?: Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -319,7 +319,7 @@ export type ServiceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ServiceScalarWhereWithAggregatesInput | Prisma.ServiceScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Service"> | string
   businessId?: Prisma.UuidWithAggregatesFilter<"Service"> | string
-  categoryId?: Prisma.UuidWithAggregatesFilter<"Service"> | string
+  categoryId?: Prisma.UuidNullableWithAggregatesFilter<"Service"> | string | null
   title?: Prisma.StringWithAggregatesFilter<"Service"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Service"> | string | null
   price?: Prisma.DecimalWithAggregatesFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -337,7 +337,7 @@ export type ServiceCreateInput = {
   color?: string | null
   type: $Enums.ServiceType
   business: Prisma.BusinessCreateNestedOneWithoutServicesInput
-  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  category?: Prisma.CategoryCreateNestedOneWithoutServicesInput
   staff?: Prisma.StaffServiceCreateNestedManyWithoutServiceInput
   bookings?: Prisma.BookingCreateNestedManyWithoutServiceInput
   waitingList?: Prisma.WaitingListCreateNestedManyWithoutServiceInput
@@ -346,7 +346,7 @@ export type ServiceCreateInput = {
 export type ServiceUncheckedCreateInput = {
   id?: string
   businessId: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -367,7 +367,7 @@ export type ServiceUpdateInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumServiceTypeFieldUpdateOperationsInput | $Enums.ServiceType
   business?: Prisma.BusinessUpdateOneRequiredWithoutServicesNestedInput
-  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutServicesNestedInput
   staff?: Prisma.StaffServiceUpdateManyWithoutServiceNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutServiceNestedInput
   waitingList?: Prisma.WaitingListUpdateManyWithoutServiceNestedInput
@@ -376,7 +376,7 @@ export type ServiceUpdateInput = {
 export type ServiceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -391,7 +391,7 @@ export type ServiceUncheckedUpdateInput = {
 export type ServiceCreateManyInput = {
   id?: string
   businessId: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -413,7 +413,7 @@ export type ServiceUpdateManyMutationInput = {
 export type ServiceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -621,7 +621,7 @@ export type ServiceCreateWithoutBusinessInput = {
   duration: number
   color?: string | null
   type: $Enums.ServiceType
-  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  category?: Prisma.CategoryCreateNestedOneWithoutServicesInput
   staff?: Prisma.StaffServiceCreateNestedManyWithoutServiceInput
   bookings?: Prisma.BookingCreateNestedManyWithoutServiceInput
   waitingList?: Prisma.WaitingListCreateNestedManyWithoutServiceInput
@@ -629,7 +629,7 @@ export type ServiceCreateWithoutBusinessInput = {
 
 export type ServiceUncheckedCreateWithoutBusinessInput = {
   id?: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -673,7 +673,7 @@ export type ServiceScalarWhereInput = {
   NOT?: Prisma.ServiceScalarWhereInput | Prisma.ServiceScalarWhereInput[]
   id?: Prisma.UuidFilter<"Service"> | string
   businessId?: Prisma.UuidFilter<"Service"> | string
-  categoryId?: Prisma.UuidFilter<"Service"> | string
+  categoryId?: Prisma.UuidNullableFilter<"Service"> | string | null
   title?: Prisma.StringFilter<"Service"> | string
   description?: Prisma.StringNullableFilter<"Service"> | string | null
   price?: Prisma.DecimalFilter<"Service"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -745,7 +745,7 @@ export type ServiceCreateWithoutStaffInput = {
   color?: string | null
   type: $Enums.ServiceType
   business: Prisma.BusinessCreateNestedOneWithoutServicesInput
-  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  category?: Prisma.CategoryCreateNestedOneWithoutServicesInput
   bookings?: Prisma.BookingCreateNestedManyWithoutServiceInput
   waitingList?: Prisma.WaitingListCreateNestedManyWithoutServiceInput
 }
@@ -753,7 +753,7 @@ export type ServiceCreateWithoutStaffInput = {
 export type ServiceUncheckedCreateWithoutStaffInput = {
   id?: string
   businessId: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -789,7 +789,7 @@ export type ServiceUpdateWithoutStaffInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumServiceTypeFieldUpdateOperationsInput | $Enums.ServiceType
   business?: Prisma.BusinessUpdateOneRequiredWithoutServicesNestedInput
-  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutServicesNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutServiceNestedInput
   waitingList?: Prisma.WaitingListUpdateManyWithoutServiceNestedInput
 }
@@ -797,7 +797,7 @@ export type ServiceUpdateWithoutStaffInput = {
 export type ServiceUncheckedUpdateWithoutStaffInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -817,7 +817,7 @@ export type ServiceCreateWithoutBookingsInput = {
   color?: string | null
   type: $Enums.ServiceType
   business: Prisma.BusinessCreateNestedOneWithoutServicesInput
-  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  category?: Prisma.CategoryCreateNestedOneWithoutServicesInput
   staff?: Prisma.StaffServiceCreateNestedManyWithoutServiceInput
   waitingList?: Prisma.WaitingListCreateNestedManyWithoutServiceInput
 }
@@ -825,7 +825,7 @@ export type ServiceCreateWithoutBookingsInput = {
 export type ServiceUncheckedCreateWithoutBookingsInput = {
   id?: string
   businessId: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -861,7 +861,7 @@ export type ServiceUpdateWithoutBookingsInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumServiceTypeFieldUpdateOperationsInput | $Enums.ServiceType
   business?: Prisma.BusinessUpdateOneRequiredWithoutServicesNestedInput
-  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutServicesNestedInput
   staff?: Prisma.StaffServiceUpdateManyWithoutServiceNestedInput
   waitingList?: Prisma.WaitingListUpdateManyWithoutServiceNestedInput
 }
@@ -869,7 +869,7 @@ export type ServiceUpdateWithoutBookingsInput = {
 export type ServiceUncheckedUpdateWithoutBookingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -889,7 +889,7 @@ export type ServiceCreateWithoutWaitingListInput = {
   color?: string | null
   type: $Enums.ServiceType
   business: Prisma.BusinessCreateNestedOneWithoutServicesInput
-  category: Prisma.CategoryCreateNestedOneWithoutServicesInput
+  category?: Prisma.CategoryCreateNestedOneWithoutServicesInput
   staff?: Prisma.StaffServiceCreateNestedManyWithoutServiceInput
   bookings?: Prisma.BookingCreateNestedManyWithoutServiceInput
 }
@@ -897,7 +897,7 @@ export type ServiceCreateWithoutWaitingListInput = {
 export type ServiceUncheckedCreateWithoutWaitingListInput = {
   id?: string
   businessId: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -933,7 +933,7 @@ export type ServiceUpdateWithoutWaitingListInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumServiceTypeFieldUpdateOperationsInput | $Enums.ServiceType
   business?: Prisma.BusinessUpdateOneRequiredWithoutServicesNestedInput
-  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutServicesNestedInput
   staff?: Prisma.StaffServiceUpdateManyWithoutServiceNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutServiceNestedInput
 }
@@ -941,7 +941,7 @@ export type ServiceUpdateWithoutWaitingListInput = {
 export type ServiceUncheckedUpdateWithoutWaitingListInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   businessId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -954,7 +954,7 @@ export type ServiceUncheckedUpdateWithoutWaitingListInput = {
 
 export type ServiceCreateManyBusinessInput = {
   id?: string
-  categoryId: string
+  categoryId?: string | null
   title: string
   description?: string | null
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -971,7 +971,7 @@ export type ServiceUpdateWithoutBusinessInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumServiceTypeFieldUpdateOperationsInput | $Enums.ServiceType
-  category?: Prisma.CategoryUpdateOneRequiredWithoutServicesNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutServicesNestedInput
   staff?: Prisma.StaffServiceUpdateManyWithoutServiceNestedInput
   bookings?: Prisma.BookingUpdateManyWithoutServiceNestedInput
   waitingList?: Prisma.WaitingListUpdateManyWithoutServiceNestedInput
@@ -979,7 +979,7 @@ export type ServiceUpdateWithoutBusinessInput = {
 
 export type ServiceUncheckedUpdateWithoutBusinessInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -993,7 +993,7 @@ export type ServiceUncheckedUpdateWithoutBusinessInput = {
 
 export type ServiceUncheckedUpdateManyWithoutBusinessInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1112,7 +1112,7 @@ export type ServiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   color?: boolean
   type?: boolean
   business?: boolean | Prisma.BusinessDefaultArgs<ExtArgs>
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Service$categoryArgs<ExtArgs>
   staff?: boolean | Prisma.Service$staffArgs<ExtArgs>
   bookings?: boolean | Prisma.Service$bookingsArgs<ExtArgs>
   waitingList?: boolean | Prisma.Service$waitingListArgs<ExtArgs>
@@ -1130,7 +1130,7 @@ export type ServiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   color?: boolean
   type?: boolean
   business?: boolean | Prisma.BusinessDefaultArgs<ExtArgs>
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Service$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1144,7 +1144,7 @@ export type ServiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   color?: boolean
   type?: boolean
   business?: boolean | Prisma.BusinessDefaultArgs<ExtArgs>
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Service$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["service"]>
 
 export type ServiceSelectScalar = {
@@ -1162,7 +1162,7 @@ export type ServiceSelectScalar = {
 export type ServiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "businessId" | "categoryId" | "title" | "description" | "price" | "duration" | "color" | "type", ExtArgs["result"]["service"]>
 export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   business?: boolean | Prisma.BusinessDefaultArgs<ExtArgs>
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Service$categoryArgs<ExtArgs>
   staff?: boolean | Prisma.Service$staffArgs<ExtArgs>
   bookings?: boolean | Prisma.Service$bookingsArgs<ExtArgs>
   waitingList?: boolean | Prisma.Service$waitingListArgs<ExtArgs>
@@ -1170,18 +1170,18 @@ export type ServiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }
 export type ServiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   business?: boolean | Prisma.BusinessDefaultArgs<ExtArgs>
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Service$categoryArgs<ExtArgs>
 }
 export type ServiceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   business?: boolean | Prisma.BusinessDefaultArgs<ExtArgs>
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.Service$categoryArgs<ExtArgs>
 }
 
 export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Service"
   objects: {
     business: Prisma.$BusinessPayload<ExtArgs>
-    category: Prisma.$CategoryPayload<ExtArgs>
+    category: Prisma.$CategoryPayload<ExtArgs> | null
     staff: Prisma.$StaffServicePayload<ExtArgs>[]
     bookings: Prisma.$BookingPayload<ExtArgs>[]
     waitingList: Prisma.$WaitingListPayload<ExtArgs>[]
@@ -1189,7 +1189,7 @@ export type $ServicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     businessId: string
-    categoryId: string
+    categoryId: string | null
     title: string
     description: string | null
     price: runtime.Decimal
@@ -1591,7 +1591,7 @@ readonly fields: ServiceFieldRefs;
 export interface Prisma__ServiceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   business<T extends Prisma.BusinessDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BusinessDefaultArgs<ExtArgs>>): Prisma.Prisma__BusinessClient<runtime.Types.Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  category<T extends Prisma.Service$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   staff<T extends Prisma.Service$staffArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$staffArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffServicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bookings<T extends Prisma.Service$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   waitingList<T extends Prisma.Service$waitingListArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Service$waitingListArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WaitingListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2026,6 +2026,25 @@ export type ServiceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Services to delete.
    */
   limit?: number
+}
+
+/**
+ * Service.category
+ */
+export type Service$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
 }
 
 /**

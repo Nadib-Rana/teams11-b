@@ -189,8 +189,8 @@ model Service {
   id          String      @id @default(uuid()) @db.Uuid
   businessId  String      @map("business_id") @db.Uuid
   business    Business    @relation(fields: [businessId], references: [id])
-  categoryId  String      @map("category_id") @db.Uuid
-  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String?      @map("category_id") @db.Uuid
+  category    Category?    @relation(fields: [categoryId], references: [id])
   title       String
   description String?
   price       Decimal     @db.Decimal(10, 2)
