@@ -12,19 +12,19 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post("register")
-  @ResponseMessage("User is Registed")
+  @ResponseMessage("User is Registed successful")
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
   }
 
   @Post("verify-email")
-  @ResponseMessage("Email varifyed")
+  @ResponseMessage("Email varifyed successful")
   verifyEmail(@Body() dto: VerifyTokenDto) {
     return this.authService.verifyEmail(dto.token);
   }
 
   @Post("login")
-  @ResponseMessage("User is login")
+  @ResponseMessage("login successful")
   login(@Body() dto: LoginDto) {
     // choose email or phone; validation ensures at least one is present
     const identifier = dto.email ?? dto.phone;
@@ -32,7 +32,7 @@ export class AuthController {
   }
 
   @Post("request-password-reset")
-  @ResponseMessage("Password reset request sended")
+  @ResponseMessage("Password reset request send successful")
   requestReset(@Body() dto: RequestPasswordResetDto) {
     return this.authService.requestPasswordReset(dto.email);
   }

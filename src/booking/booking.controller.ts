@@ -19,6 +19,7 @@ import { BookingService } from "./booking.service";
 import { CreateBookingDto } from "./dto/create-booking.dto";
 import { UpdateBookingDto } from "./dto/update-booking.dto";
 import { BookingStatus } from "src/generated/prisma/enums";
+import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 // import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 // import { RolesGuard } from "../auth/guards/roles.guard";
 // import { Roles } from "../auth/decorators/roles.decorator";
@@ -37,6 +38,7 @@ export class BookingController {
    * @returns Created booking with confirmation
    */
   @Post()
+  @ResponseMessage("Created booking with confirmation successfully")
   async create(@Body() dto: CreateBookingDto) {
     return this.bookingService.create(dto);
   }
@@ -71,6 +73,7 @@ export class BookingController {
    * @returns Booking details with customer, service, staff, and business info
    */
   @Get(":id")
+  @ResponseMessage("All Booking service")
   async findOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.bookingService.findOne(id);
   }
@@ -85,6 +88,7 @@ export class BookingController {
    * @returns Updated booking profile
    */
   @Put(":id")
+  @ResponseMessage("Updated booking profile successfully")
   async update(
     @Param("id", ParseUUIDPipe) id: string,
     @Body() dto: UpdateBookingDto,
@@ -102,6 +106,7 @@ export class BookingController {
    * @returns Cancelled booking
    */
   @Post(":id/cancel")
+  @ResponseMessage("Cancelled booking successfully")
   async cancel(
     @Param("id", ParseUUIDPipe) id: string,
     @Body() body: { cancelReason: string },
@@ -117,6 +122,7 @@ export class BookingController {
    * @returns Customer's bookings
    */
   @Get("customer/:customerId")
+  @ResponseMessage("Retrieve all bookings for a specific customer.")
   async getCustomerBookings(
     @Param("customerId", ParseUUIDPipe) customerId: string,
   ) {
@@ -132,6 +138,7 @@ export class BookingController {
    * @returns Business's bookings
    */
   @Get("business/:businessId")
+  @ResponseMessage("Retrieve all bookings for a specific business.")
   async getBusinessBookings(
     @Param("businessId", ParseUUIDPipe) businessId: string,
   ) {
@@ -149,6 +156,9 @@ export class BookingController {
    * @returns { available: boolean }
    */
   @Get("availability/:staffId")
+  @ResponseMessage(
+    "Checked successful for available staff for a given date Time.",
+  )
   async checkAvailability(
     @Param("staffId", ParseUUIDPipe) staffId: string,
     @Query("date") date: string,

@@ -23,6 +23,7 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
 import { GetUser } from "../auth/decorators/get-user.decorator";
+import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 
 @Controller("staff")
 export class StaffController {
@@ -37,6 +38,7 @@ export class StaffController {
    * @returns Created staff profile with user info
    */
   @Post()
+  @ResponseMessage("Created staff member for your business.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async create(@Body() dto: CreateStaffDto) {
@@ -51,6 +53,7 @@ export class StaffController {
    * @returns Array of staff profiles with user and service details
    */
   @Get()
+  @ResponseMessage("All staff members in this platform")
   async findAll(@Query("businessId") businessId?: string) {
     return this.staffService.findAll(businessId);
   }
@@ -64,6 +67,7 @@ export class StaffController {
    * @returns Dashboard data: today's bookings count, active customers, booking details
    */
   @Get("dashboard/overview")
+  @ResponseMessage("Your personal dashboard overview as a Staff")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("staff")
   async getDashboard(@GetUser("userId") userId: string) {
@@ -78,6 +82,7 @@ export class StaffController {
    * @returns Staff profile with user info, business details, services, and bookings
    */
   @Get(":id")
+  @ResponseMessage("Detailed information about a specific staff member.")
   async findOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.staffService.findOne(id);
   }
@@ -91,6 +96,7 @@ export class StaffController {
    * @returns Updated staff profile
    */
   @Put(":id")
+  @ResponseMessage("Updated staff member information successfully")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor", "staff")
   async update(
@@ -108,6 +114,7 @@ export class StaffController {
    * @returns Deleted staff profile summary
    */
   @Delete(":id")
+  @ResponseMessage("Removed staff member record from the system.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async delete(@Param("id", ParseUUIDPipe) id: string) {
@@ -124,6 +131,7 @@ export class StaffController {
    * @returns Created service assignment
    */
   @Post(":staffId/services/:serviceId")
+  @ResponseMessage("Created service assignment successfully.")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async assignService(
@@ -142,6 +150,7 @@ export class StaffController {
    * @returns Deletion confirmation
    */
   @Delete(":staffId/services/:serviceId")
+  @ResponseMessage("Deletion complete successfully !")
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("vendor")
   async removeService(
