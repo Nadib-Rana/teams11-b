@@ -1,5 +1,12 @@
 // src/staff/dto/update-staff.dto.ts
-import { IsString, IsOptional } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsObject,
+  ValidateNested,
+} from "class-validator";
+import { Type } from "class-transformer";
+import { WorkingDaysDto } from "./working-days.dto";
 
 export class UpdateStaffDto {
   @IsString()
@@ -10,7 +17,9 @@ export class UpdateStaffDto {
   @IsOptional()
   specialties?: string;
 
-  @IsString()
   @IsOptional()
-  workingDays?: string;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => WorkingDaysDto)
+  workingDays?: WorkingDaysDto;
 }
