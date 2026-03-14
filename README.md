@@ -419,12 +419,6 @@ The system supports multiple subscription plans.
 
 ---
 
-# Database Design
-
-Database schema diagram:
-
-https://dbdiagram.io/d/Teams11-69a9e654a3f0aa31e1f9e5ff
-
 ---
 
 # Technology Stack
