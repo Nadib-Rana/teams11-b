@@ -8,6 +8,7 @@ import {
 import { PrismaService } from "../common/context/prisma.service";
 import { CreateServiceDto } from "./dto/create-service.dto";
 import { UpdateServiceDto } from "./dto/update-service.dto";
+import { BookingStatus } from "src/generated/prisma/enums";
 
 /**
  * ServiceService
@@ -212,7 +213,10 @@ export class ServiceService {
 
     // Check for existing bookings
     const bookingCount = await this.prisma.booking.count({
-      where: { serviceId: id, status: { in: ["confirmed", "pending"] } },
+      where: {
+        serviceId: id,
+        status: { in: [BookingStatus.confirmed, BookingStatus.pending] },
+      },
     });
 
     if (bookingCount > 0) {

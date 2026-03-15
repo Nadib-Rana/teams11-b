@@ -5,7 +5,8 @@ import {
   IsUUID,
   IsEnum,
   IsDateString,
-  IsEmpty,
+  Matches,
+  IsOptional,
 } from "class-validator";
 
 export enum BookingType {
@@ -31,8 +32,9 @@ export class CreateBookingDto {
   @IsNotEmpty()
   businessId: string;
 
+  @IsOptional()
   @IsUUID()
-  staffId?: string;
+  staffId?: string; // Optional: staff can be assigned later by vendor
 
   @IsEnum(BookingType)
   @IsNotEmpty()
@@ -42,11 +44,17 @@ export class CreateBookingDto {
   @IsNotEmpty()
   date: string; // ISO date format
 
-  // @IsTimeString()
   @IsString()
   @IsNotEmpty()
+  @Matches(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/, {
+    message: "startTime must be in HH:MM:SS format",
+  })
   startTime: string; // HH:MM:SS format
 
-  @IsEmpty()
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/, {
+    message: "endTime must be in HH:MM:SS format",
+  })
   endTime: string; // HH:MM:SS format
 }

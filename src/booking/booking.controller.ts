@@ -173,4 +173,30 @@ export class BookingController {
     );
     return { available };
   }
+
+  /**
+   * GET /bookings/available-staff/:businessId
+   * Get available staff for a business on a given date/time.
+   *
+   * @param businessId - Business UUID
+   * @param date - Date to check (ISO format)
+   * @param startTime - Start time to check (HH:MM:SS)
+   * @param endTime - End time to check (HH:MM:SS)
+   * @returns Array of available staff
+   */
+  @Get("available-staff/:businessId")
+  @ResponseMessage("Available staff for the given date and time.")
+  async getAvailableStaff(
+    @Param("businessId", ParseUUIDPipe) businessId: string,
+    @Query("date") date: string,
+    @Query("startTime") startTime: string,
+    @Query("endTime") endTime: string,
+  ) {
+    return this.bookingService.getAvailableStaff(
+      businessId,
+      date,
+      startTime,
+      endTime,
+    );
+  }
 }
