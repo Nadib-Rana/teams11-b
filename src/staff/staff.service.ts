@@ -8,6 +8,7 @@ import {
 import { PrismaService } from "../common/context/prisma.service";
 import { CreateStaffDto } from "./dto/create-staff.dto";
 import { UpdateStaffDto } from "./dto/update-staff.dto";
+import { BookingStatus } from "src/generated/prisma/enums";
 import * as bcrypt from "bcryptjs"; // for hashing password when creating user
 
 @Injectable()
@@ -280,7 +281,7 @@ export class StaffService {
     const activeBookings = await this.prisma.booking.findMany({
       where: {
         staffId: staff.id,
-        status: "confirmed",
+        status: BookingStatus.confirmed,
       },
       distinct: ["customerId"],
       select: {

@@ -1,5 +1,11 @@
 // src/booking/dto/update-booking.dto.ts
-import { IsString, IsOptional, IsEnum, IsDateString } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsEnum,
+  IsDateString,
+  IsUUID,
+} from "class-validator";
 
 export enum BookingStatus {
   PENDING = "pending",
@@ -10,12 +16,16 @@ export enum BookingStatus {
 
 /**
  * UpdateBookingDto
- * Allows updates to booking status and rescheduling.
+ * Allows updates to booking status, staff assignment, and rescheduling.
  */
 export class UpdateBookingDto {
   @IsEnum(BookingStatus)
   @IsOptional()
   status?: BookingStatus;
+
+  @IsUUID()
+  @IsOptional()
+  staffId?: string; // for assigning staff
 
   @IsDateString()
   @IsOptional()
