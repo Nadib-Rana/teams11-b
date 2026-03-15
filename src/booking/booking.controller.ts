@@ -95,6 +95,8 @@ export class BookingController {
    * @returns Updated booking profile
    */
   @Put(":id")
+  @Roles("customer")
+  @Roles("vendor")
   @ResponseMessage("Updated booking profile successfully")
   async update(
     @Param("id", ParseUUIDPipe) id: string,
