@@ -14,15 +14,16 @@ import {
   Put,
   ParseUUIDPipe,
   Query,
+  UseGuards,
 } from "@nestjs/common";
 import { BookingService } from "./booking.service";
 import { CreateBookingDto } from "./dto/create-booking.dto";
 import { UpdateBookingDto } from "./dto/update-booking.dto";
 import { BookingStatus } from "src/generated/prisma/enums";
 import { ResponseMessage } from "src/common/decorators/response-message.decorator";
-// import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
-// import { RolesGuard } from "../auth/guards/roles.guard";
-// import { Roles } from "../auth/decorators/roles.decorator";
+import { Roles } from "src/auth/decorators/roles.decorator";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { RolesGuard } from "../auth/guards/roles.guard";
 // import { GetUser } from "../auth/decorators/get-user.decorator";
 
 @Controller("bookings")
@@ -38,6 +39,8 @@ export class BookingController {
    * @returns Created booking with confirmation
    */
   @Post()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("customer")
   @ResponseMessage("Created booking with confirmation successfully")
   async create(@Body() dto: CreateBookingDto) {
     return this.bookingService.create(dto);
@@ -47,7 +50,7 @@ export class BookingController {
    * GET /bookings
    * Retrieve bookings with optional filters (customer, business, staff, status).
    * Can be used by vendors to view business bookings or customers to view their bookings.
-   *
+   * Ony cutomer,vendor and staff have acess to do this oparation.
    * @param customerId - Optional: filter by customer
    * @param businessId - Optional: filter by business
    * @param staffId - Optional: filter by staff
@@ -55,6 +58,10 @@ export class BookingController {
    * @returns Array of bookings matching filters
    */
   @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("customer")
+  @Roles("vendor")
+  @Roles("staff")
   async findAll(
     @Query("customerId") customerId?: string,
     @Query("businessId") businessId?: string,
