@@ -14,6 +14,7 @@ import { StaffModule } from "./staff/staff.module";
 import { ServiceModule } from "./service/service.module";
 import { BookingModule } from "./booking/booking.module";
 import { CategoryModule } from "./category/category.module";
+import { ReviewModule } from "./review/review.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CategoryModule } from "./category/category.module";
     ServiceModule,
     BookingModule,
     CategoryModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [
