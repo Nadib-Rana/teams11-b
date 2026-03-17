@@ -1,14 +1,14 @@
 import {
-  Injectable,
-  BadRequestException,
   UnauthorizedException,
-} from "@nestjs/common";
+  BadRequestException,
+} from "../common/exceptions/http.exceptions";
 import { PrismaService } from "../common/context/prisma.service";
 import * as bcrypt from "bcryptjs";
 import { JwtService } from "@nestjs/jwt";
 import { randomInt } from "crypto";
 import { RegisterDto } from "./dto/register.dto";
 import { MailerService } from "@nestjs-modules/mailer";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AuthService {
@@ -103,28 +103,61 @@ export class AuthService {
   }
 
   // Login (accept email or phone as identifier; staff bypass verification)
-  async login(identifier: string | undefined, password: string) {
+  async login(
+    identifier: string | undefined,
+    password: string,
+  ): Promise<{ accessToken: string; isVerified: boolean }> {
     if (!identifier) {
-      throw new BadRequestException("Email or phone must be provided");
+      // কাস্টম BadRequestException (message, code)
+      throw new BadRequestException(
+        "Email or phone must be provided",
+        "MISSING_IDENTIFIER",
+      );
     }
+
     const user = await this.prisma.user.findFirst({
       where: {
         OR: [{ email: identifier }, { phone: identifier }],
       },
     });
-    if (!user) throw new UnauthorizedException("Invalid credentials");
 
+    // ১. ইউজার না থাকলে
+    if (!user)
+      throw new UnauthorizedException(
+        "Invalid credentials",
+        false,
+        "INVALID_CREDENTIALS",
+      );
+
+    // ২. ইমেইল ভেরিফাইড না থাকলে
     if (user.role !== "staff" && !user.isVerified) {
-      throw new UnauthorizedException("Email not verified");
+      // এখানে অবজেক্টের বদলে সরাসরি আর্গুমেন্ট পাস করুন
+      throw new UnauthorizedException(
+        "Email not verified", // 1. message
+        user.isVerified, // 2. isVerified (boolean)
+        "EMAIL_NOT_VERIFIED", // 3. code
+        undefined, // 4. errors
+        "PLEASE_VERIFY_EMAIL", // 5. instruction
+      );
     }
 
+    // ৩. পাসওয়ার্ড চেক
     const valid = await bcrypt.compare(password, user.password);
-    if (!valid) throw new UnauthorizedException("Invalid credentials");
+    if (!valid)
+      throw new UnauthorizedException(
+        "Invalid credentials",
+        user.isVerified,
+        "INVALID_PASSWORD",
+      );
 
     const payload = { sub: user.id, role: user.role };
     const token = this.jwtService.sign(payload);
 
-    return { accessToken: token };
+    // Success response
+    return {
+      accessToken: token,
+      isVerified: user.isVerified,
+    };
   }
 
   // Password reset request
@@ -185,5 +218,52 @@ export class AuthService {
     });
 
     return { message: "Password reset successfully." };
+  }
+
+  // Resend OTP for email verification
+  async resendOtp(email: string) {
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) throw new BadRequestException("User not found");
+
+    if (user.isVerified)
+      throw new BadRequestException("Email already verified");
+
+    // Invalidate existing unused email verification tokens
+    await this.prisma.verificationToken.updateMany({
+      where: {
+        userId: user.id,
+        type: "email_verification",
+        used: false,
+      },
+      data: { used: true },
+    });
+
+    // Generate new OTP
+    const token = this.generateOTP();
+    await this.prisma.verificationToken.create({
+      data: {
+        userId: user.id,
+        token,
+        type: "email_verification",
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // OTP 5 min valid
+      },
+    });
+
+    // Send OTP email
+    try {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: "Email Verification OTP - Teams11",
+        template: "./verification",
+        context: {
+          name: user.fullName,
+          otp: token,
+        },
+      });
+    } catch (error) {
+      console.error("Error sending resend OTP email:", error);
+    }
+
+    return { message: "OTP resent. Check your email." };
   }
 }

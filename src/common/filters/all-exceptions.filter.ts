@@ -13,16 +13,16 @@ import {
   Injectable,
   Logger,
   BadRequestException,
-} from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
-import { Request } from 'express';
-import { ContextService } from '../context/context.service';
+} from "@nestjs/common";
+import { HttpAdapterHost } from "@nestjs/core";
+import { Request } from "express";
+import { ContextService } from "../context/context.service";
 import {
   ApiErrorResponseDto,
   ErrorDetail,
-} from '../dto/api-error-response.dto';
-import { getPrismaError } from '../exceptions/prisma-error.helper';
-import { BaseException } from '../exceptions/base.exception'; // <-- Import BaseException
+} from "../dto/api-error-response.dto";
+import { getPrismaError } from "../exceptions/prisma-error.helper";
+import { BaseException } from "../exceptions/base.exception"; // <-- Import BaseException
 
 // --- Type definitions for better type safety ---
 
@@ -35,7 +35,8 @@ interface HttpExceptionResponse {
   code?: string;
   errors?: ErrorDetail[];
   instruction?: string; // <-- Support instruction
-  details?: unknown; // <-- Support details
+  details?: unknown;
+  isVerified?: boolean; // <-- Support details
   // <-- REMOVED the [key: string]: unknown index signature
 }
 
@@ -64,11 +65,11 @@ interface PrismaErrorInterface {
  */
 function isPrismaError(exception: unknown): exception is PrismaErrorInterface {
   return (
-    typeof exception === 'object' &&
+    typeof exception === "object" &&
     exception !== null &&
     (exception as Error).constructor?.name ===
-      'PrismaClientKnownRequestError' &&
-    typeof (exception as PrismaErrorInterface).code === 'string'
+      "PrismaClientKnownRequestError" &&
+    typeof (exception as PrismaErrorInterface).code === "string"
   );
 }
 
@@ -91,10 +92,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const stack = (exception as Error)?.stack; // <-- Get stack trace early
 
     let httpStatus: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message: string = 'Internal Server Error';
+    let message: string = "Internal Server Error";
     let errors: ErrorDetail[] = [];
     let instruction: string | undefined = undefined; // <-- ADDED THIS
     let details: unknown = undefined; // <-- CHANGED to just 'unknown'
+    let isVerified: boolean | undefined = undefined;
 
     // --- Logic to handle different exception types ---
 
@@ -102,8 +104,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
       // 1. (NEW) Handle our custom BaseException
       // This gives us full control over the error response
       httpStatus = exception.getStatus();
-      const response = exception.getResponse() as HttpExceptionResponse; // This cast is safe
+      const response = exception.getResponse() as HttpExceptionResponse;
       message = response.message as string;
+
+      instruction = response.instruction;
+      details = response.details;
+      isVerified = response.isVerified;
+
       errors =
         response.errors ||
         (response.message
@@ -126,27 +133,27 @@ export class AllExceptionsFilter implements ExceptionFilter {
       const isClassValidatorResponse = (
         res: unknown,
       ): res is { message: unknown[] } =>
-        typeof res === 'object' &&
+        typeof res === "object" &&
         res !== null &&
-        'message' in res &&
+        "message" in res &&
         Array.isArray((res as { message: unknown[] }).message);
 
       // --- Type guard for generic object response ---
       const isGenericErrorResponse = (
         res: unknown,
       ): res is Record<string, unknown> =>
-        typeof res === 'object' && res !== null;
+        typeof res === "object" && res !== null;
 
       if (
         exception instanceof BadRequestException &&
         isClassValidatorResponse(response)
       ) {
         // 2a. Handle class-validator Validation Errors
-        message = 'Validation Failed';
+        message = "Validation Failed";
         errors = this.buildValidationErrors(
           response.message as unknown as SimpleValidationError[],
         );
-      } else if (typeof response === 'string') {
+      } else if (typeof response === "string") {
         // 2b. Handle simple string HTTP exceptions
         message = response;
         errors = [{ code: exception.name, message: response }];
@@ -155,21 +162,21 @@ export class AllExceptionsFilter implements ExceptionFilter {
         // Safely access properties from the 'unknown' record
         const responseMessage = response.message;
         if (Array.isArray(responseMessage)) {
-          message = responseMessage.join(', ');
-        } else if (typeof responseMessage === 'string') {
+          message = responseMessage.join(", ");
+        } else if (typeof responseMessage === "string") {
           message = responseMessage;
         } else {
           message = exception.name;
         }
 
         const responseCode =
-          typeof response.code === 'string' ? response.code : exception.name;
+          typeof response.code === "string" ? response.code : exception.name;
 
         const errorMessage = Array.isArray(responseMessage)
-          ? responseMessage.join(', ')
-          : typeof responseMessage === 'string'
+          ? responseMessage.join(", ")
+          : typeof responseMessage === "string"
             ? responseMessage
-            : 'An unexpected error occurred';
+            : "An unexpected error occurred";
 
         errors = [
           {
@@ -188,13 +195,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
           {
             code: `DB_${exception.code}`,
             message: prismaError.message, // Use the friendly message
-            field: exception.meta?.target?.join('.'),
+            field: exception.meta?.target?.join("."),
           },
         ];
       } else {
         // Unhandled Prisma error
         httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-        message = 'An unhandled database error occurred.';
+        message = "An unhandled database error occurred.";
         errors = [
           { code: `DB_UNKNOWN_${exception.code}`, message: exception.message },
         ];
@@ -208,7 +215,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       // 4. Handle generic Javascript Errors
       message = exception.message;
       errors = [
-        { code: exception.name || 'Error', message: exception.message },
+        { code: exception.name || "Error", message: exception.message },
       ];
       this.logger.error(
         `Generic Error: ${message}`,
@@ -217,12 +224,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
       );
     } else {
       // 5. Handle all other unknown exceptions
-      message = 'An unknown error occurred.';
+      message = "An unknown error occurred.";
       errors = [
-        { code: 'UNKNOWN_ERROR', message: 'An unknown error occurred.' },
+        { code: "UNKNOWN_ERROR", message: "An unknown error occurred." },
       ];
       this.logger.error(
-        'Unknown exception caught',
+        "Unknown exception caught",
         exception,
         `RequestID: ${requestId}`,
       );
@@ -245,7 +252,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       requestId,
       instruction, // <-- PASS INSTRUCTION
       details, // <-- PASS DETAILS
-      process.env.NODE_ENV !== 'production' ? stack : undefined, // <-- PASS CONDITIONAL STACK
+      process.env.NODE_ENV !== "production" ? stack : undefined, // <-- PASS CONDITIONAL STACK
+      isVerified,
     );
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
@@ -270,7 +278,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       if (err.constraints) {
         for (const key of Object.keys(err.constraints)) {
           errors.push({
-            code: 'VALIDATION_ERROR',
+            code: "VALIDATION_ERROR",
             message: err.constraints[key],
             field: field,
           });

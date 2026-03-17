@@ -19,6 +19,7 @@ export class BaseException extends HttpException {
   public readonly errors: ErrorDetail[];
   public readonly instruction?: string;
   public readonly details?: unknown;
+  public readonly isVerified?: boolean;
 
   /**
    * Creates a structured API exception.
@@ -37,6 +38,7 @@ export class BaseException extends HttpException {
     errors?: ErrorDetail[],
     instruction?: string,
     details?: unknown,
+    isVerified?: boolean,
   ) {
     const formattedErrors: ErrorDetail[] = errors ?? [
       {
@@ -55,6 +57,7 @@ export class BaseException extends HttpException {
         errors: formattedErrors,
         instruction,
         details,
+        isVerified,
       },
       status,
     );
@@ -63,5 +66,6 @@ export class BaseException extends HttpException {
     this.errors = formattedErrors;
     this.instruction = instruction;
     this.details = details;
+    this.isVerified = isVerified;
   }
 }
