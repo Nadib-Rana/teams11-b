@@ -3,7 +3,7 @@
  * * This DTO defines the standard structure for all successful API responses.
  */
 
-import { PaginationMetaDto } from './pagination.dto';
+import { PaginationMetaDto } from "./pagination.dto";
 
 export class ApiResponseDto<T> {
   /**

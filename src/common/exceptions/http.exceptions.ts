@@ -35,12 +35,21 @@ export class BadRequestException extends BaseException {
 export class UnauthorizedException extends BaseException {
   constructor(
     message: string = "Authentication required",
+    isVerified?: boolean,
     code: string = "AUTHENTICATION_ERROR",
     errors?: ErrorDetail[],
     instruction?: string,
     details?: unknown,
   ) {
-    super(message, HttpStatus.UNAUTHORIZED, code, errors, instruction, details);
+    super(
+      message,
+      HttpStatus.UNAUTHORIZED,
+      code,
+      errors,
+      instruction,
+      details,
+      isVerified,
+    );
   }
 }
 

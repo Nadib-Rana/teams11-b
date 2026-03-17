@@ -5,6 +5,7 @@ import { LoginDto } from "./dto/login.dto";
 import { VerifyTokenDto } from "./dto/verify-token.dto";
 import { ResetPasswordDto } from "./dto/reset-password.dto";
 import { RequestPasswordResetDto } from "./dto/request-Password-Reset.dto";
+import { ResendOtpDto } from "./dto/resend-otp.dto";
 import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 
 @Controller("auth")
@@ -21,6 +22,12 @@ export class AuthController {
   @ResponseMessage("Email varifyed successful")
   verifyEmail(@Body() dto: VerifyTokenDto) {
     return this.authService.verifyEmail(dto.token);
+  }
+
+  @Post("resend-otp")
+  @ResponseMessage("OTP resent successful")
+  resendOtp(@Body() dto: ResendOtpDto) {
+    return this.authService.resendOtp(dto.email);
   }
 
   @Post("login")
