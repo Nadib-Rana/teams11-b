@@ -6,8 +6,10 @@ import { BookingCreationService } from "./services/booking-creation.service";
 import { BookingRetrievalService } from "./services/booking-retrieval.service";
 import { BookingUpdateService } from "./services/booking-update.service";
 import { BookingAvailabilityService } from "./services/booking-availability.service";
+import { NotificationModule } from "../notification/notification.module";
 
 @Module({
+  imports: [NotificationModule],
   controllers: [BookingController],
   providers: [
     BookingService,

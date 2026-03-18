@@ -7,6 +7,7 @@ import { BookingAvailabilityService } from "./services/booking-availability.serv
 import { CreateBookingDto } from "./dto/create-booking.dto";
 import { UpdateBookingDto } from "./dto/update-booking.dto";
 import { BookingStatus } from "src/generated/prisma/enums";
+import { NotificationService } from "../notification/notification.service";
 
 /**
  * BookingService
@@ -23,6 +24,7 @@ export class BookingService {
     private retrievalService: BookingRetrievalService,
     private updateService: BookingUpdateService,
     private availabilityService: BookingAvailabilityService,
+    private notificationService: NotificationService,
   ) {}
 
   /**
@@ -30,7 +32,17 @@ export class BookingService {
    * Delegates to BookingCreationService.
    */
   async create(dto: CreateBookingDto) {
-    return this.creationService.create(dto);
+    const booking = await this.creationService.create(dto);
+
+    // Notify customer about the created booking (email + in-app notification)
+    try {
+      await this.notificationService.sendBookingCreatedNotification(booking.id);
+    } catch (error) {
+      // Avoid breaking the main flow if notification fails
+      console.error("Failed to send booking creation notification:", error);
+    }
+
+    return booking;
   }
 
   /**
@@ -64,7 +76,15 @@ export class BookingService {
    * Delegates to BookingUpdateService.
    */
   async update(id: string, dto: UpdateBookingDto) {
-    return this.updateService.update(id, dto);
+    const updated = await this.updateService.update(id, dto);
+
+    try {
+      await this.notificationService.sendBookingReminder(id);
+    } catch (error) {
+      console.error("Failed to send booking update notification:", error);
+    }
+
+    return updated;
   }
 
   /**
@@ -72,7 +92,15 @@ export class BookingService {
    * Delegates to BookingUpdateService.
    */
   async cancel(id: string, cancelReason: string) {
-    return this.updateService.cancel(id, cancelReason);
+    const cancelled = await this.updateService.cancel(id, cancelReason);
+
+    try {
+      await this.notificationService.sendBookingReminder(id);
+    } catch (error) {
+      console.error("Failed to send booking cancellation notification:", error);
+    }
+
+    return cancelled;
   }
 
   /**
