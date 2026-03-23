@@ -78,6 +78,30 @@ export class AuthService {
   }
 
   // Verify email / OTP
+  // async verifyEmail(token: string) {
+  //   const verification = await this.prisma.verificationToken.findFirst({
+  //     where: { token, used: false },
+  //   });
+
+  //   if (!verification || verification.type !== "email_verification")
+  //     throw new BadRequestException("Invalid OTP");
+
+  //   if (verification.expiresAt < new Date())
+  //     throw new BadRequestException("OTP expired");
+
+  //   await this.prisma.user.update({
+  //     where: { id: verification.userId },
+  //     data: { isVerified: true },
+  //   });
+
+  //   await this.prisma.verificationToken.update({
+  //     where: { id: verification.id },
+  //     data: { used: true },
+  //   });
+
+  //   return { message: "Email verified successfully." };
+  // }
+
   async verifyEmail(token: string) {
     const verification = await this.prisma.verificationToken.findFirst({
       where: { token, used: false },
@@ -89,17 +113,38 @@ export class AuthService {
     if (verification.expiresAt < new Date())
       throw new BadRequestException("OTP expired");
 
-    await this.prisma.user.update({
+    // ✅ Get user first
+    const user = await this.prisma.user.findUnique({
       where: { id: verification.userId },
+    });
+
+    if (!user) throw new BadRequestException("User not found");
+
+    // ✅ Mark verified
+    await this.prisma.user.update({
+      where: { id: user.id },
       data: { isVerified: true },
     });
 
+    // ✅ Mark token used
     await this.prisma.verificationToken.update({
       where: { id: verification.id },
       data: { used: true },
     });
 
-    return { message: "Email verified successfully." };
+    // ✅ Generate JWT token (AUTO LOGIN)
+    const payload = { sub: user.id, role: user.role };
+    const accessToken = this.jwtService.sign(payload);
+
+    return {
+      message: "Email verified successfully",
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+    };
   }
 
   // Login (accept email or phone as identifier; staff bypass verification)
