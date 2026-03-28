@@ -18,5 +18,6 @@ import { NotificationModule } from "../notification/notification.module";
     BookingUpdateService,
     BookingAvailabilityService,
   ],
+  exports: [BookingService],
 })
 export class BookingModule {}

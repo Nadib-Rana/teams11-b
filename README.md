@@ -238,6 +238,45 @@ Fields include:
 - Assigned Staff
 - Status
 
+### Dashboard API
+
+**GET /dashboard/vendor**
+
+Retrieves aggregated dashboard data for vendors including:
+
+- Business information
+- Statistics (services count, staff count, total bookings, upcoming bookings)
+- Recent reviews
+- Upcoming bookings
+- Recent notifications
+
+**Authentication:** Required (Vendor role)
+
+**Response:**
+
+```json
+{
+  "business": {
+    "id": "string",
+    "name": "string",
+    "description": "string",
+    "logo": "string",
+    "location": "string",
+    "workingDays": "json"
+  },
+  "stats": {
+    "servicesCount": "number",
+    "staffCount": "number",
+    "totalBookings": "number",
+    "upcomingBookingsCount": "number",
+    "reviewsCount": "number"
+  },
+  "upcomingBookings": [...],
+  "recentReviews": [...],
+  "notifications": [...]
+}
+```
+
 ---
 
 # Business Profile Management
