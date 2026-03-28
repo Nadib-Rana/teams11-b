@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../common/context/prisma.service";
 import { CreateBusinessDto } from "./dto/create-business.dto";
+import { UpdateBusinessDto } from "./dto/update-business.dto";
 import { Prisma } from "src/generated/prisma/client";
 
 @Injectable()
@@ -47,6 +48,10 @@ export class BusinessService {
       data.category = { connect: { id: dto.category } };
     }
 
+    if (dto.workingDays) {
+      data.workingDays = dto.workingDays;
+    }
+
     return this.prisma.business.create({
       data,
       include: {
@@ -91,6 +96,38 @@ export class BusinessService {
     return this.prisma.business.findMany({
       where: { vendor: { userId } },
       include: { images: true },
+    });
+  }
+
+  async update(id: string, dto: UpdateBusinessDto) {
+    const business = await this.prisma.business.findUnique({ where: { id } });
+    if (!business) {
+      throw new NotFoundException("Business not found");
+    }
+
+    const data: Prisma.BusinessUpdateInput = {
+      name: dto.name,
+      description: dto.description,
+      logo: dto.logo,
+      location: dto.location,
+      workingDays: dto.workingDays,
+      images:
+        dto.images && dto.images.length > 0
+          ? {
+              deleteMany: {},
+              create: dto.images.map((url) => ({ imageUrl: url })),
+            }
+          : undefined,
+    };
+
+    if (dto.category) {
+      data.category = { connect: { id: dto.category } };
+    }
+
+    return this.prisma.business.update({
+      where: { id },
+      data,
+      include: { images: true, category: true },
     });
   }
 }

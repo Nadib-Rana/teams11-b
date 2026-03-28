@@ -15,6 +15,9 @@ import { ServiceModule } from "./service/service.module";
 import { BookingModule } from "./booking/booking.module";
 import { CategoryModule } from "./category/category.module";
 import { ReviewModule } from "./review/review.module";
+import { CustomerModule } from "./customer/customer.module";
+import { NotificationModule } from "./notification/notification.module";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
   imports: [
@@ -28,12 +31,15 @@ import { ReviewModule } from "./review/review.module";
     }),
     ContextModule,
     AuthModule,
+    CustomerModule,
+    NotificationModule,
     BusinessModule,
     StaffModule,
     ServiceModule,
     BookingModule,
     CategoryModule,
     ReviewModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [

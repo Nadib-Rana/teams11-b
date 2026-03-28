@@ -1,6 +1,9 @@
 import { Module } from "@nestjs/common";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
+import { RegistrationService } from "./registration.service";
+import { LoginService } from "./login.service";
+import { PasswordResetService } from "./password-reset.service";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { ContextModule } from "../common/context/context.module";
@@ -20,6 +23,12 @@ import { jwtConstants } from "./constants";
     ContextModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [
+    AuthService,
+    RegistrationService,
+    LoginService,
+    PasswordResetService,
+    JwtStrategy,
+  ],
 })
 export class AuthModule {}

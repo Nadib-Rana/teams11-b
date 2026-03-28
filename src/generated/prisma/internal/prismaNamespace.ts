@@ -2076,7 +2076,8 @@ export const BusinessScalarFieldEnum = {
   description: 'description',
   logo: 'logo',
   location: 'location',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  workingDays: 'workingDays'
 } as const
 
 export type BusinessScalarFieldEnum = (typeof BusinessScalarFieldEnum)[keyof typeof BusinessScalarFieldEnum]

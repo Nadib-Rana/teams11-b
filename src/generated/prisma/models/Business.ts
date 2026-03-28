@@ -55,6 +55,7 @@ export type BusinessCountAggregateOutputType = {
   logo: number
   location: number
   createdAt: number
+  workingDays: number
   _all: number
 }
 
@@ -90,6 +91,7 @@ export type BusinessCountAggregateInputType = {
   logo?: true
   location?: true
   createdAt?: true
+  workingDays?: true
   _all?: true
 }
 
@@ -174,6 +176,7 @@ export type BusinessGroupByOutputType = {
   logo: string | null
   location: string | null
   createdAt: Date
+  workingDays: runtime.JsonValue | null
   _count: BusinessCountAggregateOutputType | null
   _min: BusinessMinAggregateOutputType | null
   _max: BusinessMaxAggregateOutputType | null
@@ -206,6 +209,7 @@ export type BusinessWhereInput = {
   logo?: Prisma.StringNullableFilter<"Business"> | string | null
   location?: Prisma.StringNullableFilter<"Business"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Business"> | Date | string
+  workingDays?: Prisma.JsonNullableFilter<"Business">
   vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   images?: Prisma.BusinessImageListRelationFilter
@@ -226,6 +230,7 @@ export type BusinessOrderByWithRelationInput = {
   logo?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  workingDays?: Prisma.SortOrderInput | Prisma.SortOrder
   vendor?: Prisma.VendorOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
   images?: Prisma.BusinessImageOrderByRelationAggregateInput
@@ -249,6 +254,7 @@ export type BusinessWhereUniqueInput = Prisma.AtLeast<{
   logo?: Prisma.StringNullableFilter<"Business"> | string | null
   location?: Prisma.StringNullableFilter<"Business"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Business"> | Date | string
+  workingDays?: Prisma.JsonNullableFilter<"Business">
   vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   images?: Prisma.BusinessImageListRelationFilter
@@ -269,6 +275,7 @@ export type BusinessOrderByWithAggregationInput = {
   logo?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  workingDays?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BusinessCountOrderByAggregateInput
   _max?: Prisma.BusinessMaxOrderByAggregateInput
   _min?: Prisma.BusinessMinOrderByAggregateInput
@@ -286,6 +293,7 @@ export type BusinessScalarWhereWithAggregatesInput = {
   logo?: Prisma.StringNullableWithAggregatesFilter<"Business"> | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"Business"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Business"> | Date | string
+  workingDays?: Prisma.JsonNullableWithAggregatesFilter<"Business">
 }
 
 export type BusinessCreateInput = {
@@ -295,6 +303,7 @@ export type BusinessCreateInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -315,6 +324,7 @@ export type BusinessUncheckedCreateInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -331,6 +341,7 @@ export type BusinessUpdateInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -351,6 +362,7 @@ export type BusinessUncheckedUpdateInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -369,6 +381,7 @@ export type BusinessCreateManyInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type BusinessUpdateManyMutationInput = {
@@ -378,6 +391,7 @@ export type BusinessUpdateManyMutationInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type BusinessUncheckedUpdateManyInput = {
@@ -389,6 +403,7 @@ export type BusinessUncheckedUpdateManyInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type BusinessListRelationFilter = {
@@ -410,6 +425,7 @@ export type BusinessCountOrderByAggregateInput = {
   logo?: Prisma.SortOrder
   location?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  workingDays?: Prisma.SortOrder
 }
 
 export type BusinessMaxOrderByAggregateInput = {
@@ -628,6 +644,7 @@ export type BusinessCreateWithoutVendorInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffCreateNestedManyWithoutBusinessInput
@@ -646,6 +663,7 @@ export type BusinessUncheckedCreateWithoutVendorInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -693,6 +711,7 @@ export type BusinessScalarWhereInput = {
   logo?: Prisma.StringNullableFilter<"Business"> | string | null
   location?: Prisma.StringNullableFilter<"Business"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Business"> | Date | string
+  workingDays?: Prisma.JsonNullableFilter<"Business">
 }
 
 export type BusinessCreateWithoutImagesInput = {
@@ -702,6 +721,7 @@ export type BusinessCreateWithoutImagesInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   staff?: Prisma.StaffCreateNestedManyWithoutBusinessInput
@@ -721,6 +741,7 @@ export type BusinessUncheckedCreateWithoutImagesInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutBusinessInput
@@ -752,6 +773,7 @@ export type BusinessUpdateWithoutImagesInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   staff?: Prisma.StaffUpdateManyWithoutBusinessNestedInput
@@ -771,6 +793,7 @@ export type BusinessUncheckedUpdateWithoutImagesInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutBusinessNestedInput
@@ -786,6 +809,7 @@ export type BusinessCreateWithoutStaffInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -805,6 +829,7 @@ export type BusinessUncheckedCreateWithoutStaffInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutBusinessInput
@@ -836,6 +861,7 @@ export type BusinessUpdateWithoutStaffInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -855,6 +881,7 @@ export type BusinessUncheckedUpdateWithoutStaffInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutBusinessNestedInput
@@ -870,6 +897,7 @@ export type BusinessCreateWithoutCategoryInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffCreateNestedManyWithoutBusinessInput
@@ -888,6 +916,7 @@ export type BusinessUncheckedCreateWithoutCategoryInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -930,6 +959,7 @@ export type BusinessCreateWithoutServicesInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -949,6 +979,7 @@ export type BusinessUncheckedCreateWithoutServicesInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutBusinessInput
@@ -980,6 +1011,7 @@ export type BusinessUpdateWithoutServicesInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -999,6 +1031,7 @@ export type BusinessUncheckedUpdateWithoutServicesInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1014,6 +1047,7 @@ export type BusinessCreateWithoutBookingsInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -1033,6 +1067,7 @@ export type BusinessUncheckedCreateWithoutBookingsInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -1064,6 +1099,7 @@ export type BusinessUpdateWithoutBookingsInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -1083,6 +1119,7 @@ export type BusinessUncheckedUpdateWithoutBookingsInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1098,6 +1135,7 @@ export type BusinessCreateWithoutGuestsInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -1117,6 +1155,7 @@ export type BusinessUncheckedCreateWithoutGuestsInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -1148,6 +1187,7 @@ export type BusinessUpdateWithoutGuestsInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -1167,6 +1207,7 @@ export type BusinessUncheckedUpdateWithoutGuestsInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1182,6 +1223,7 @@ export type BusinessCreateWithoutReviewsInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -1201,6 +1243,7 @@ export type BusinessUncheckedCreateWithoutReviewsInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -1232,6 +1275,7 @@ export type BusinessUpdateWithoutReviewsInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -1251,6 +1295,7 @@ export type BusinessUncheckedUpdateWithoutReviewsInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1266,6 +1311,7 @@ export type BusinessCreateWithoutFavoritedByInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor: Prisma.VendorCreateNestedOneWithoutBusinessesInput
   category?: Prisma.CategoryCreateNestedOneWithoutBusinessesInput
   images?: Prisma.BusinessImageCreateNestedManyWithoutBusinessInput
@@ -1285,6 +1331,7 @@ export type BusinessUncheckedCreateWithoutFavoritedByInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedCreateNestedManyWithoutBusinessInput
   staff?: Prisma.StaffUncheckedCreateNestedManyWithoutBusinessInput
   services?: Prisma.ServiceUncheckedCreateNestedManyWithoutBusinessInput
@@ -1316,6 +1363,7 @@ export type BusinessUpdateWithoutFavoritedByInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
@@ -1335,6 +1383,7 @@ export type BusinessUncheckedUpdateWithoutFavoritedByInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1351,6 +1400,7 @@ export type BusinessCreateManyVendorInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type BusinessUpdateWithoutVendorInput = {
@@ -1360,6 +1410,7 @@ export type BusinessUpdateWithoutVendorInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   category?: Prisma.CategoryUpdateOneWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUpdateManyWithoutBusinessNestedInput
@@ -1378,6 +1429,7 @@ export type BusinessUncheckedUpdateWithoutVendorInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1395,6 +1447,7 @@ export type BusinessUncheckedUpdateManyWithoutVendorInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type BusinessCreateManyCategoryInput = {
@@ -1405,6 +1458,7 @@ export type BusinessCreateManyCategoryInput = {
   logo?: string | null
   location?: string | null
   createdAt?: Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 export type BusinessUpdateWithoutCategoryInput = {
@@ -1414,6 +1468,7 @@ export type BusinessUpdateWithoutCategoryInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   vendor?: Prisma.VendorUpdateOneRequiredWithoutBusinessesNestedInput
   images?: Prisma.BusinessImageUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUpdateManyWithoutBusinessNestedInput
@@ -1432,6 +1487,7 @@ export type BusinessUncheckedUpdateWithoutCategoryInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   images?: Prisma.BusinessImageUncheckedUpdateManyWithoutBusinessNestedInput
   staff?: Prisma.StaffUncheckedUpdateManyWithoutBusinessNestedInput
   services?: Prisma.ServiceUncheckedUpdateManyWithoutBusinessNestedInput
@@ -1449,6 +1505,7 @@ export type BusinessUncheckedUpdateManyWithoutCategoryInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workingDays?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
 }
 
 
@@ -1545,6 +1602,7 @@ export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   logo?: boolean
   location?: boolean
   createdAt?: boolean
+  workingDays?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Business$categoryArgs<ExtArgs>
   images?: boolean | Prisma.Business$imagesArgs<ExtArgs>
@@ -1566,6 +1624,7 @@ export type BusinessSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   logo?: boolean
   location?: boolean
   createdAt?: boolean
+  workingDays?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Business$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["business"]>
@@ -1579,6 +1638,7 @@ export type BusinessSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   logo?: boolean
   location?: boolean
   createdAt?: boolean
+  workingDays?: boolean
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Business$categoryArgs<ExtArgs>
 }, ExtArgs["result"]["business"]>
@@ -1592,9 +1652,10 @@ export type BusinessSelectScalar = {
   logo?: boolean
   location?: boolean
   createdAt?: boolean
+  workingDays?: boolean
 }
 
-export type BusinessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "categoryId" | "name" | "description" | "logo" | "location" | "createdAt", ExtArgs["result"]["business"]>
+export type BusinessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "categoryId" | "name" | "description" | "logo" | "location" | "createdAt" | "workingDays", ExtArgs["result"]["business"]>
 export type BusinessInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Business$categoryArgs<ExtArgs>
@@ -1638,6 +1699,7 @@ export type $BusinessPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     logo: string | null
     location: string | null
     createdAt: Date
+    workingDays: runtime.JsonValue | null
   }, ExtArgs["result"]["business"]>
   composites: {}
 }
@@ -2078,6 +2140,7 @@ export interface BusinessFieldRefs {
   readonly logo: Prisma.FieldRef<"Business", 'String'>
   readonly location: Prisma.FieldRef<"Business", 'String'>
   readonly createdAt: Prisma.FieldRef<"Business", 'DateTime'>
+  readonly workingDays: Prisma.FieldRef<"Business", 'Json'>
 }
     
 
