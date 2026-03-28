@@ -134,6 +134,8 @@ model Business {
   location    String?
   createdAt   DateTime  @default(now()) @map("created_at")
 
+  workingDays Json? @map("working_days")
+
   // Relations
   images     BusinessImage[]
   staff      Staff[]

@@ -8,9 +8,11 @@ import {
   Param,
   ParseUUIDPipe,
   Query,
+  Patch,
 } from "@nestjs/common";
 import { BusinessService } from "./business.service";
 import { CreateBusinessDto } from "./dto/create-business.dto";
+import { UpdateBusinessDto } from "./dto/update-business.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { Roles } from "../auth/decorators/roles.decorator";
@@ -50,5 +52,16 @@ export class BusinessController {
   @Get(":id")
   async getOne(@Param("id", ParseUUIDPipe) id: string) {
     return this.businessService.findOne(id);
+  }
+
+  @Patch(":id")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("vendor")
+  @ResponseMessage("Business updated successfully.")
+  async update(
+    @Param("id", ParseUUIDPipe) id: string,
+    @Body() dto: UpdateBusinessDto,
+  ) {
+    return this.businessService.update(id, dto);
   }
 }

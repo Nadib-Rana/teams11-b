@@ -4,9 +4,13 @@ import {
   IsArray,
   IsNotEmpty,
   IsOptional,
+  IsObject,
   IsString,
   IsUUID,
+  ValidateNested,
 } from "class-validator";
+import { Type } from "class-transformer";
+import { WorkingDaysDto } from "../../staff/dto/working-days.dto";
 
 export class CreateBusinessDto {
   @IsString()
@@ -28,6 +32,12 @@ export class CreateBusinessDto {
   @IsString()
   @IsOptional()
   location?: string;
+
+  @IsOptional()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => WorkingDaysDto)
+  workingDays?: WorkingDaysDto;
 
   @IsArray()
   @IsString({ each: true })

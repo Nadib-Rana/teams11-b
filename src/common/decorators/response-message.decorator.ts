@@ -4,9 +4,9 @@
  * * for a controller route.
  */
 
-import { SetMetadata } from '@nestjs/common';
+import { SetMetadata } from "@nestjs/common";
 
-export const RESPONSE_MESSAGE_KEY = 'responseMessage';
+export const RESPONSE_MESSAGE_KEY = "responseMessage";
 
 /**
  * Decorator that sets a custom success message for a response.

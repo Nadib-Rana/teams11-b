@@ -11,20 +11,21 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
-} from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HttpArgumentsHost } from '@nestjs/common/interfaces';
-import { Request, Response } from 'express';
-import { ApiResponseDto, PaginatedResponseDto } from '../dto/api-response.dto';
-import { ContextService } from '../context/context.service';
-import { Reflector } from '@nestjs/core';
-import { RESPONSE_MESSAGE_KEY } from '../decorators/response-message.decorator';
+} from "@nestjs/common";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { HttpArgumentsHost } from "@nestjs/common/interfaces";
+import { Request, Response } from "express";
+import { ApiResponseDto, PaginatedResponseDto } from "../dto/api-response.dto";
+import { ContextService } from "../context/context.service";
+import { Reflector } from "@nestjs/core";
+import { RESPONSE_MESSAGE_KEY } from "../decorators/response-message.decorator";
 
 @Injectable()
-export class ResponseStandardizationInterceptor<T>
-  implements NestInterceptor<T, ApiResponseDto<T | T[]>>
-{
+export class ResponseStandardizationInterceptor<T> implements NestInterceptor<
+  T,
+  ApiResponseDto<T | T[]>
+> {
   // --- Inject ContextService and Reflector ---
   constructor(
     private readonly contextService: ContextService,
@@ -59,7 +60,7 @@ export class ResponseStandardizationInterceptor<T>
             true,
             statusCode, // <-- PASS STATUS CODE
             // Use custom message or default
-            customMessage || 'Data fetched successfully (paginated)',
+            customMessage || "Data fetched successfully (paginated)",
             path,
             requestId,
             data.data,
@@ -72,7 +73,7 @@ export class ResponseStandardizationInterceptor<T>
           true,
           statusCode, // <-- PASS STATUS CODE
           // Use custom message or default
-          customMessage || 'Operation successful',
+          customMessage || "Operation successful",
           path,
           requestId,
           data as T,

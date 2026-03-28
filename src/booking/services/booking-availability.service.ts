@@ -25,6 +25,9 @@ export class BookingAvailabilityService {
   ): Promise<boolean> {
     const staff = await this.prisma.staff.findUnique({
       where: { id: staffId },
+      include: {
+        business: true,
+      },
     });
 
     if (!staff) {
@@ -38,8 +41,19 @@ export class BookingAvailabilityService {
         weekday: "long",
       })
       .toLowerCase();
-    const workingDays = staff.workingDays as Record<string, boolean> | null;
-    if (!workingDays || !workingDays[dayOfWeek]) {
+
+    const staffWorkingDays = staff.workingDays as Record<
+      string,
+      boolean
+    > | null;
+    if (!staffWorkingDays || !staffWorkingDays[dayOfWeek]) {
+      return false;
+    }
+
+    const businessWorkingDays =
+      staff.business &&
+      (staff.business.workingDays as Record<string, boolean> | null);
+    if (businessWorkingDays && !businessWorkingDays[dayOfWeek]) {
       return false;
     }
 
