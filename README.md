@@ -500,3 +500,5 @@ I completed:
 5. BookingModule
 6. CategoryModule
 7. ReviewModule
+8. vendor dashboard API
+9. Customer dashboard API
