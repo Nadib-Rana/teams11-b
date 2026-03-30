@@ -2,6 +2,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../../common/context/prisma.service";
 import { BookingStatus } from "../../generated/prisma/enums";
+import { Prisma } from "src/generated/prisma/client";
 
 @Injectable()
 export class BookingRetrievalService {
@@ -29,7 +30,7 @@ export class BookingRetrievalService {
     endDate?: string,
     user?: { userId: string; role: string },
   ) {
-    const where: any = {};
+    const where: Prisma.BookingWhereInput = {};
     if (customerId) where.customerId = customerId;
     if (businessId) where.businessId = businessId;
     if (staffId) where.staffId = staffId;
