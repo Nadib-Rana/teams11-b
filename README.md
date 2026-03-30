@@ -297,6 +297,10 @@ Fields:
 
 ---
 
+# Calendar Management
+
+The Calendar serves as the central hub for Vendors to visualize, filter, and manage time-based data. It provides a real-time overview of business operations and staff availability.
+
 # Staff Management
 
 Vendors can:

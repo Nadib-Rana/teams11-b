@@ -54,12 +54,20 @@ export class BookingService {
     businessId?: string,
     staffId?: string,
     status?: BookingStatus,
+    date?: string,
+    startDate?: string,
+    endDate?: string,
+    user?: { userId: string; role: string },
   ) {
     return this.retrievalService.findAll(
       customerId,
       businessId,
       staffId,
       status,
+      date,
+      startDate,
+      endDate,
+      user,
     );
   }
 

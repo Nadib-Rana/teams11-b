@@ -24,7 +24,7 @@ import { ResponseMessage } from "src/common/decorators/response-message.decorato
 import { Roles } from "src/auth/decorators/roles.decorator";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
-// import { GetUser } from "../auth/decorators/get-user.decorator";
+import { GetUser } from "../auth/decorators/get-user.decorator";
 
 @Controller("bookings")
 export class BookingController {
@@ -48,27 +48,41 @@ export class BookingController {
 
   /**
    * GET /bookings
-   * Retrieve bookings with optional filters (customer, business, staff, status).
+   * Retrieve bookings with optional filters (customer, business, staff, status, dates).
    * Can be used by vendors to view business bookings or customers to view their bookings.
-   * Ony cutomer,vendor and staff have acess to do this oparation.
+   * Only customer, vendor and staff have access to do this operation.
    * @param customerId - Optional: filter by customer
    * @param businessId - Optional: filter by business
    * @param staffId - Optional: filter by staff
    * @param status - Optional: filter by status (pending, confirmed, cancelled, waiting)
+   * @param date - Optional: filter by specific date (ISO format)
+   * @param startDate - Optional: filter by date range start (ISO format)
+   * @param endDate - Optional: filter by date range end (ISO format)
    * @returns Array of bookings matching filters
    */
   @Get()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles("customer")
-  @Roles("vendor")
-  @Roles("staff")
+  @Roles("customer", "vendor", "staff")
   async findAll(
     @Query("customerId") customerId?: string,
     @Query("businessId") businessId?: string,
     @Query("staffId") staffId?: string,
     @Query("status") status?: BookingStatus,
+    @Query("date") date?: string,
+    @Query("startDate") startDate?: string,
+    @Query("endDate") endDate?: string,
+    @GetUser() user?: { userId: string; role: string },
   ) {
-    return this.bookingService.findAll(customerId, businessId, staffId, status);
+    return this.bookingService.findAll(
+      customerId,
+      businessId,
+      staffId,
+      status,
+      date,
+      startDate,
+      endDate,
+      user,
+    );
   }
 
   /**
