@@ -61,6 +61,13 @@ export class RegistrationService {
 
     // Send opt to main
     try {
+      console.log("📧 Attempting to send verification email to:", email);
+      console.log(
+        "📧 Mail config - Host:",
+        process.env.MAIL_HOST,
+        "Port:",
+        process.env.MAIL_PORT,
+      );
       await this.mailerService.sendMail({
         to: email,
         subject: "Welcome to Teams11!",
@@ -70,8 +77,10 @@ export class RegistrationService {
           otp: token,
         },
       });
+      console.log("✅ Verification email sent successfully to:", email);
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("❌ Error sending email:", error);
+      console.error("❌ Error details:", error.message);
     }
 
     return { message: "User registered. Check your email for OTP." };

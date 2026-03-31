@@ -2,18 +2,22 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "../../common/context/prisma.service";
 import { BookingStatus } from "../../generated/prisma/enums";
+import { Prisma } from "src/generated/prisma/client";
 
 @Injectable()
 export class BookingRetrievalService {
   constructor(private prisma: PrismaService) {}
 
   /**
-   * Retrieves all bookings, optionally filtered by customer, business, or staff.
+   * Retrieves all bookings, optionally filtered by customer, business, staff, status, or dates.
    *
    * @param customerId - Optional: filter by customer
    * @param businessId - Optional: filter by business
    * @param staffId - Optional: filter by staff
    * @param status - Optional: filter by booking status
+   * @param date - Optional: filter by specific date (ISO format)
+   * @param startDate - Optional: filter by date range start (ISO format)
+   * @param endDate - Optional: filter by date range end (ISO format)
    * @returns Array of bookings with related data
    */
   async findAll(
@@ -21,17 +25,90 @@ export class BookingRetrievalService {
     businessId?: string,
     staffId?: string,
     status?: BookingStatus,
+    date?: string,
+    startDate?: string,
+    endDate?: string,
+    user?: { userId: string; role: string },
   ) {
-    const where: {
-      customerId?: string;
-      businessId?: string;
-      staffId?: string;
-      status?: BookingStatus;
-    } = {};
+    const where: Prisma.BookingWhereInput = {};
     if (customerId) where.customerId = customerId;
     if (businessId) where.businessId = businessId;
     if (staffId) where.staffId = staffId;
     if (status) where.status = status;
+
+    // Apply date filters
+    if (date) {
+      // Filter by specific date
+      const targetDate = new Date(date);
+      where.date = {
+        gte: new Date(
+          targetDate.getFullYear(),
+          targetDate.getMonth(),
+          targetDate.getDate(),
+        ),
+        lt: new Date(
+          targetDate.getFullYear(),
+          targetDate.getMonth(),
+          targetDate.getDate() + 1,
+        ),
+      };
+    } else if (startDate || endDate) {
+      // Filter by date range
+      where.date = {};
+      if (startDate) {
+        const start = new Date(startDate);
+        where.date.gte = new Date(
+          start.getFullYear(),
+          start.getMonth(),
+          start.getDate(),
+        );
+      }
+      if (endDate) {
+        const end = new Date(endDate);
+        where.date.lt = new Date(
+          end.getFullYear(),
+          end.getMonth(),
+          end.getDate() + 1,
+        );
+      }
+    }
+
+    // Apply role-based filtering
+    if (user) {
+      if (user.role === "vendor") {
+        // Vendors can only see bookings for their businesses
+        const vendorBusinesses = await this.prisma.business.findMany({
+          where: { vendorId: user.userId },
+          select: { id: true },
+        });
+        const businessIds = vendorBusinesses.map((b) => b.id);
+        where.businessId = { in: businessIds };
+      } else if (user.role === "customer") {
+        // Customers can only see their own bookings
+        const customer = await this.prisma.customer.findUnique({
+          where: { userId: user.userId },
+          select: { id: true },
+        });
+        if (customer) {
+          where.customerId = customer.id;
+        } else {
+          // No customer record found, return empty array
+          return [];
+        }
+      } else if (user.role === "staff") {
+        // Staff can only see bookings assigned to them
+        const staff = await this.prisma.staff.findUnique({
+          where: { userId: user.userId },
+          select: { id: true },
+        });
+        if (staff) {
+          where.staffId = staff.id;
+        } else {
+          // No staff record found, return empty array
+          return [];
+        }
+      }
+    }
 
     return this.prisma.booking.findMany({
       where,

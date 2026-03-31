@@ -13,6 +13,9 @@ export const getMailConfig = (configService: ConfigService): MailerOptions => {
         user: configService.get<string>("MAIL_USER"),
         pass: configService.get<string>("MAIL_PASS"),
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     },
 
     defaults: {

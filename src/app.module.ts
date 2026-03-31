@@ -12,12 +12,14 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { BusinessModule } from "./business/business.module";
 import { StaffModule } from "./staff/staff.module";
 import { ServiceModule } from "./service/service.module";
+import { VendorModule } from "./vendor/vendor.module";
 import { BookingModule } from "./booking/booking.module";
 import { CategoryModule } from "./category/category.module";
 import { ReviewModule } from "./review/review.module";
 import { CustomerModule } from "./customer/customer.module";
 import { NotificationModule } from "./notification/notification.module";
 import { ScheduleModule } from "@nestjs/schedule";
+import { DashboardModule } from "./dashboard/dashboard.module";
 
 @Module({
   imports: [
@@ -40,6 +42,8 @@ import { ScheduleModule } from "@nestjs/schedule";
     CategoryModule,
     ReviewModule,
     ScheduleModule.forRoot(),
+    DashboardModule,
+    VendorModule,
   ],
   controllers: [AppController],
   providers: [

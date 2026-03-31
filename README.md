@@ -238,6 +238,45 @@ Fields include:
 - Assigned Staff
 - Status
 
+### Dashboard API
+
+**GET /dashboard/vendor**
+
+Retrieves aggregated dashboard data for vendors including:
+
+- Business information
+- Statistics (services count, staff count, total bookings, upcoming bookings)
+- Recent reviews
+- Upcoming bookings
+- Recent notifications
+
+**Authentication:** Required (Vendor role)
+
+**Response:**
+
+```json
+{
+  "business": {
+    "id": "string",
+    "name": "string",
+    "description": "string",
+    "logo": "string",
+    "location": "string",
+    "workingDays": "json"
+  },
+  "stats": {
+    "servicesCount": "number",
+    "staffCount": "number",
+    "totalBookings": "number",
+    "upcomingBookingsCount": "number",
+    "reviewsCount": "number"
+  },
+  "upcomingBookings": [...],
+  "recentReviews": [...],
+  "notifications": [...]
+}
+```
+
 ---
 
 # Business Profile Management
@@ -257,6 +296,10 @@ Fields:
 - Staff
 
 ---
+
+# Calendar Management
+
+The Calendar serves as the central hub for Vendors to visualize, filter, and manage time-based data. It provides a real-time overview of business operations and staff availability.
 
 # Staff Management
 
@@ -461,3 +504,5 @@ I completed:
 5. BookingModule
 6. CategoryModule
 7. ReviewModule
+8. vendor dashboard API
+9. Customer dashboard API
