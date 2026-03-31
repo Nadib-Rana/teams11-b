@@ -5,6 +5,7 @@ import {
   Delete,
   Param,
   UseInterceptors,
+  UseGuards,
   UploadedFile,
   BadRequestException,
   //   Res,
@@ -12,6 +13,7 @@ import {
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Response } from "express";
 import { GetUser } from "../auth/decorators/get-user.decorator";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { StorageService } from "../storage/storage.service";
 import { PrismaService } from "../prisma.service";
 
@@ -28,6 +30,7 @@ export class FileUploadController {
    * @param userId - The user's ID from JWT token
    */
   @Post("profile-image")
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor("profileImage", {
       fileFilter: (req, file, cb) => {
@@ -110,6 +113,7 @@ export class FileUploadController {
    * @param userId - User ID from JWT token
    */
   @Delete("profile-image")
+  @UseGuards(JwtAuthGuard)
   async deleteProfileImage(@GetUser("userId") userId: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
 
@@ -131,6 +135,7 @@ export class FileUploadController {
    * Upload business logo
    */
   @Post("business-logo/:businessId")
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor("logo", {
       fileFilter: (req, file, cb) => {
@@ -197,6 +202,7 @@ export class FileUploadController {
    * Upload business images (multiple)
    */
   @Post("business-images/:businessId")
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor("images", {
       fileFilter: (req, file, cb) => {
@@ -246,6 +252,7 @@ export class FileUploadController {
    * Delete business image
    */
   @Delete("business-images/:imageId")
+  @UseGuards(JwtAuthGuard)
   async deleteBusinessImage(@Param("imageId") imageId: string) {
     const businessImage = await this.prisma.businessImage.findUnique({
       where: { id: imageId },

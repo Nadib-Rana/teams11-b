@@ -21,6 +21,7 @@ import { NotificationModule } from "./notification/notification.module";
 import { ScheduleModule } from "@nestjs/schedule";
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { StorageModule } from "./storage/storage.module";
+import { PrismaModule } from "./prisma.module";
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { StorageModule } from "./storage/storage.module";
     ScheduleModule.forRoot(),
     DashboardModule,
     VendorModule,
+    PrismaModule,
     StorageModule,
   ],
   controllers: [AppController],
