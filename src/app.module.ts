@@ -20,6 +20,7 @@ import { CustomerModule } from "./customer/customer.module";
 import { NotificationModule } from "./notification/notification.module";
 import { ScheduleModule } from "@nestjs/schedule";
 import { DashboardModule } from "./dashboard/dashboard.module";
+import { StorageModule } from "./storage/storage.module";
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { DashboardModule } from "./dashboard/dashboard.module";
     ScheduleModule.forRoot(),
     DashboardModule,
     VendorModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [
