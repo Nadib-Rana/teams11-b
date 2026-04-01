@@ -16,6 +16,7 @@ import { GetUser } from "../auth/decorators/get-user.decorator";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { StorageService } from "../storage/storage.service";
 import { PrismaService } from "../prisma.service";
+import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 
 @Controller("api/files")
 export class FileUploadController {
@@ -31,6 +32,7 @@ export class FileUploadController {
    */
   @Post("profile-image")
   @UseGuards(JwtAuthGuard)
+  @ResponseMessage("Profile image uploaded successfully")
   @UseInterceptors(
     FileInterceptor("profileImage", {
       fileFilter: (req, file, cb) => {
@@ -98,6 +100,7 @@ export class FileUploadController {
    * @param objectKey - The MinIO object key stored in database
    */
   @Get("profile-image/:objectKey")
+  @ResponseMessage("Profile image retrieved successfully")
   async getProfileImage(@Param("objectKey") objectKey: string) {
     const imageUrl = await this.storageService.getPresignedDownloadUrl(
       objectKey,
@@ -114,6 +117,7 @@ export class FileUploadController {
    */
   @Delete("profile-image")
   @UseGuards(JwtAuthGuard)
+  @ResponseMessage("Profile image deleted successfully")
   async deleteProfileImage(@GetUser("userId") userId: string) {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
 
@@ -136,6 +140,7 @@ export class FileUploadController {
    */
   @Post("business-logo/:businessId")
   @UseGuards(JwtAuthGuard)
+  @ResponseMessage("Business logo uploaded successfully")
   @UseInterceptors(
     FileInterceptor("logo", {
       fileFilter: (req, file, cb) => {
@@ -202,6 +207,7 @@ export class FileUploadController {
    * Upload business images (multiple)
    */
   @Post("business-images/:businessId")
+  @ResponseMessage("Business images uploaded successfully")
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(
     FileInterceptor("images", {
@@ -253,6 +259,7 @@ export class FileUploadController {
    */
   @Delete("business-images/:imageId")
   @UseGuards(JwtAuthGuard)
+  @ResponseMessage("Business image deleted successfully")
   async deleteBusinessImage(@Param("imageId") imageId: string) {
     const businessImage = await this.prisma.businessImage.findUnique({
       where: { id: imageId },
