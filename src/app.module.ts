@@ -5,6 +5,7 @@ import { ContextModule } from "./common/context/context.module";
 import { RequestIdMiddleware } from "./common/middleware/request-id.middleware";
 import { APP_INTERCEPTOR, Reflector } from "@nestjs/core";
 import { ResponseStandardizationInterceptor } from "./common/interceptors/response-standardization.interceptor";
+import { ImageTransformInterceptor } from "./common/interceptors/image-transform.interceptor";
 import { AuthModule } from "./auth/auth.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { getMailConfig } from "./mail/mail.config";
@@ -52,6 +53,10 @@ import { PrismaModule } from "./prisma.module";
   controllers: [AppController],
   providers: [
     AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ImageTransformInterceptor,
+    },
     {
       provide: APP_INTERCEPTOR,
       useClass: ResponseStandardizationInterceptor,

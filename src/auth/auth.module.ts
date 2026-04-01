@@ -10,6 +10,8 @@ import { ContextModule } from "../common/context/context.module";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./jwt.strategy";
 import { jwtConstants } from "./constants";
+import { RolesGuard } from "./guards/roles.guard";
+// import { Roles } from "./decorators/roles.decorator";
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { jwtConstants } from "./constants";
     LoginService,
     PasswordResetService,
     JwtStrategy,
+    RolesGuard,
   ],
+  exports: [JwtStrategy, RolesGuard],
 })
 export class AuthModule {}

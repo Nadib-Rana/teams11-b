@@ -55,6 +55,7 @@ model User {
   password      String
   role          UserRole
   phone         String?   // optional phone number for user
+  /// Stores MinIO object key for profile image (not full URL). Format: users/{userId}/profile-{timestamp}
   profileImage  String?   @map("profile_image")
   isVerified    Boolean   @default(false) @map("is_verified")
   createdAt     DateTime  @default(now()) @map("created_at")
@@ -130,7 +131,8 @@ model Business {
   
   name        String
   description String?
-  logo        String?
+  /// Stores MinIO object key for logo (not full URL). Format: businesses/{businessId}/logo-{timestamp}
+  logoKey     String?   @map("logo")
   location    String?
   createdAt   DateTime  @default(now()) @map("created_at")
 
@@ -151,8 +153,9 @@ model Business {
 model BusinessImage {
   id         String   @id @default(uuid()) @db.Uuid
   businessId String   @map("business_id") @db.Uuid
-  business   Business @relation(fields: [businessId], references: [id])
-  imageUrl   String   @map("image_url")
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  /// Stores MinIO object key (not full URL). Format: businesses/{businessId}/images/{key}
+  imageKey   String   @map("image_url")
 
   @@map("business_images")
 }
@@ -178,7 +181,8 @@ model Staff {
 model Category {
   id   String @id @default(uuid()) @db.Uuid
   name String
-  image String
+  /// Stores MinIO object key for category image (not full URL). Format: categories/{categoryId}/image-{timestamp}
+  image String?
 
   // Relations
   businesses Business[]

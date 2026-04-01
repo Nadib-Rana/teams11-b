@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Query,
   Patch,
+  Delete,
 } from "@nestjs/common";
 import { BusinessService } from "./business.service";
 import { CreateBusinessDto } from "./dto/create-business.dto";
@@ -63,5 +64,18 @@ export class BusinessController {
     @Body() dto: UpdateBusinessDto,
   ) {
     return this.businessService.update(id, dto);
+  }
+
+  @Delete(":id")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("vendor")
+  @ResponseMessage("Business deleted successfully.")
+  async delete(
+    @Param("id", ParseUUIDPipe) id: string,
+    @GetUser("userId") userId: string,
+  ) {
+    // অনুমতি যাচাই করুন
+    await this.businessService.verifyOwnership(id, userId);
+    return this.businessService.delete(id);
   }
 }

@@ -2,11 +2,14 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { StorageService } from "./storage.service";
 import { MinioConfigService } from "./minio.config";
-import { FileUploadController } from "./file-upload.controller";
+import { ProfileController } from "./profile.controller";
+import { BusinessController } from "./business.controller";
+import { CategoryController } from "./category.controller";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
-  imports: [ConfigModule],
-  controllers: [FileUploadController],
+  imports: [ConfigModule, AuthModule],
+  controllers: [ProfileController, BusinessController, CategoryController],
   providers: [MinioConfigService, StorageService],
   exports: [StorageService, MinioConfigService],
 })

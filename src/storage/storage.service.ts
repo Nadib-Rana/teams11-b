@@ -192,6 +192,32 @@ export class StorageService {
    * @param bucketType - Type of bucket
    * @returns Direct object URL
    */
+  async moveFile(
+    bucketType: BucketType,
+    sourceObjectName: string,
+    destinationObjectName: string,
+  ): Promise<string> {
+    const client = this.minioConfig.getClient();
+    const bucketName = this.minioConfig.getBucketName(bucketType);
+
+    if (sourceObjectName === destinationObjectName) {
+      return destinationObjectName;
+    }
+
+    try {
+      const copySource = `/${bucketName}/${sourceObjectName}`;
+      await client.copyObject(bucketName, destinationObjectName, copySource);
+      await client.removeObject(bucketName, sourceObjectName);
+      return destinationObjectName;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      throw new InternalServerErrorException(
+        `Failed to move file from ${sourceObjectName} to ${destinationObjectName}: ${errorMessage}`,
+      );
+    }
+  }
+
   getObjectUrl(objectName: string, bucketType: BucketType): string {
     const bucketName = this.minioConfig.getBucketName(bucketType);
     const minioUrl = this.minioConfig.getMinioUrl();

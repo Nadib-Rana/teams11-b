@@ -186,7 +186,7 @@ export class DashboardService {
         id: business.id,
         name: business.name,
         description: business.description,
-        logo: business.logo,
+        logoKey: business.logoKey,
         location: business.location,
         workingDays: business.workingDays,
       },
