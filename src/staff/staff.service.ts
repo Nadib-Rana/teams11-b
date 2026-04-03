@@ -10,6 +10,7 @@ import { CreateStaffDto } from "./dto/create-staff.dto";
 import { UpdateStaffDto } from "./dto/update-staff.dto";
 import { BookingStatus } from "src/generated/prisma/enums";
 import * as bcrypt from "bcryptjs"; // for hashing password when creating user
+import { StorageService } from "../storage/storage.service";
 
 @Injectable()
 export class StaffService {
@@ -22,7 +23,10 @@ export class StaffService {
    * - Retrieve staff listings and individual details
    * - Generate staff-specific dashboards
    */
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private storageService: StorageService,
+  ) {}
 
   async create(dto: CreateStaffDto) {
     // 1. Ensure the business exists first (vendors only can add staff)
@@ -75,7 +79,7 @@ export class StaffService {
     }
 
     // 4. Create the staff record
-    return this.prisma.staff.create({
+    const staff = await this.prisma.staff.create({
       data: {
         userId: user.id,
         businessId: dto.businessId,
@@ -83,6 +87,42 @@ export class StaffService {
         specialties: dto.specialties,
         workingDays: dto.workingDays,
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            fullName: true,
+            email: true,
+            profileImage: true,
+            phone: true,
+          },
+        },
+        business: true,
+      },
+    });
+
+    let finalImageKey = dto.image;
+
+    if (dto.image && dto.image.startsWith("staff/temp/")) {
+      const fileName =
+        dto.image.split("/").pop() ?? `profile-${Date.now()}.jpg`;
+      const destinationKey = `staff/${staff.id}/profile-${Date.now()}-${fileName}`;
+      finalImageKey = await this.storageService.moveFile(
+        "staff",
+        dto.image,
+        destinationKey,
+      );
+    }
+
+    if (finalImageKey !== dto.image) {
+      await this.prisma.staff.update({
+        where: { id: staff.id },
+        data: { image: finalImageKey },
+      });
+    }
+
+    return this.prisma.staff.findUnique({
+      where: { id: staff.id },
       include: {
         user: {
           select: {

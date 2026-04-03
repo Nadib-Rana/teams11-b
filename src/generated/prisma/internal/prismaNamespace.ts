@@ -2098,6 +2098,7 @@ export const StaffScalarFieldEnum = {
   businessId: 'businessId',
   role: 'role',
   specialties: 'specialties',
+  image: 'image',
   workingDays: 'workingDays',
   createdAt: 'createdAt'
 } as const

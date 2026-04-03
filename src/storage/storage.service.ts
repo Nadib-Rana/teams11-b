@@ -11,7 +11,8 @@ export type BucketType =
   | "businesses"
   | "categories"
   | "reviews"
-  | "documents";
+  | "documents"
+  | "staff";
 
 @Injectable()
 export class StorageService {
@@ -27,6 +28,7 @@ export class StorageService {
       "categories",
       "reviews",
       "documents",
+      "staff",
     ];
 
     for (const type of bucketTypes) {

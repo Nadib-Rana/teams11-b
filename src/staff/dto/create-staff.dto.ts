@@ -48,4 +48,8 @@ export class CreateStaffDto {
   @ValidateNested()
   @Type(() => WorkingDaysDto)
   workingDays?: WorkingDaysDto;
+
+  @IsString()
+  @IsOptional()
+  image?: string; // MinIO object key for staff profile image
 }

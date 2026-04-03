@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  Get,
   Delete,
   Param,
   UseInterceptors,
@@ -295,5 +296,35 @@ export class BusinessController {
     await this.prisma.businessImage.delete({ where: { id: imageId } });
 
     return { success: true, message: "Image deleted successfully" };
+  }
+
+  /**
+   * Get presigned URL for business logo
+   */
+  @Get("business-logo/*path")
+  @ResponseMessage("Business logo retrieved successfully")
+  async getBusinessLogo(@Param("path") objectKey: string) {
+    const imageUrl = await this.storageService.getPresignedDownloadUrl(
+      objectKey,
+      "businesses",
+      86400, // 24 hours
+    );
+
+    return { imageUrl };
+  }
+
+  /**
+   * Get presigned URL for business gallery image
+   */
+  @Get("business-images/*path")
+  @ResponseMessage("Business image retrieved successfully")
+  async getBusinessImage(@Param("path") objectKey: string) {
+    const imageUrl = await this.storageService.getPresignedDownloadUrl(
+      objectKey,
+      "businesses",
+      86400, // 24 hours
+    );
+
+    return { imageUrl };
   }
 }

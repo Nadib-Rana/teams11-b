@@ -168,6 +168,8 @@ model Staff {
   business    Business @relation(fields: [businessId], references: [id])
   role        String?
   specialties String?
+  /// Stores MinIO object key for staff profile image (not full URL). Format: staff/{staffId}/profile-{timestamp}
+  image       String?  @map("image")
   workingDays Json?    @map("working_days")
   createdAt   DateTime @default(now()) @map("created_at")
 
