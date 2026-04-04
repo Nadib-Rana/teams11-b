@@ -9,6 +9,8 @@ import {
 } from "@nestjs/common";
 import { NotificationService } from "./notification.service";
 import { UpdateNotificationSettingsDto } from "./dto/update-notification-settings.dto";
+import { CreateNotificationTemplateDto } from "./dto/create-notification-template.dto";
+import { SendBookingReminderDto } from "./dto/send-booking-reminder.dto";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { GetUser } from "../auth/decorators/get-user.decorator";
 import { ResponseMessage } from "src/common/decorators/response-message.decorator";
@@ -47,7 +49,25 @@ export class NotificationController {
 
   @Post("booking-reminder")
   @ResponseMessage("Sent booking reminder successfully")
-  async sendBookingReminder(@Body("bookingId") bookingId: string) {
-    return this.notificationService.sendBookingReminder(bookingId);
+  async sendBookingReminder(@Body() dto: SendBookingReminderDto) {
+    return this.notificationService.sendBookingReminder(dto.bookingId);
+  }
+
+  @Get("analytics")
+  @ResponseMessage("Fetched notification analytics successfully")
+  async getAnalytics(@GetUser("userId") userId: string) {
+    return this.notificationService.getNotificationAnalytics(userId);
+  }
+
+  @Get("templates")
+  @ResponseMessage("Fetched notification templates successfully")
+  async getTemplates() {
+    return this.notificationService.getNotificationTemplates();
+  }
+
+  @Post("templates")
+  @ResponseMessage("Created notification template successfully")
+  async createTemplate(@Body() templateData: CreateNotificationTemplateDto) {
+    return this.notificationService.createNotificationTemplate(templateData);
   }
 }

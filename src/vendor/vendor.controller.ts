@@ -19,6 +19,12 @@ export class VendorController {
     return this.vendorService.getProfile(userId);
   }
 
+  @Get("referral")
+  @ResponseMessage("Fetched vendor referral summary successfully")
+  async getReferralSummary(@GetUser("userId") userId: string) {
+    return this.vendorService.getReferralSummary(userId);
+  }
+
   @Patch("me")
   @ResponseMessage("Updated vendor profile successfully")
   async updateProfile(

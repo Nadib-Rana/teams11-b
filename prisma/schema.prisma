@@ -247,8 +247,9 @@ model Booking {
   createdAt    DateTime      @default(now()) @map("created_at")
 
   // Relations
-  reviews  Review[]
-  payments Payment[]
+  reviews      Review[]
+  payments     Payment[]
+  notifications Notification[]
 
   @@map("bookings")
 }
@@ -308,17 +309,36 @@ model Favorite {
   @@map("favorites")
 }
 
-model Notification {
-  id        String   @id @default(uuid()) @db.Uuid
+enum NotificationDeliveryStatus {
+  pending
+  sent
+  failed
+}
 
-  userId    String   @map("user_id") @db.Uuid
-  user      User     @relation(fields: [userId], references: [id])
+enum NotificationChannel {
+  email
+  sms
+  push
+}
+
+model Notification {
+  id             String                     @id @default(uuid()) @db.Uuid
+
+  userId         String                     @map("user_id") @db.Uuid
+  user           User                       @relation(fields: [userId], references: [id])
   
-  title     String
-  message   String
-  type      String
-  isRead    Boolean  @default(false) @map("is_read")
-  createdAt DateTime @default(now()) @map("created_at")
+  bookingId      String?                    @map("booking_id") @db.Uuid
+  booking        Booking?                   @relation(fields: [bookingId], references: [id])
+  
+  title          String
+  message        String
+  type           String
+  channel        NotificationChannel
+  deliveryStatus NotificationDeliveryStatus @default(pending) @map("delivery_status")
+  sentAt         DateTime?                  @map("sent_at")
+  retryCount     Int                        @default(0) @map("retry_count")
+  isRead         Boolean                    @default(false) @map("is_read")
+  createdAt      DateTime                   @default(now()) @map("created_at")
 
   @@map("notifications")
 }
@@ -330,8 +350,24 @@ model NotificationSetting {
   emailNotification Boolean @default(true) @map("email_notifications")
   pushNotification  Boolean @default(true) @map("push_notifications")
   bookingReminders  Boolean @default(true) @map("booking_reminders")
+  reminder24h       Boolean @default(true) @map("reminder_24h")
+  reminder1h        Boolean @default(true) @map("reminder_1h")
 
   @@map("notification_settings")
+}
+
+model NotificationTemplate {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  type        String   // e.g., booking_confirmation, appointment_reminder, cancellation
+  subject     String?
+  body        String
+  variables   Json?    // e.g., { "customerName": "{{customerName}}", "appointmentTime": "{{appointmentTime}}" }
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("notification_templates")
 }
 
 model Referral {

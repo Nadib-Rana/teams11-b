@@ -10,6 +10,8 @@ import { RegisterDto } from "./dto/register.dto";
 import { MailerService } from "@nestjs-modules/mailer";
 import { Injectable } from "@nestjs/common";
 
+const REFERRAL_BONUS_AMOUNT = 10.0;
+
 @Injectable()
 export class RegistrationService {
   constructor(
@@ -23,43 +25,97 @@ export class RegistrationService {
     return "" + randomInt(100000, 999999);
   }
 
+  private generateReferralCode(): string {
+    return `T11-${randomInt(100000, 999999)}`;
+  }
+
+  private async generateUniqueReferralCode() {
+    let referralCode = this.generateReferralCode();
+    while (
+      (await this.prisma.vendor.findFirst({ where: { referralCode } })) ||
+      (await this.prisma.customer.findFirst({ where: { referralCode } }))
+    ) {
+      referralCode = this.generateReferralCode();
+    }
+    return referralCode;
+  }
+
   // Register user
   async register(data: RegisterDto) {
-    const { fullName, email, password, role } = data;
+    const { fullName, email, password, role, referralCode, ref } = data;
+    const activeReferralCode = referralCode ?? ref;
 
     const existing = await this.prisma.user.findUnique({ where: { email } });
     if (existing) throw new BadRequestException("Email already exists");
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user and associated profile in a transaction
     const user = await this.prisma.user.create({
       data: { fullName, email, password: hashedPassword, role },
     });
 
-    // Create role-specific profile
     if (role === "vendor") {
-      await this.prisma.vendor.create({
-        data: { userId: user.id },
-      });
+      const newVendorReferralCode = await this.generateUniqueReferralCode();
+      const vendorData: {
+        userId: string;
+        referralCode: string;
+        referredBy?: string | null;
+      } = {
+        userId: user.id,
+        referralCode: newVendorReferralCode,
+      };
+
+      if (activeReferralCode) {
+        const referrerVendor = await this.prisma.vendor.findFirst({
+          where: { referralCode: activeReferralCode },
+          include: { user: true },
+        });
+
+        if (!referrerVendor) {
+          throw new BadRequestException("Invalid referral code");
+        }
+
+        vendorData.referredBy = referrerVendor.id;
+
+        await this.prisma.$transaction(async (tx) => {
+          const createdVendor = await tx.vendor.create({ data: vendorData });
+
+          await tx.vendor.update({
+            where: { id: referrerVendor.id },
+            data: {
+              referralCount: { increment: 1 },
+              bonusBalance: { increment: REFERRAL_BONUS_AMOUNT },
+            },
+          });
+
+          await tx.referral.create({
+            data: {
+              referrerUserId: referrerVendor.userId,
+              referredVendorId: createdVendor.id,
+              bonusAmount: REFERRAL_BONUS_AMOUNT,
+            },
+          });
+        });
+      } else {
+        await this.prisma.vendor.create({ data: vendorData });
+      }
     } else if (role === "customer") {
+      const customerReferralCode = await this.generateUniqueReferralCode();
       await this.prisma.customer.create({
-        data: { userId: user.id },
+        data: { userId: user.id, referralCode: customerReferralCode },
       });
     }
 
-    // Generate numeric OTP
     const token = this.generateOTP();
     await this.prisma.verificationToken.create({
       data: {
         userId: user.id,
         token,
         type: "email_verification",
-        expiresAt: new Date(Date.now() + 5 * 60 * 1000), // OTP 5 min valid
+        expiresAt: new Date(Date.now() + 5 * 60 * 1000),
       },
     });
 
-    // Send opt to main
     try {
       console.log("📧 Attempting to send verification email to:", email);
       console.log(

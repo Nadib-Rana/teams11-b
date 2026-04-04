@@ -61,3 +61,21 @@ export const TokenType = {
 } as const
 
 export type TokenType = (typeof TokenType)[keyof typeof TokenType]
+
+
+export const NotificationDeliveryStatus = {
+  pending: 'pending',
+  sent: 'sent',
+  failed: 'failed'
+} as const
+
+export type NotificationDeliveryStatus = (typeof NotificationDeliveryStatus)[keyof typeof NotificationDeliveryStatus]
+
+
+export const NotificationChannel = {
+  email: 'email',
+  sms: 'sms',
+  push: 'push'
+} as const
+
+export type NotificationChannel = (typeof NotificationChannel)[keyof typeof NotificationChannel]

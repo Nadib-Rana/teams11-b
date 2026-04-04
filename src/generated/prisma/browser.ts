@@ -103,6 +103,11 @@ export type Notification = Prisma.NotificationModel
  */
 export type NotificationSetting = Prisma.NotificationSettingModel
 /**
+ * Model NotificationTemplate
+ * 
+ */
+export type NotificationTemplate = Prisma.NotificationTemplateModel
+/**
  * Model Referral
  * 
  */

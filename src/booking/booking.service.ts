@@ -37,6 +37,8 @@ export class BookingService {
     // Notify customer about the created booking (email + in-app notification)
     try {
       await this.notificationService.sendBookingCreatedNotification(booking.id);
+      // Schedule automatic reminders
+      await this.notificationService.scheduleAppointmentReminders(booking.id);
     } catch (error) {
       // Avoid breaking the main flow if notification fails
       console.error("Failed to send booking creation notification:", error);

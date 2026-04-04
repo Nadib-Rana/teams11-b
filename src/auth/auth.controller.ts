@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Request } from "@nestjs/common";
+import { Controller, Post, Body, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { RegisterDto } from "./dto/register.dto";
 import { LoginDto } from "./dto/login.dto";
@@ -8,6 +8,7 @@ import { RequestPasswordResetDto } from "./dto/request-Password-Reset.dto";
 import { ResendOtpDto } from "./dto/resend-otp.dto";
 import { ResponseMessage } from "src/common/decorators/response-message.decorator";
 import { JwtAuthGuard } from "./guards/jwt-auth.guard";
+import { GetUser } from "./decorators/get-user.decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -42,8 +43,8 @@ export class AuthController {
   @Post("logout")
   @UseGuards(JwtAuthGuard)
   @ResponseMessage("logout successful")
-  logout(@Request() req: any) {
-    return this.authService.logout(req.user?.sub ?? req.user?.id);
+  logout(@GetUser("userId") userId: string) {
+    return this.authService.logout(userId);
   }
 
   @Post("request-password-reset")

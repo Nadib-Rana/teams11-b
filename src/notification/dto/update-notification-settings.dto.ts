@@ -12,4 +12,12 @@ export class UpdateNotificationSettingsDto {
   @IsOptional()
   @IsBoolean()
   bookingReminders?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  reminder24h?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  reminder1h?: boolean;
 }

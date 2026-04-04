@@ -20,16 +20,31 @@ export type NotificationModel = runtime.Types.Result.DefaultSelection<Prisma.$No
 
 export type AggregateNotification = {
   _count: NotificationCountAggregateOutputType | null
+  _avg: NotificationAvgAggregateOutputType | null
+  _sum: NotificationSumAggregateOutputType | null
   _min: NotificationMinAggregateOutputType | null
   _max: NotificationMaxAggregateOutputType | null
+}
+
+export type NotificationAvgAggregateOutputType = {
+  retryCount: number | null
+}
+
+export type NotificationSumAggregateOutputType = {
+  retryCount: number | null
 }
 
 export type NotificationMinAggregateOutputType = {
   id: string | null
   userId: string | null
+  bookingId: string | null
   title: string | null
   message: string | null
   type: string | null
+  channel: $Enums.NotificationChannel | null
+  deliveryStatus: $Enums.NotificationDeliveryStatus | null
+  sentAt: Date | null
+  retryCount: number | null
   isRead: boolean | null
   createdAt: Date | null
 }
@@ -37,9 +52,14 @@ export type NotificationMinAggregateOutputType = {
 export type NotificationMaxAggregateOutputType = {
   id: string | null
   userId: string | null
+  bookingId: string | null
   title: string | null
   message: string | null
   type: string | null
+  channel: $Enums.NotificationChannel | null
+  deliveryStatus: $Enums.NotificationDeliveryStatus | null
+  sentAt: Date | null
+  retryCount: number | null
   isRead: boolean | null
   createdAt: Date | null
 }
@@ -47,21 +67,39 @@ export type NotificationMaxAggregateOutputType = {
 export type NotificationCountAggregateOutputType = {
   id: number
   userId: number
+  bookingId: number
   title: number
   message: number
   type: number
+  channel: number
+  deliveryStatus: number
+  sentAt: number
+  retryCount: number
   isRead: number
   createdAt: number
   _all: number
 }
 
 
+export type NotificationAvgAggregateInputType = {
+  retryCount?: true
+}
+
+export type NotificationSumAggregateInputType = {
+  retryCount?: true
+}
+
 export type NotificationMinAggregateInputType = {
   id?: true
   userId?: true
+  bookingId?: true
   title?: true
   message?: true
   type?: true
+  channel?: true
+  deliveryStatus?: true
+  sentAt?: true
+  retryCount?: true
   isRead?: true
   createdAt?: true
 }
@@ -69,9 +107,14 @@ export type NotificationMinAggregateInputType = {
 export type NotificationMaxAggregateInputType = {
   id?: true
   userId?: true
+  bookingId?: true
   title?: true
   message?: true
   type?: true
+  channel?: true
+  deliveryStatus?: true
+  sentAt?: true
+  retryCount?: true
   isRead?: true
   createdAt?: true
 }
@@ -79,9 +122,14 @@ export type NotificationMaxAggregateInputType = {
 export type NotificationCountAggregateInputType = {
   id?: true
   userId?: true
+  bookingId?: true
   title?: true
   message?: true
   type?: true
+  channel?: true
+  deliveryStatus?: true
+  sentAt?: true
+  retryCount?: true
   isRead?: true
   createdAt?: true
   _all?: true
@@ -125,6 +173,18 @@ export type NotificationAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: NotificationAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: NotificationSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: NotificationMinAggregateInputType
@@ -155,6 +215,8 @@ export type NotificationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: NotificationCountAggregateInputType | true
+  _avg?: NotificationAvgAggregateInputType
+  _sum?: NotificationSumAggregateInputType
   _min?: NotificationMinAggregateInputType
   _max?: NotificationMaxAggregateInputType
 }
@@ -162,12 +224,19 @@ export type NotificationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type NotificationGroupByOutputType = {
   id: string
   userId: string
+  bookingId: string | null
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus: $Enums.NotificationDeliveryStatus
+  sentAt: Date | null
+  retryCount: number
   isRead: boolean
   createdAt: Date
   _count: NotificationCountAggregateOutputType | null
+  _avg: NotificationAvgAggregateOutputType | null
+  _sum: NotificationSumAggregateOutputType | null
   _min: NotificationMinAggregateOutputType | null
   _max: NotificationMaxAggregateOutputType | null
 }
@@ -193,23 +262,35 @@ export type NotificationWhereInput = {
   NOT?: Prisma.NotificationWhereInput | Prisma.NotificationWhereInput[]
   id?: Prisma.UuidFilter<"Notification"> | string
   userId?: Prisma.UuidFilter<"Notification"> | string
+  bookingId?: Prisma.UuidNullableFilter<"Notification"> | string | null
   title?: Prisma.StringFilter<"Notification"> | string
   message?: Prisma.StringFilter<"Notification"> | string
   type?: Prisma.StringFilter<"Notification"> | string
+  channel?: Prisma.EnumNotificationChannelFilter<"Notification"> | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFilter<"Notification"> | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
+  retryCount?: Prisma.IntFilter<"Notification"> | number
   isRead?: Prisma.BoolFilter<"Notification"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  booking?: Prisma.XOR<Prisma.BookingNullableScalarRelationFilter, Prisma.BookingWhereInput> | null
 }
 
 export type NotificationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   message?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  channel?: Prisma.SortOrder
+  deliveryStatus?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  booking?: Prisma.BookingOrderByWithRelationInput
 }
 
 export type NotificationWhereUniqueInput = Prisma.AtLeast<{
@@ -218,25 +299,38 @@ export type NotificationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.NotificationWhereInput[]
   NOT?: Prisma.NotificationWhereInput | Prisma.NotificationWhereInput[]
   userId?: Prisma.UuidFilter<"Notification"> | string
+  bookingId?: Prisma.UuidNullableFilter<"Notification"> | string | null
   title?: Prisma.StringFilter<"Notification"> | string
   message?: Prisma.StringFilter<"Notification"> | string
   type?: Prisma.StringFilter<"Notification"> | string
+  channel?: Prisma.EnumNotificationChannelFilter<"Notification"> | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFilter<"Notification"> | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
+  retryCount?: Prisma.IntFilter<"Notification"> | number
   isRead?: Prisma.BoolFilter<"Notification"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  booking?: Prisma.XOR<Prisma.BookingNullableScalarRelationFilter, Prisma.BookingWhereInput> | null
 }, "id">
 
 export type NotificationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   message?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  channel?: Prisma.SortOrder
+  deliveryStatus?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.NotificationCountOrderByAggregateInput
+  _avg?: Prisma.NotificationAvgOrderByAggregateInput
   _max?: Prisma.NotificationMaxOrderByAggregateInput
   _min?: Prisma.NotificationMinOrderByAggregateInput
+  _sum?: Prisma.NotificationSumOrderByAggregateInput
 }
 
 export type NotificationScalarWhereWithAggregatesInput = {
@@ -245,9 +339,14 @@ export type NotificationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.NotificationScalarWhereWithAggregatesInput | Prisma.NotificationScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Notification"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"Notification"> | string
+  bookingId?: Prisma.UuidNullableWithAggregatesFilter<"Notification"> | string | null
   title?: Prisma.StringWithAggregatesFilter<"Notification"> | string
   message?: Prisma.StringWithAggregatesFilter<"Notification"> | string
   type?: Prisma.StringWithAggregatesFilter<"Notification"> | string
+  channel?: Prisma.EnumNotificationChannelWithAggregatesFilter<"Notification"> | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusWithAggregatesFilter<"Notification"> | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Notification"> | Date | string | null
+  retryCount?: Prisma.IntWithAggregatesFilter<"Notification"> | number
   isRead?: Prisma.BoolWithAggregatesFilter<"Notification"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Notification"> | Date | string
 }
@@ -257,17 +356,27 @@ export type NotificationCreateInput = {
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
   isRead?: boolean
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutNotificationsInput
+  booking?: Prisma.BookingCreateNestedOneWithoutNotificationsInput
 }
 
 export type NotificationUncheckedCreateInput = {
   id?: string
   userId: string
+  bookingId?: string | null
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
   isRead?: boolean
   createdAt?: Date | string
 }
@@ -277,17 +386,27 @@ export type NotificationUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutNotificationsNestedInput
+  booking?: Prisma.BookingUpdateOneWithoutNotificationsNestedInput
 }
 
 export type NotificationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -295,9 +414,14 @@ export type NotificationUncheckedUpdateInput = {
 export type NotificationCreateManyInput = {
   id?: string
   userId: string
+  bookingId?: string | null
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
   isRead?: boolean
   createdAt?: Date | string
 }
@@ -307,6 +431,10 @@ export type NotificationUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -314,9 +442,14 @@ export type NotificationUpdateManyMutationInput = {
 export type NotificationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -334,19 +467,33 @@ export type NotificationOrderByRelationAggregateInput = {
 export type NotificationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   message?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  channel?: Prisma.SortOrder
+  deliveryStatus?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type NotificationAvgOrderByAggregateInput = {
+  retryCount?: Prisma.SortOrder
 }
 
 export type NotificationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   message?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  channel?: Prisma.SortOrder
+  deliveryStatus?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -354,11 +501,20 @@ export type NotificationMaxOrderByAggregateInput = {
 export type NotificationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  bookingId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   message?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  channel?: Prisma.SortOrder
+  deliveryStatus?: Prisma.SortOrder
+  sentAt?: Prisma.SortOrder
+  retryCount?: Prisma.SortOrder
   isRead?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type NotificationSumOrderByAggregateInput = {
+  retryCount?: Prisma.SortOrder
 }
 
 export type NotificationCreateNestedManyWithoutUserInput = {
@@ -403,20 +559,84 @@ export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.NotificationScalarWhereInput | Prisma.NotificationScalarWhereInput[]
 }
 
+export type NotificationCreateNestedManyWithoutBookingInput = {
+  create?: Prisma.XOR<Prisma.NotificationCreateWithoutBookingInput, Prisma.NotificationUncheckedCreateWithoutBookingInput> | Prisma.NotificationCreateWithoutBookingInput[] | Prisma.NotificationUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutBookingInput | Prisma.NotificationCreateOrConnectWithoutBookingInput[]
+  createMany?: Prisma.NotificationCreateManyBookingInputEnvelope
+  connect?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+}
+
+export type NotificationUncheckedCreateNestedManyWithoutBookingInput = {
+  create?: Prisma.XOR<Prisma.NotificationCreateWithoutBookingInput, Prisma.NotificationUncheckedCreateWithoutBookingInput> | Prisma.NotificationCreateWithoutBookingInput[] | Prisma.NotificationUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutBookingInput | Prisma.NotificationCreateOrConnectWithoutBookingInput[]
+  createMany?: Prisma.NotificationCreateManyBookingInputEnvelope
+  connect?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+}
+
+export type NotificationUpdateManyWithoutBookingNestedInput = {
+  create?: Prisma.XOR<Prisma.NotificationCreateWithoutBookingInput, Prisma.NotificationUncheckedCreateWithoutBookingInput> | Prisma.NotificationCreateWithoutBookingInput[] | Prisma.NotificationUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutBookingInput | Prisma.NotificationCreateOrConnectWithoutBookingInput[]
+  upsert?: Prisma.NotificationUpsertWithWhereUniqueWithoutBookingInput | Prisma.NotificationUpsertWithWhereUniqueWithoutBookingInput[]
+  createMany?: Prisma.NotificationCreateManyBookingInputEnvelope
+  set?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  disconnect?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  delete?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  connect?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  update?: Prisma.NotificationUpdateWithWhereUniqueWithoutBookingInput | Prisma.NotificationUpdateWithWhereUniqueWithoutBookingInput[]
+  updateMany?: Prisma.NotificationUpdateManyWithWhereWithoutBookingInput | Prisma.NotificationUpdateManyWithWhereWithoutBookingInput[]
+  deleteMany?: Prisma.NotificationScalarWhereInput | Prisma.NotificationScalarWhereInput[]
+}
+
+export type NotificationUncheckedUpdateManyWithoutBookingNestedInput = {
+  create?: Prisma.XOR<Prisma.NotificationCreateWithoutBookingInput, Prisma.NotificationUncheckedCreateWithoutBookingInput> | Prisma.NotificationCreateWithoutBookingInput[] | Prisma.NotificationUncheckedCreateWithoutBookingInput[]
+  connectOrCreate?: Prisma.NotificationCreateOrConnectWithoutBookingInput | Prisma.NotificationCreateOrConnectWithoutBookingInput[]
+  upsert?: Prisma.NotificationUpsertWithWhereUniqueWithoutBookingInput | Prisma.NotificationUpsertWithWhereUniqueWithoutBookingInput[]
+  createMany?: Prisma.NotificationCreateManyBookingInputEnvelope
+  set?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  disconnect?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  delete?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  connect?: Prisma.NotificationWhereUniqueInput | Prisma.NotificationWhereUniqueInput[]
+  update?: Prisma.NotificationUpdateWithWhereUniqueWithoutBookingInput | Prisma.NotificationUpdateWithWhereUniqueWithoutBookingInput[]
+  updateMany?: Prisma.NotificationUpdateManyWithWhereWithoutBookingInput | Prisma.NotificationUpdateManyWithWhereWithoutBookingInput[]
+  deleteMany?: Prisma.NotificationScalarWhereInput | Prisma.NotificationScalarWhereInput[]
+}
+
+export type EnumNotificationChannelFieldUpdateOperationsInput = {
+  set?: $Enums.NotificationChannel
+}
+
+export type EnumNotificationDeliveryStatusFieldUpdateOperationsInput = {
+  set?: $Enums.NotificationDeliveryStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type NotificationCreateWithoutUserInput = {
   id?: string
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
   isRead?: boolean
   createdAt?: Date | string
+  booking?: Prisma.BookingCreateNestedOneWithoutNotificationsInput
 }
 
 export type NotificationUncheckedCreateWithoutUserInput = {
   id?: string
+  bookingId?: string | null
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
   isRead?: boolean
   createdAt?: Date | string
 }
@@ -453,18 +673,82 @@ export type NotificationScalarWhereInput = {
   NOT?: Prisma.NotificationScalarWhereInput | Prisma.NotificationScalarWhereInput[]
   id?: Prisma.UuidFilter<"Notification"> | string
   userId?: Prisma.UuidFilter<"Notification"> | string
+  bookingId?: Prisma.UuidNullableFilter<"Notification"> | string | null
   title?: Prisma.StringFilter<"Notification"> | string
   message?: Prisma.StringFilter<"Notification"> | string
   type?: Prisma.StringFilter<"Notification"> | string
+  channel?: Prisma.EnumNotificationChannelFilter<"Notification"> | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFilter<"Notification"> | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.DateTimeNullableFilter<"Notification"> | Date | string | null
+  retryCount?: Prisma.IntFilter<"Notification"> | number
   isRead?: Prisma.BoolFilter<"Notification"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Notification"> | Date | string
 }
 
-export type NotificationCreateManyUserInput = {
+export type NotificationCreateWithoutBookingInput = {
   id?: string
   title: string
   message: string
   type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
+  isRead?: boolean
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutNotificationsInput
+}
+
+export type NotificationUncheckedCreateWithoutBookingInput = {
+  id?: string
+  userId: string
+  title: string
+  message: string
+  type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
+  isRead?: boolean
+  createdAt?: Date | string
+}
+
+export type NotificationCreateOrConnectWithoutBookingInput = {
+  where: Prisma.NotificationWhereUniqueInput
+  create: Prisma.XOR<Prisma.NotificationCreateWithoutBookingInput, Prisma.NotificationUncheckedCreateWithoutBookingInput>
+}
+
+export type NotificationCreateManyBookingInputEnvelope = {
+  data: Prisma.NotificationCreateManyBookingInput | Prisma.NotificationCreateManyBookingInput[]
+  skipDuplicates?: boolean
+}
+
+export type NotificationUpsertWithWhereUniqueWithoutBookingInput = {
+  where: Prisma.NotificationWhereUniqueInput
+  update: Prisma.XOR<Prisma.NotificationUpdateWithoutBookingInput, Prisma.NotificationUncheckedUpdateWithoutBookingInput>
+  create: Prisma.XOR<Prisma.NotificationCreateWithoutBookingInput, Prisma.NotificationUncheckedCreateWithoutBookingInput>
+}
+
+export type NotificationUpdateWithWhereUniqueWithoutBookingInput = {
+  where: Prisma.NotificationWhereUniqueInput
+  data: Prisma.XOR<Prisma.NotificationUpdateWithoutBookingInput, Prisma.NotificationUncheckedUpdateWithoutBookingInput>
+}
+
+export type NotificationUpdateManyWithWhereWithoutBookingInput = {
+  where: Prisma.NotificationScalarWhereInput
+  data: Prisma.XOR<Prisma.NotificationUpdateManyMutationInput, Prisma.NotificationUncheckedUpdateManyWithoutBookingInput>
+}
+
+export type NotificationCreateManyUserInput = {
+  id?: string
+  bookingId?: string | null
+  title: string
+  message: string
+  type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
   isRead?: boolean
   createdAt?: Date | string
 }
@@ -474,24 +758,95 @@ export type NotificationUpdateWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  booking?: Prisma.BookingUpdateOneWithoutNotificationsNestedInput
 }
 
 export type NotificationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type NotificationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  bookingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   message?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type NotificationCreateManyBookingInput = {
+  id?: string
+  userId: string
+  title: string
+  message: string
+  type: string
+  channel: $Enums.NotificationChannel
+  deliveryStatus?: $Enums.NotificationDeliveryStatus
+  sentAt?: Date | string | null
+  retryCount?: number
+  isRead?: boolean
+  createdAt?: Date | string
+}
+
+export type NotificationUpdateWithoutBookingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutNotificationsNestedInput
+}
+
+export type NotificationUncheckedUpdateWithoutBookingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type NotificationUncheckedUpdateManyWithoutBookingInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  message?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumNotificationChannelFieldUpdateOperationsInput | $Enums.NotificationChannel
+  deliveryStatus?: Prisma.EnumNotificationDeliveryStatusFieldUpdateOperationsInput | $Enums.NotificationDeliveryStatus
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  retryCount?: Prisma.IntFieldUpdateOperationsInput | number
   isRead?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -501,68 +856,100 @@ export type NotificationUncheckedUpdateManyWithoutUserInput = {
 export type NotificationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  bookingId?: boolean
   title?: boolean
   message?: boolean
   type?: boolean
+  channel?: boolean
+  deliveryStatus?: boolean
+  sentAt?: boolean
+  retryCount?: boolean
   isRead?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  booking?: boolean | Prisma.Notification$bookingArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
 export type NotificationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  bookingId?: boolean
   title?: boolean
   message?: boolean
   type?: boolean
+  channel?: boolean
+  deliveryStatus?: boolean
+  sentAt?: boolean
+  retryCount?: boolean
   isRead?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  booking?: boolean | Prisma.Notification$bookingArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
 export type NotificationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  bookingId?: boolean
   title?: boolean
   message?: boolean
   type?: boolean
+  channel?: boolean
+  deliveryStatus?: boolean
+  sentAt?: boolean
+  retryCount?: boolean
   isRead?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  booking?: boolean | Prisma.Notification$bookingArgs<ExtArgs>
 }, ExtArgs["result"]["notification"]>
 
 export type NotificationSelectScalar = {
   id?: boolean
   userId?: boolean
+  bookingId?: boolean
   title?: boolean
   message?: boolean
   type?: boolean
+  channel?: boolean
+  deliveryStatus?: boolean
+  sentAt?: boolean
+  retryCount?: boolean
   isRead?: boolean
   createdAt?: boolean
 }
 
-export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "message" | "type" | "isRead" | "createdAt", ExtArgs["result"]["notification"]>
+export type NotificationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "bookingId" | "title" | "message" | "type" | "channel" | "deliveryStatus" | "sentAt" | "retryCount" | "isRead" | "createdAt", ExtArgs["result"]["notification"]>
 export type NotificationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  booking?: boolean | Prisma.Notification$bookingArgs<ExtArgs>
 }
 export type NotificationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  booking?: boolean | Prisma.Notification$bookingArgs<ExtArgs>
 }
 export type NotificationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  booking?: boolean | Prisma.Notification$bookingArgs<ExtArgs>
 }
 
 export type $NotificationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Notification"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    booking: Prisma.$BookingPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
+    bookingId: string | null
     title: string
     message: string
     type: string
+    channel: $Enums.NotificationChannel
+    deliveryStatus: $Enums.NotificationDeliveryStatus
+    sentAt: Date | null
+    retryCount: number
     isRead: boolean
     createdAt: Date
   }, ExtArgs["result"]["notification"]>
@@ -960,6 +1347,7 @@ readonly fields: NotificationFieldRefs;
 export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  booking<T extends Prisma.Notification$bookingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Notification$bookingArgs<ExtArgs>>): Prisma.Prisma__BookingClient<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -991,9 +1379,14 @@ export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends run
 export interface NotificationFieldRefs {
   readonly id: Prisma.FieldRef<"Notification", 'String'>
   readonly userId: Prisma.FieldRef<"Notification", 'String'>
+  readonly bookingId: Prisma.FieldRef<"Notification", 'String'>
   readonly title: Prisma.FieldRef<"Notification", 'String'>
   readonly message: Prisma.FieldRef<"Notification", 'String'>
   readonly type: Prisma.FieldRef<"Notification", 'String'>
+  readonly channel: Prisma.FieldRef<"Notification", 'NotificationChannel'>
+  readonly deliveryStatus: Prisma.FieldRef<"Notification", 'NotificationDeliveryStatus'>
+  readonly sentAt: Prisma.FieldRef<"Notification", 'DateTime'>
+  readonly retryCount: Prisma.FieldRef<"Notification", 'Int'>
   readonly isRead: Prisma.FieldRef<"Notification", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Notification", 'DateTime'>
 }
@@ -1389,6 +1782,25 @@ export type NotificationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many Notifications to delete.
    */
   limit?: number
+}
+
+/**
+ * Notification.booking
+ */
+export type Notification$bookingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Booking
+   */
+  select?: Prisma.BookingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Booking
+   */
+  omit?: Prisma.BookingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BookingInclude<ExtArgs> | null
+  where?: Prisma.BookingWhereInput
 }
 
 /**

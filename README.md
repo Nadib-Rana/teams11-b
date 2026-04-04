@@ -197,13 +197,19 @@ Examples:
 
 # Referral System
 
-Each user gets a unique referral link.
+Each vendor or customer gets a unique referral link.
 
 Example:
 
 teams11.com/signup?ref=ABC123
 
 When a new vendor signs up using this link, the referral count increases.
+
+How it works:
+
+- The signup form should capture the `ref` query parameter and send it to `POST /auth/register` as `ref` or `referralCode`.
+- Vendor registrations with a valid referral code increment the referrer's `referralCount` and create a referral record.
+- Vendors can view their referral summary at `GET /vendor/referral`.
 
 Example:
 
@@ -448,6 +454,24 @@ Types:
 - Booking Reminders
 
 ---
+
+# Real-time reminders for upcoming appointments.
+
+-Automatic notifications for customers and staff about upcoming appointments.
+-Customers receive reminders 24 hours and 1 hour before the appointment.
+-Staff receive reminders 1 hour before the appointment.
+-Notifications include appointment details and a link to view the booking.
+-Customers can opt-in or opt-out of notifications in their profile settings.
+-Staff can manage their notification preferences in their profile settings.
+-The system uses a background job scheduler to send notifications at the appropriate times.
+-Notification templates are customizable for different types of notifications (e.g., booking confirmation, appointment reminder, cancellation notice).
+-The system tracks notification delivery status and allows vendors to view notification history for each booking.
+-Customers and staff can receive notifications via email or phone and push notifications (if enabled).
+-The system ensures that notifications are sent reliably and handles any delivery failures gracefully, with retry mechanisms in place.
+-The notification system is designed to be scalable and can handle a large volume of notifications without performance degradation.
+-The system provides analytics on notification engagement, such as open rates and click-through rates, to help vendors optimize their communication strategies.
+-The notification system is integrated with the booking system to ensure that notifications are sent in real-time based on booking status changes (e.g., when a booking is confirmed, cancelled, or rescheduled).
+-The system allows vendors to create custom notification templates for different scenarios, such as special promotions, holiday greetings, or important announcements, which can be sent to customers and staff as needed.
 
 # Subscription Plans
 

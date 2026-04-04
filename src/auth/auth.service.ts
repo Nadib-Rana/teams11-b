@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   // Logout
-  async logout(userId: string) {
+  logout(userId: string) {
     return { message: "Logged out successfully", userId };
   }
 }
