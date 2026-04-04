@@ -9,36 +9,55 @@
 * 🟢 You can import this file directly.
 */
 
-export const ContentType = {
-  TEXT: 'TEXT',
-  VOICE: 'VOICE'
+export const UserRole = {
+  customer: 'customer',
+  vendor: 'vendor',
+  staff: 'staff'
 } as const
 
-export type ContentType = (typeof ContentType)[keyof typeof ContentType]
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-export const PostType = {
-  SILVER: 'SILVER',
-  GOLD: 'GOLD',
-  URGENT: 'URGENT'
+export const BookingStatus = {
+  pending: 'pending',
+  waiting: 'waiting',
+  confirmed: 'confirmed',
+  cancelled: 'cancelled'
 } as const
 
-export type PostType = (typeof PostType)[keyof typeof PostType]
+export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus]
 
 
-export const NotificationType = {
-  RESPONSE_TO_POST: 'RESPONSE_TO_POST',
-  REPLY_TO_MY_RESPONSE: 'REPLY_TO_MY_RESPONSE',
-  NEW_FAVORITE: 'NEW_FAVORITE'
+export const BookingType = {
+  virtual: 'virtual',
+  in_person: 'in_person'
 } as const
 
-export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+export type BookingType = (typeof BookingType)[keyof typeof BookingType]
 
 
-export const type = {
-  DAILY: 'DAILY',
-  STREAK: 'STREAK',
-  ONE_TIME: 'ONE_TIME'
+export const ServiceType = {
+  service: 'service',
+  event: 'event',
+  class: 'class'
 } as const
 
-export type type = (typeof type)[keyof typeof type]
+export type ServiceType = (typeof ServiceType)[keyof typeof ServiceType]
+
+
+export const PaymentStatus = {
+  pending: 'pending',
+  paid: 'paid',
+  failed: 'failed'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const TokenType = {
+  email_verification: 'email_verification',
+  password_reset: 'password_reset',
+  login_otp: 'login_otp'
+} as const
+
+export type TokenType = (typeof TokenType)[keyof typeof TokenType]

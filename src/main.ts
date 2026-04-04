@@ -1,8 +1,8 @@
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
-import { ContextService } from './common/context/context.service';
+import { HttpAdapterHost, NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { ValidationPipe, BadRequestException } from "@nestjs/common";
+import { AllExceptionsFilter } from "./common/filters/all-exceptions.filter";
+import { ContextService } from "./common/context/context.service";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +15,20 @@ async function bootstrap() {
       whitelist: true, // Strip properties not in DTO
       transform: true, // Automatically transform payloads to DTO instances
       forbidNonWhitelisted: true, // Throw error on non-whitelisted properties
+      exceptionFactory: (errors) => {
+        const messages = errors.map((error) => {
+          const constraints = error.constraints;
+          if (constraints) {
+            return Object.values(constraints).join(", ");
+          }
+          return `Validation failed for ${error.property}`;
+        });
+        return new BadRequestException({
+          statusCode: 400,
+          message: messages,
+          error: "Validation Failed",
+        });
+      },
       // transformOptions: {
       //   enableImplicitConversion: true, // Convert query/path params
       // },
@@ -35,4 +49,4 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap();

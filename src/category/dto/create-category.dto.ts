@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateCategoryDto {
   @IsString()
@@ -6,6 +6,6 @@ export class CreateCategoryDto {
   name: string;
 
   @IsString()
-  @IsOptional()
-  icon?: string;
+  @IsNotEmpty()
+  image: string; // URL or path to category image
 }

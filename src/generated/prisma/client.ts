@@ -45,35 +45,70 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Post
+ * Model VerificationToken
  * 
  */
-export type Post = Prisma.PostModel
+export type VerificationToken = Prisma.VerificationTokenModel
 /**
- * Model Response
+ * Model Customer
  * 
  */
-export type Response = Prisma.ResponseModel
+export type Customer = Prisma.CustomerModel
+/**
+ * Model Vendor
+ * 
+ */
+export type Vendor = Prisma.VendorModel
+/**
+ * Model Business
+ * 
+ */
+export type Business = Prisma.BusinessModel
+/**
+ * Model BusinessImage
+ * 
+ */
+export type BusinessImage = Prisma.BusinessImageModel
+/**
+ * Model Staff
+ * 
+ */
+export type Staff = Prisma.StaffModel
 /**
  * Model Category
  * 
  */
 export type Category = Prisma.CategoryModel
 /**
- * Model Subscription
+ * Model Service
  * 
  */
-export type Subscription = Prisma.SubscriptionModel
+export type Service = Prisma.ServiceModel
 /**
- * Model Purchase
+ * Model StaffService
  * 
  */
-export type Purchase = Prisma.PurchaseModel
+export type StaffService = Prisma.StaffServiceModel
 /**
- * Model PushToken
+ * Model Booking
  * 
  */
-export type PushToken = Prisma.PushTokenModel
+export type Booking = Prisma.BookingModel
+/**
+ * Model WaitingList
+ * 
+ */
+export type WaitingList = Prisma.WaitingListModel
+/**
+ * Model GuestCustomer
+ * 
+ */
+export type GuestCustomer = Prisma.GuestCustomerModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
 /**
  * Model Favorite
  * 
@@ -85,22 +120,27 @@ export type Favorite = Prisma.FavoriteModel
  */
 export type Notification = Prisma.NotificationModel
 /**
- * Model Mission
+ * Model NotificationSetting
  * 
  */
-export type Mission = Prisma.MissionModel
+export type NotificationSetting = Prisma.NotificationSettingModel
 /**
- * Model UserMissionProgress
+ * Model Referral
  * 
  */
-export type UserMissionProgress = Prisma.UserMissionProgressModel
+export type Referral = Prisma.ReferralModel
 /**
- * Model UserStreak
+ * Model SubscriptionPlan
  * 
  */
-export type UserStreak = Prisma.UserStreakModel
+export type SubscriptionPlan = Prisma.SubscriptionPlanModel
 /**
- * Model UserInventory
+ * Model Subscription
  * 
  */
-export type UserInventory = Prisma.UserInventoryModel
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel

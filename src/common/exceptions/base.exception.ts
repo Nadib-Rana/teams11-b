@@ -1,67 +1,71 @@
 /**
  * src/common/exceptions/base.exception.ts
- * * Defines a custom base exception class.
- * * UPDATED: Now includes optional 'instruction' and 'details' fields.
- */
-
-import { HttpException, HttpStatus } from '@nestjs/common';
-import { ErrorDetail } from '../dto/api-error-response.dto';
-
-/**
- * A custom base exception that allows for a structured
- * error response, including an application-specific error code.
  *
- * @example
- * throw new BaseException(
- * "Login failed, please verify OTP",
- * HttpStatus.UNAUTHORIZED,
- * "OTP_REQUIRED",
- * [],
- * "REQUIRE_OTP_VERIFICATION",
- * { "needOtpVerification": true } // <-- New details field
- * );
+ * Defines the base custom exception used across the application.
+ * Provides structured API error responses with:
+ * - message
+ * - HTTP status
+ * - application error code
+ * - optional field errors
+ * - optional frontend instruction
+ * - optional details object
  */
+
+import { HttpException, HttpStatus } from "@nestjs/common";
+import { ErrorDetail } from "../dto/api-error-response.dto";
+
 export class BaseException extends HttpException {
   public readonly code: string;
   public readonly errors: ErrorDetail[];
-  public readonly instruction?: string; // <-- ADDED THIS
-  public readonly details?: unknown; // <-- CHANGED from any to unknown
+  public readonly instruction?: string;
+  public readonly details?: unknown;
+  public readonly isVerified?: boolean;
 
   /**
-   * @param message A high-level, human-readable summary of the error.
-   * @param status The HTTP status code.
-   * @param code An application-specific error code (e.g., "VALIDATION_ERROR").
-   * @param errors An optional array of detailed errors.
-   * @param instruction An optional frontend-specific action code.
-   * @param details An optional object with extra data for the frontend.
+   * Creates a structured API exception.
+   *
+   * @param message Human readable error message
+   * @param status HTTP status code
+   * @param code Application specific error code
+   * @param errors Optional detailed errors
+   * @param instruction Optional frontend instruction
+   * @param details Optional metadata object
    */
   constructor(
     message: string,
     status: HttpStatus,
     code: string,
     errors?: ErrorDetail[],
-    instruction?: string, // <-- ADDED THIS
-    details?: unknown, // <-- CHANGED from any to unknown
+    instruction?: string,
+    details?: unknown,
+    isVerified?: boolean,
   ) {
-    // Call HttpException constructor with the message and status
+    const formattedErrors: ErrorDetail[] = errors ?? [
+      {
+        code,
+        message,
+        field: undefined,
+      },
+    ];
+
     super(
       {
+        success: false,
+        statusCode: status,
         message,
         code,
-        errors:
-          errors ||
-          (message ? [{ code, message: message, field: undefined }] : []),
-        instruction, // <-- ADDED THIS
-        details, // <-- ADDED THIS
+        errors: formattedErrors,
+        instruction,
+        details,
+        isVerified,
       },
       status,
     );
 
-    // Store custom properties
     this.code = code;
-    this.errors =
-      errors || (message ? [{ code, message: message, field: undefined }] : []);
-    this.instruction = instruction; // <-- ADDED THIS
-    this.details = details; // <-- ADDED THIS
+    this.errors = formattedErrors;
+    this.instruction = instruction;
+    this.details = details;
+    this.isVerified = isVerified;
   }
 }

@@ -20,86 +20,64 @@ export type SubscriptionModel = runtime.Types.Result.DefaultSelection<Prisma.$Su
 
 export type AggregateSubscription = {
   _count: SubscriptionCountAggregateOutputType | null
-  _avg: SubscriptionAvgAggregateOutputType | null
-  _sum: SubscriptionSumAggregateOutputType | null
   _min: SubscriptionMinAggregateOutputType | null
   _max: SubscriptionMaxAggregateOutputType | null
 }
 
-export type SubscriptionAvgAggregateOutputType = {
-  postExpiryHours: number | null
-  price: runtime.Decimal | null
-}
-
-export type SubscriptionSumAggregateOutputType = {
-  postExpiryHours: number | null
-  price: runtime.Decimal | null
-}
-
 export type SubscriptionMinAggregateOutputType = {
   id: string | null
-  name: string | null
-  postExpiryHours: number | null
-  themeColor: string | null
-  price: runtime.Decimal | null
-  createdAt: Date | null
+  vendorId: string | null
+  planId: string | null
+  startDate: Date | null
+  endDate: Date | null
+  status: string | null
 }
 
 export type SubscriptionMaxAggregateOutputType = {
   id: string | null
-  name: string | null
-  postExpiryHours: number | null
-  themeColor: string | null
-  price: runtime.Decimal | null
-  createdAt: Date | null
+  vendorId: string | null
+  planId: string | null
+  startDate: Date | null
+  endDate: Date | null
+  status: string | null
 }
 
 export type SubscriptionCountAggregateOutputType = {
   id: number
-  name: number
-  postExpiryHours: number
-  themeColor: number
-  price: number
-  createdAt: number
+  vendorId: number
+  planId: number
+  startDate: number
+  endDate: number
+  status: number
   _all: number
 }
 
 
-export type SubscriptionAvgAggregateInputType = {
-  postExpiryHours?: true
-  price?: true
-}
-
-export type SubscriptionSumAggregateInputType = {
-  postExpiryHours?: true
-  price?: true
-}
-
 export type SubscriptionMinAggregateInputType = {
   id?: true
-  name?: true
-  postExpiryHours?: true
-  themeColor?: true
-  price?: true
-  createdAt?: true
+  vendorId?: true
+  planId?: true
+  startDate?: true
+  endDate?: true
+  status?: true
 }
 
 export type SubscriptionMaxAggregateInputType = {
   id?: true
-  name?: true
-  postExpiryHours?: true
-  themeColor?: true
-  price?: true
-  createdAt?: true
+  vendorId?: true
+  planId?: true
+  startDate?: true
+  endDate?: true
+  status?: true
 }
 
 export type SubscriptionCountAggregateInputType = {
   id?: true
-  name?: true
-  postExpiryHours?: true
-  themeColor?: true
-  price?: true
-  createdAt?: true
+  vendorId?: true
+  planId?: true
+  startDate?: true
+  endDate?: true
+  status?: true
   _all?: true
 }
 
@@ -141,18 +119,6 @@ export type SubscriptionAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: SubscriptionAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: SubscriptionSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: SubscriptionMinAggregateInputType
@@ -183,22 +149,18 @@ export type SubscriptionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: SubscriptionCountAggregateInputType | true
-  _avg?: SubscriptionAvgAggregateInputType
-  _sum?: SubscriptionSumAggregateInputType
   _min?: SubscriptionMinAggregateInputType
   _max?: SubscriptionMaxAggregateInputType
 }
 
 export type SubscriptionGroupByOutputType = {
   id: string
-  name: string
-  postExpiryHours: number
-  themeColor: string | null
-  price: runtime.Decimal
-  createdAt: Date
+  vendorId: string
+  planId: string
+  startDate: Date
+  endDate: Date
+  status: string
   _count: SubscriptionCountAggregateOutputType | null
-  _avg: SubscriptionAvgAggregateOutputType | null
-  _sum: SubscriptionSumAggregateOutputType | null
   _min: SubscriptionMinAggregateOutputType | null
   _max: SubscriptionMaxAggregateOutputType | null
 }
@@ -223,24 +185,24 @@ export type SubscriptionWhereInput = {
   OR?: Prisma.SubscriptionWhereInput[]
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   id?: Prisma.UuidFilter<"Subscription"> | string
-  name?: Prisma.StringFilter<"Subscription"> | string
-  postExpiryHours?: Prisma.IntFilter<"Subscription"> | number
-  themeColor?: Prisma.StringNullableFilter<"Subscription"> | string | null
-  price?: Prisma.DecimalFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
-  users?: Prisma.UserListRelationFilter
-  purchases?: Prisma.PurchaseListRelationFilter
+  vendorId?: Prisma.UuidFilter<"Subscription"> | string
+  planId?: Prisma.UuidFilter<"Subscription"> | string
+  startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
+  endDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
+  status?: Prisma.StringFilter<"Subscription"> | string
+  vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
+  plan?: Prisma.XOR<Prisma.SubscriptionPlanScalarRelationFilter, Prisma.SubscriptionPlanWhereInput>
 }
 
 export type SubscriptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  postExpiryHours?: Prisma.SortOrder
-  themeColor?: Prisma.SortOrderInput | Prisma.SortOrder
-  price?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  users?: Prisma.UserOrderByRelationAggregateInput
-  purchases?: Prisma.PurchaseOrderByRelationAggregateInput
+  vendorId?: Prisma.SortOrder
+  planId?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  vendor?: Prisma.VendorOrderByWithRelationInput
+  plan?: Prisma.SubscriptionPlanOrderByWithRelationInput
 }
 
 export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
@@ -248,27 +210,25 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   OR?: Prisma.SubscriptionWhereInput[]
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
-  name?: Prisma.StringFilter<"Subscription"> | string
-  postExpiryHours?: Prisma.IntFilter<"Subscription"> | number
-  themeColor?: Prisma.StringNullableFilter<"Subscription"> | string | null
-  price?: Prisma.DecimalFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
-  users?: Prisma.UserListRelationFilter
-  purchases?: Prisma.PurchaseListRelationFilter
+  vendorId?: Prisma.UuidFilter<"Subscription"> | string
+  planId?: Prisma.UuidFilter<"Subscription"> | string
+  startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
+  endDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
+  status?: Prisma.StringFilter<"Subscription"> | string
+  vendor?: Prisma.XOR<Prisma.VendorScalarRelationFilter, Prisma.VendorWhereInput>
+  plan?: Prisma.XOR<Prisma.SubscriptionPlanScalarRelationFilter, Prisma.SubscriptionPlanWhereInput>
 }, "id">
 
 export type SubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  postExpiryHours?: Prisma.SortOrder
-  themeColor?: Prisma.SortOrderInput | Prisma.SortOrder
-  price?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  vendorId?: Prisma.SortOrder
+  planId?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.SubscriptionCountOrderByAggregateInput
-  _avg?: Prisma.SubscriptionAvgOrderByAggregateInput
   _max?: Prisma.SubscriptionMaxOrderByAggregateInput
   _min?: Prisma.SubscriptionMinOrderByAggregateInput
-  _sum?: Prisma.SubscriptionSumOrderByAggregateInput
 }
 
 export type SubscriptionScalarWhereWithAggregatesInput = {
@@ -276,382 +236,426 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   OR?: Prisma.SubscriptionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SubscriptionScalarWhereWithAggregatesInput | Prisma.SubscriptionScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Subscription"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
-  postExpiryHours?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
-  themeColor?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
-  price?: Prisma.DecimalWithAggregatesFilter<"Subscription"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
+  vendorId?: Prisma.UuidWithAggregatesFilter<"Subscription"> | string
+  planId?: Prisma.UuidWithAggregatesFilter<"Subscription"> | string
+  startDate?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
+  endDate?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
+  status?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
 }
 
 export type SubscriptionCreateInput = {
   id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  users?: Prisma.UserCreateNestedManyWithoutSubscriptionInput
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutSubscriptionInput
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  vendor: Prisma.VendorCreateNestedOneWithoutSubscriptionsInput
+  plan: Prisma.SubscriptionPlanCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateInput = {
   id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutSubscriptionInput
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutSubscriptionInput
+  vendorId: string
+  planId: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
 }
 
 export type SubscriptionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  users?: Prisma.UserUpdateManyWithoutSubscriptionNestedInput
-  purchases?: Prisma.PurchaseUpdateManyWithoutSubscriptionNestedInput
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor?: Prisma.VendorUpdateOneRequiredWithoutSubscriptionsNestedInput
+  plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  users?: Prisma.UserUncheckedUpdateManyWithoutSubscriptionNestedInput
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutSubscriptionNestedInput
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SubscriptionCreateManyInput = {
   id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
+  vendorId: string
+  planId: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
 }
 
 export type SubscriptionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SubscriptionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type SubscriptionNullableScalarRelationFilter = {
-  is?: Prisma.SubscriptionWhereInput | null
-  isNot?: Prisma.SubscriptionWhereInput | null
+export type SubscriptionListRelationFilter = {
+  every?: Prisma.SubscriptionWhereInput
+  some?: Prisma.SubscriptionWhereInput
+  none?: Prisma.SubscriptionWhereInput
+}
+
+export type SubscriptionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type SubscriptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  postExpiryHours?: Prisma.SortOrder
-  themeColor?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type SubscriptionAvgOrderByAggregateInput = {
-  postExpiryHours?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+  vendorId?: Prisma.SortOrder
+  planId?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type SubscriptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  postExpiryHours?: Prisma.SortOrder
-  themeColor?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  vendorId?: Prisma.SortOrder
+  planId?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type SubscriptionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  postExpiryHours?: Prisma.SortOrder
-  themeColor?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  vendorId?: Prisma.SortOrder
+  planId?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  endDate?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
-export type SubscriptionSumOrderByAggregateInput = {
-  postExpiryHours?: Prisma.SortOrder
-  price?: Prisma.SortOrder
+export type SubscriptionCreateNestedManyWithoutVendorInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutVendorInput, Prisma.SubscriptionUncheckedCreateWithoutVendorInput> | Prisma.SubscriptionCreateWithoutVendorInput[] | Prisma.SubscriptionUncheckedCreateWithoutVendorInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutVendorInput | Prisma.SubscriptionCreateOrConnectWithoutVendorInput[]
+  createMany?: Prisma.SubscriptionCreateManyVendorInputEnvelope
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
 }
 
-export type SubscriptionScalarRelationFilter = {
-  is?: Prisma.SubscriptionWhereInput
-  isNot?: Prisma.SubscriptionWhereInput
+export type SubscriptionUncheckedCreateNestedManyWithoutVendorInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutVendorInput, Prisma.SubscriptionUncheckedCreateWithoutVendorInput> | Prisma.SubscriptionCreateWithoutVendorInput[] | Prisma.SubscriptionUncheckedCreateWithoutVendorInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutVendorInput | Prisma.SubscriptionCreateOrConnectWithoutVendorInput[]
+  createMany?: Prisma.SubscriptionCreateManyVendorInputEnvelope
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
 }
 
-export type SubscriptionCreateNestedOneWithoutUsersInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsersInput, Prisma.SubscriptionUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUsersInput
-  connect?: Prisma.SubscriptionWhereUniqueInput
+export type SubscriptionUpdateManyWithoutVendorNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutVendorInput, Prisma.SubscriptionUncheckedCreateWithoutVendorInput> | Prisma.SubscriptionCreateWithoutVendorInput[] | Prisma.SubscriptionUncheckedCreateWithoutVendorInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutVendorInput | Prisma.SubscriptionCreateOrConnectWithoutVendorInput[]
+  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutVendorInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutVendorInput[]
+  createMany?: Prisma.SubscriptionCreateManyVendorInputEnvelope
+  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutVendorInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutVendorInput[]
+  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutVendorInput | Prisma.SubscriptionUpdateManyWithWhereWithoutVendorInput[]
+  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
-export type SubscriptionUpdateOneWithoutUsersNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsersInput, Prisma.SubscriptionUncheckedCreateWithoutUsersInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutUsersInput
-  upsert?: Prisma.SubscriptionUpsertWithoutUsersInput
-  disconnect?: Prisma.SubscriptionWhereInput | boolean
-  delete?: Prisma.SubscriptionWhereInput | boolean
-  connect?: Prisma.SubscriptionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutUsersInput, Prisma.SubscriptionUpdateWithoutUsersInput>, Prisma.SubscriptionUncheckedUpdateWithoutUsersInput>
+export type SubscriptionUncheckedUpdateManyWithoutVendorNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutVendorInput, Prisma.SubscriptionUncheckedCreateWithoutVendorInput> | Prisma.SubscriptionCreateWithoutVendorInput[] | Prisma.SubscriptionUncheckedCreateWithoutVendorInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutVendorInput | Prisma.SubscriptionCreateOrConnectWithoutVendorInput[]
+  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutVendorInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutVendorInput[]
+  createMany?: Prisma.SubscriptionCreateManyVendorInputEnvelope
+  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutVendorInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutVendorInput[]
+  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutVendorInput | Prisma.SubscriptionUpdateManyWithWhereWithoutVendorInput[]
+  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+export type SubscriptionCreateNestedManyWithoutPlanInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutPlanInput, Prisma.SubscriptionUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionCreateWithoutPlanInput[] | Prisma.SubscriptionUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutPlanInput | Prisma.SubscriptionCreateOrConnectWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionCreateManyPlanInputEnvelope
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
 }
 
-export type SubscriptionCreateNestedOneWithoutPurchasesInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutPurchasesInput, Prisma.SubscriptionUncheckedCreateWithoutPurchasesInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutPurchasesInput
-  connect?: Prisma.SubscriptionWhereUniqueInput
+export type SubscriptionUncheckedCreateNestedManyWithoutPlanInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutPlanInput, Prisma.SubscriptionUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionCreateWithoutPlanInput[] | Prisma.SubscriptionUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutPlanInput | Prisma.SubscriptionCreateOrConnectWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionCreateManyPlanInputEnvelope
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
 }
 
-export type SubscriptionUpdateOneRequiredWithoutPurchasesNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutPurchasesInput, Prisma.SubscriptionUncheckedCreateWithoutPurchasesInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutPurchasesInput
-  upsert?: Prisma.SubscriptionUpsertWithoutPurchasesInput
-  connect?: Prisma.SubscriptionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutPurchasesInput, Prisma.SubscriptionUpdateWithoutPurchasesInput>, Prisma.SubscriptionUncheckedUpdateWithoutPurchasesInput>
+export type SubscriptionUpdateManyWithoutPlanNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutPlanInput, Prisma.SubscriptionUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionCreateWithoutPlanInput[] | Prisma.SubscriptionUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutPlanInput | Prisma.SubscriptionCreateOrConnectWithoutPlanInput[]
+  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionCreateManyPlanInputEnvelope
+  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutPlanInput[]
+  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutPlanInput | Prisma.SubscriptionUpdateManyWithWhereWithoutPlanInput[]
+  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
-export type SubscriptionCreateWithoutUsersInput = {
+export type SubscriptionUncheckedUpdateManyWithoutPlanNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutPlanInput, Prisma.SubscriptionUncheckedCreateWithoutPlanInput> | Prisma.SubscriptionCreateWithoutPlanInput[] | Prisma.SubscriptionUncheckedCreateWithoutPlanInput[]
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutPlanInput | Prisma.SubscriptionCreateOrConnectWithoutPlanInput[]
+  upsert?: Prisma.SubscriptionUpsertWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionUpsertWithWhereUniqueWithoutPlanInput[]
+  createMany?: Prisma.SubscriptionCreateManyPlanInputEnvelope
+  set?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  delete?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  connect?: Prisma.SubscriptionWhereUniqueInput | Prisma.SubscriptionWhereUniqueInput[]
+  update?: Prisma.SubscriptionUpdateWithWhereUniqueWithoutPlanInput | Prisma.SubscriptionUpdateWithWhereUniqueWithoutPlanInput[]
+  updateMany?: Prisma.SubscriptionUpdateManyWithWhereWithoutPlanInput | Prisma.SubscriptionUpdateManyWithWhereWithoutPlanInput[]
+  deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
+}
+
+export type SubscriptionCreateWithoutVendorInput = {
   id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  purchases?: Prisma.PurchaseCreateNestedManyWithoutSubscriptionInput
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  plan: Prisma.SubscriptionPlanCreateNestedOneWithoutSubscriptionsInput
 }
 
-export type SubscriptionUncheckedCreateWithoutUsersInput = {
+export type SubscriptionUncheckedCreateWithoutVendorInput = {
   id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutSubscriptionInput
+  planId: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
 }
 
-export type SubscriptionCreateOrConnectWithoutUsersInput = {
+export type SubscriptionCreateOrConnectWithoutVendorInput = {
   where: Prisma.SubscriptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsersInput, Prisma.SubscriptionUncheckedCreateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutVendorInput, Prisma.SubscriptionUncheckedCreateWithoutVendorInput>
 }
 
-export type SubscriptionUpsertWithoutUsersInput = {
-  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUsersInput, Prisma.SubscriptionUncheckedUpdateWithoutUsersInput>
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutUsersInput, Prisma.SubscriptionUncheckedCreateWithoutUsersInput>
-  where?: Prisma.SubscriptionWhereInput
+export type SubscriptionCreateManyVendorInputEnvelope = {
+  data: Prisma.SubscriptionCreateManyVendorInput | Prisma.SubscriptionCreateManyVendorInput[]
+  skipDuplicates?: boolean
 }
 
-export type SubscriptionUpdateToOneWithWhereWithoutUsersInput = {
-  where?: Prisma.SubscriptionWhereInput
-  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutUsersInput, Prisma.SubscriptionUncheckedUpdateWithoutUsersInput>
-}
-
-export type SubscriptionUpdateWithoutUsersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purchases?: Prisma.PurchaseUpdateManyWithoutSubscriptionNestedInput
-}
-
-export type SubscriptionUncheckedUpdateWithoutUsersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutSubscriptionNestedInput
-}
-
-export type SubscriptionCreateWithoutPurchasesInput = {
-  id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  users?: Prisma.UserCreateNestedManyWithoutSubscriptionInput
-}
-
-export type SubscriptionUncheckedCreateWithoutPurchasesInput = {
-  id?: string
-  name: string
-  postExpiryHours: number
-  themeColor?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Date | string
-  users?: Prisma.UserUncheckedCreateNestedManyWithoutSubscriptionInput
-}
-
-export type SubscriptionCreateOrConnectWithoutPurchasesInput = {
+export type SubscriptionUpsertWithWhereUniqueWithoutVendorInput = {
   where: Prisma.SubscriptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutPurchasesInput, Prisma.SubscriptionUncheckedCreateWithoutPurchasesInput>
+  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutVendorInput, Prisma.SubscriptionUncheckedUpdateWithoutVendorInput>
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutVendorInput, Prisma.SubscriptionUncheckedCreateWithoutVendorInput>
 }
 
-export type SubscriptionUpsertWithoutPurchasesInput = {
-  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutPurchasesInput, Prisma.SubscriptionUncheckedUpdateWithoutPurchasesInput>
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutPurchasesInput, Prisma.SubscriptionUncheckedCreateWithoutPurchasesInput>
-  where?: Prisma.SubscriptionWhereInput
+export type SubscriptionUpdateWithWhereUniqueWithoutVendorInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutVendorInput, Prisma.SubscriptionUncheckedUpdateWithoutVendorInput>
 }
 
-export type SubscriptionUpdateToOneWithWhereWithoutPurchasesInput = {
-  where?: Prisma.SubscriptionWhereInput
-  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutPurchasesInput, Prisma.SubscriptionUncheckedUpdateWithoutPurchasesInput>
+export type SubscriptionUpdateManyWithWhereWithoutVendorInput = {
+  where: Prisma.SubscriptionScalarWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionUpdateManyMutationInput, Prisma.SubscriptionUncheckedUpdateManyWithoutVendorInput>
 }
 
-export type SubscriptionUpdateWithoutPurchasesInput = {
+export type SubscriptionScalarWhereInput = {
+  AND?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
+  OR?: Prisma.SubscriptionScalarWhereInput[]
+  NOT?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
+  id?: Prisma.UuidFilter<"Subscription"> | string
+  vendorId?: Prisma.UuidFilter<"Subscription"> | string
+  planId?: Prisma.UuidFilter<"Subscription"> | string
+  startDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
+  endDate?: Prisma.DateTimeFilter<"Subscription"> | Date | string
+  status?: Prisma.StringFilter<"Subscription"> | string
+}
+
+export type SubscriptionCreateWithoutPlanInput = {
+  id?: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+  vendor: Prisma.VendorCreateNestedOneWithoutSubscriptionsInput
+}
+
+export type SubscriptionUncheckedCreateWithoutPlanInput = {
+  id?: string
+  vendorId: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+}
+
+export type SubscriptionCreateOrConnectWithoutPlanInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutPlanInput, Prisma.SubscriptionUncheckedCreateWithoutPlanInput>
+}
+
+export type SubscriptionCreateManyPlanInputEnvelope = {
+  data: Prisma.SubscriptionCreateManyPlanInput | Prisma.SubscriptionCreateManyPlanInput[]
+  skipDuplicates?: boolean
+}
+
+export type SubscriptionUpsertWithWhereUniqueWithoutPlanInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutPlanInput, Prisma.SubscriptionUncheckedUpdateWithoutPlanInput>
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutPlanInput, Prisma.SubscriptionUncheckedCreateWithoutPlanInput>
+}
+
+export type SubscriptionUpdateWithWhereUniqueWithoutPlanInput = {
+  where: Prisma.SubscriptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutPlanInput, Prisma.SubscriptionUncheckedUpdateWithoutPlanInput>
+}
+
+export type SubscriptionUpdateManyWithWhereWithoutPlanInput = {
+  where: Prisma.SubscriptionScalarWhereInput
+  data: Prisma.XOR<Prisma.SubscriptionUpdateManyMutationInput, Prisma.SubscriptionUncheckedUpdateManyWithoutPlanInput>
+}
+
+export type SubscriptionCreateManyVendorInput = {
+  id?: string
+  planId: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
+}
+
+export type SubscriptionUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  users?: Prisma.UserUpdateManyWithoutSubscriptionNestedInput
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  plan?: Prisma.SubscriptionPlanUpdateOneRequiredWithoutSubscriptionsNestedInput
 }
 
-export type SubscriptionUncheckedUpdateWithoutPurchasesInput = {
+export type SubscriptionUncheckedUpdateWithoutVendorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  postExpiryHours?: Prisma.IntFieldUpdateOperationsInput | number
-  themeColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  users?: Prisma.UserUncheckedUpdateManyWithoutSubscriptionNestedInput
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-
-/**
- * Count Type SubscriptionCountOutputType
- */
-
-export type SubscriptionCountOutputType = {
-  users: number
-  purchases: number
+export type SubscriptionUncheckedUpdateManyWithoutVendorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type SubscriptionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  users?: boolean | SubscriptionCountOutputTypeCountUsersArgs
-  purchases?: boolean | SubscriptionCountOutputTypeCountPurchasesArgs
+export type SubscriptionCreateManyPlanInput = {
+  id?: string
+  vendorId: string
+  startDate: Date | string
+  endDate: Date | string
+  status: string
 }
 
-/**
- * SubscriptionCountOutputType without action
- */
-export type SubscriptionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SubscriptionCountOutputType
-   */
-  select?: Prisma.SubscriptionCountOutputTypeSelect<ExtArgs> | null
+export type SubscriptionUpdateWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  vendor?: Prisma.VendorUpdateOneRequiredWithoutSubscriptionsNestedInput
 }
 
-/**
- * SubscriptionCountOutputType without action
- */
-export type SubscriptionCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserWhereInput
+export type SubscriptionUncheckedUpdateWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-/**
- * SubscriptionCountOutputType without action
- */
-export type SubscriptionCountOutputTypeCountPurchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PurchaseWhereInput
+export type SubscriptionUncheckedUpdateManyWithoutPlanInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vendorId?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
+
 
 
 export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  postExpiryHours?: boolean
-  themeColor?: boolean
-  price?: boolean
-  createdAt?: boolean
-  users?: boolean | Prisma.Subscription$usersArgs<ExtArgs>
-  purchases?: boolean | Prisma.Subscription$purchasesArgs<ExtArgs>
-  _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
+  vendorId?: boolean
+  planId?: boolean
+  startDate?: boolean
+  endDate?: boolean
+  status?: boolean
+  vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  postExpiryHours?: boolean
-  themeColor?: boolean
-  price?: boolean
-  createdAt?: boolean
+  vendorId?: boolean
+  planId?: boolean
+  startDate?: boolean
+  endDate?: boolean
+  status?: boolean
+  vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  postExpiryHours?: boolean
-  themeColor?: boolean
-  price?: boolean
-  createdAt?: boolean
+  vendorId?: boolean
+  planId?: boolean
+  startDate?: boolean
+  endDate?: boolean
+  status?: boolean
+  vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectScalar = {
   id?: boolean
-  name?: boolean
-  postExpiryHours?: boolean
-  themeColor?: boolean
-  price?: boolean
-  createdAt?: boolean
+  vendorId?: boolean
+  planId?: boolean
+  startDate?: boolean
+  endDate?: boolean
+  status?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "postExpiryHours" | "themeColor" | "price" | "createdAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vendorId" | "planId" | "startDate" | "endDate" | "status", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  users?: boolean | Prisma.Subscription$usersArgs<ExtArgs>
-  purchases?: boolean | Prisma.Subscription$purchasesArgs<ExtArgs>
-  _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
+  vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
 }
-export type SubscriptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type SubscriptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type SubscriptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+}
+export type SubscriptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  vendor?: boolean | Prisma.VendorDefaultArgs<ExtArgs>
+  plan?: boolean | Prisma.SubscriptionPlanDefaultArgs<ExtArgs>
+}
 
 export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Subscription"
   objects: {
-    users: Prisma.$UserPayload<ExtArgs>[]
-    purchases: Prisma.$PurchasePayload<ExtArgs>[]
+    vendor: Prisma.$VendorPayload<ExtArgs>
+    plan: Prisma.$SubscriptionPlanPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
-    postExpiryHours: number
-    themeColor: string | null
-    price: runtime.Decimal
-    createdAt: Date
+    vendorId: string
+    planId: string
+    startDate: Date
+    endDate: Date
+    status: string
   }, ExtArgs["result"]["subscription"]>
   composites: {}
 }
@@ -1046,8 +1050,8 @@ readonly fields: SubscriptionFieldRefs;
  */
 export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  users<T extends Prisma.Subscription$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  purchases<T extends Prisma.Subscription$purchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  vendor<T extends Prisma.VendorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VendorDefaultArgs<ExtArgs>>): Prisma.Prisma__VendorClient<runtime.Types.Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  plan<T extends Prisma.SubscriptionPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriptionPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriptionPlanClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1078,11 +1082,11 @@ export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends run
  */
 export interface SubscriptionFieldRefs {
   readonly id: Prisma.FieldRef<"Subscription", 'String'>
-  readonly name: Prisma.FieldRef<"Subscription", 'String'>
-  readonly postExpiryHours: Prisma.FieldRef<"Subscription", 'Int'>
-  readonly themeColor: Prisma.FieldRef<"Subscription", 'String'>
-  readonly price: Prisma.FieldRef<"Subscription", 'Decimal'>
-  readonly createdAt: Prisma.FieldRef<"Subscription", 'DateTime'>
+  readonly vendorId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly planId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly startDate: Prisma.FieldRef<"Subscription", 'DateTime'>
+  readonly endDate: Prisma.FieldRef<"Subscription", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Subscription", 'String'>
 }
     
 
@@ -1332,6 +1336,10 @@ export type SubscriptionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    */
   data: Prisma.SubscriptionCreateManyInput | Prisma.SubscriptionCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1402,6 +1410,10 @@ export type SubscriptionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * Limit how many Subscriptions to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1468,54 +1480,6 @@ export type SubscriptionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many Subscriptions to delete.
    */
   limit?: number
-}
-
-/**
- * Subscription.users
- */
-export type Subscription$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
-  cursor?: Prisma.UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
-}
-
-/**
- * Subscription.purchases
- */
-export type Subscription$purchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Purchase
-   */
-  select?: Prisma.PurchaseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Purchase
-   */
-  omit?: Prisma.PurchaseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PurchaseInclude<ExtArgs> | null
-  where?: Prisma.PurchaseWhereInput
-  orderBy?: Prisma.PurchaseOrderByWithRelationInput | Prisma.PurchaseOrderByWithRelationInput[]
-  cursor?: Prisma.PurchaseWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PurchaseScalarFieldEnum | Prisma.PurchaseScalarFieldEnum[]
 }
 
 /**
