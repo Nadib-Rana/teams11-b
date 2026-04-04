@@ -297,6 +297,7 @@ export const NotificationSettingScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   emailNotification: 'emailNotification',
+  smsNotification: 'smsNotification',
   pushNotification: 'pushNotification',
   bookingReminders: 'bookingReminders',
   reminder24h: 'reminder24h',

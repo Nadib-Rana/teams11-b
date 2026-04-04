@@ -348,6 +348,7 @@ model NotificationSetting {
   userId            String  @unique @map("user_id") @db.Uuid
   user              User    @relation(fields: [userId], references: [id])
   emailNotification Boolean @default(true) @map("email_notifications")
+  smsNotification   Boolean @default(true) @map("sms_notifications")
   pushNotification  Boolean @default(true) @map("push_notifications")
   bookingReminders  Boolean @default(true) @map("booking_reminders")
   reminder24h       Boolean @default(true) @map("reminder_24h")

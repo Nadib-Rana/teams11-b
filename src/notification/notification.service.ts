@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException, Logger } from "@nestjs/common";
 import { PrismaService } from "../common/context/prisma.service";
-import { MailerService, ISendMailOptions } from "@nestjs-modules/mailer";
 import { UpdateNotificationSettingsDto } from "./dto/update-notification-settings.dto";
 import {
   NotificationChannel,
@@ -10,10 +9,10 @@ import {
   NotificationTemplateContext,
   NotificationWithUser,
 } from "./notification.types";
-import {
-  renderNotificationTemplate,
-  sendSmsViaTwilio,
-} from "./notification.helpers";
+import { renderNotificationTemplate } from "./notification.helpers";
+import { NotificationEmailService } from "./notification-email.service";
+import { NotificationSmsService } from "./notification-sms.service";
+import { NotificationPushService } from "./notification-push.service";
 
 @Injectable()
 export class NotificationService {
@@ -21,7 +20,9 @@ export class NotificationService {
 
   constructor(
     private prisma: PrismaService,
-    private mailerService: MailerService,
+    private emailService: NotificationEmailService,
+    private smsService: NotificationSmsService,
+    private pushService: NotificationPushService,
   ) {}
 
   async getSettings(userId: string) {
@@ -106,49 +107,17 @@ export class NotificationService {
     template?: string,
     context?: Record<string, unknown>,
   ) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      select: { email: true, fullName: true },
-    });
-
-    if (!user) {
-      throw new NotFoundException("User not found");
-    }
-
-    const settings = await this.getSettings(userId);
-    if (!settings.emailNotification) {
-      // User has opted out of email notifications
-      return null;
-    }
-
-    const mailOptions: ISendMailOptions = {
-      to: user.email,
+    return this.emailService.sendEmail(
+      userId,
       subject,
-      text: message,
-    };
-
-    if (template) {
-      mailOptions.template = template;
-
-      if (context) {
-        mailOptions.context = context;
-      }
-    }
-
-    await this.mailerService.sendMail(mailOptions);
-
-    // Store in notification table for in-app/push viewing
-    return this.createNotification(userId, subject, message, "email");
+      message,
+      template,
+      context,
+    );
   }
 
   async sendPushNotification(userId: string, title: string, message: string) {
-    const settings = await this.getSettings(userId);
-    if (!settings.pushNotification) {
-      return null;
-    }
-
-    // For now we persist push-style notifications in DB
-    return this.createNotification(userId, title, message, "push");
+    return this.pushService.sendPush(userId, title, message);
   }
 
   async sendSmsNotification(
@@ -157,27 +126,7 @@ export class NotificationService {
     message: string,
     type: string = "sms",
   ) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      select: { phone: true },
-    });
-
-    if (!user?.phone) {
-      throw new Error("User does not have a phone number for SMS delivery.");
-    }
-
-    await sendSmsViaTwilio(user.phone, message);
-
-    return this.prisma.notification.create({
-      data: {
-        userId,
-        title,
-        message,
-        type,
-        channel: NotificationChannel.sms,
-        deliveryStatus: NotificationDeliveryStatus.sent,
-      },
-    });
+    return this.smsService.sendSms(userId, title, message, type);
   }
 
   async sendBookingNotification(
@@ -376,38 +325,36 @@ export class NotificationService {
 
     switch (notification.channel) {
       case NotificationChannel.email: {
-        const mailOptions: ISendMailOptions = {
-          to: user.email,
-          subject: notification.title,
-          text: notification.message,
-        };
-        await this.mailerService.sendMail(mailOptions);
+        await this.emailService.sendEmail(
+          user.id,
+          notification.title,
+          notification.message,
+        );
         break;
       }
 
       case NotificationChannel.sms: {
-        if (!user.phone) {
-          throw new Error(
-            "User does not have a phone number for SMS delivery.",
-          );
-        }
-
-        await sendSmsViaTwilio(user.phone, notification.message);
-        this.logger.log(`Sent SMS notification to ${user.phone}`);
+        await this.smsService.sendSms(
+          user.id,
+          notification.title,
+          notification.message,
+          notification.type,
+        );
         break;
       }
 
       case NotificationChannel.push: {
-        // TODO: Implement push notification logic
-        this.logger.log(
-          `Push notification would be sent to ${user.id}: ${notification.message}`,
+        await this.pushService.sendPush(
+          user.id,
+          notification.title,
+          notification.message,
         );
         break;
       }
 
       default: {
-        throw new Error(
-          `Unsupported notification channel: ${notification.channel as string}`,
+        this.logger.warn(
+          `Unknown notification channel: ${notification.channel as string}`,
         );
       }
     }

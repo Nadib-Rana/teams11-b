@@ -28,6 +28,7 @@ export type NotificationSettingMinAggregateOutputType = {
   id: string | null
   userId: string | null
   emailNotification: boolean | null
+  smsNotification: boolean | null
   pushNotification: boolean | null
   bookingReminders: boolean | null
   reminder24h: boolean | null
@@ -38,6 +39,7 @@ export type NotificationSettingMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   emailNotification: boolean | null
+  smsNotification: boolean | null
   pushNotification: boolean | null
   bookingReminders: boolean | null
   reminder24h: boolean | null
@@ -48,6 +50,7 @@ export type NotificationSettingCountAggregateOutputType = {
   id: number
   userId: number
   emailNotification: number
+  smsNotification: number
   pushNotification: number
   bookingReminders: number
   reminder24h: number
@@ -60,6 +63,7 @@ export type NotificationSettingMinAggregateInputType = {
   id?: true
   userId?: true
   emailNotification?: true
+  smsNotification?: true
   pushNotification?: true
   bookingReminders?: true
   reminder24h?: true
@@ -70,6 +74,7 @@ export type NotificationSettingMaxAggregateInputType = {
   id?: true
   userId?: true
   emailNotification?: true
+  smsNotification?: true
   pushNotification?: true
   bookingReminders?: true
   reminder24h?: true
@@ -80,6 +85,7 @@ export type NotificationSettingCountAggregateInputType = {
   id?: true
   userId?: true
   emailNotification?: true
+  smsNotification?: true
   pushNotification?: true
   bookingReminders?: true
   reminder24h?: true
@@ -163,6 +169,7 @@ export type NotificationSettingGroupByOutputType = {
   id: string
   userId: string
   emailNotification: boolean
+  smsNotification: boolean
   pushNotification: boolean
   bookingReminders: boolean
   reminder24h: boolean
@@ -194,6 +201,7 @@ export type NotificationSettingWhereInput = {
   id?: Prisma.UuidFilter<"NotificationSetting"> | string
   userId?: Prisma.UuidFilter<"NotificationSetting"> | string
   emailNotification?: Prisma.BoolFilter<"NotificationSetting"> | boolean
+  smsNotification?: Prisma.BoolFilter<"NotificationSetting"> | boolean
   pushNotification?: Prisma.BoolFilter<"NotificationSetting"> | boolean
   bookingReminders?: Prisma.BoolFilter<"NotificationSetting"> | boolean
   reminder24h?: Prisma.BoolFilter<"NotificationSetting"> | boolean
@@ -205,6 +213,7 @@ export type NotificationSettingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   emailNotification?: Prisma.SortOrder
+  smsNotification?: Prisma.SortOrder
   pushNotification?: Prisma.SortOrder
   bookingReminders?: Prisma.SortOrder
   reminder24h?: Prisma.SortOrder
@@ -219,6 +228,7 @@ export type NotificationSettingWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.NotificationSettingWhereInput[]
   NOT?: Prisma.NotificationSettingWhereInput | Prisma.NotificationSettingWhereInput[]
   emailNotification?: Prisma.BoolFilter<"NotificationSetting"> | boolean
+  smsNotification?: Prisma.BoolFilter<"NotificationSetting"> | boolean
   pushNotification?: Prisma.BoolFilter<"NotificationSetting"> | boolean
   bookingReminders?: Prisma.BoolFilter<"NotificationSetting"> | boolean
   reminder24h?: Prisma.BoolFilter<"NotificationSetting"> | boolean
@@ -230,6 +240,7 @@ export type NotificationSettingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   emailNotification?: Prisma.SortOrder
+  smsNotification?: Prisma.SortOrder
   pushNotification?: Prisma.SortOrder
   bookingReminders?: Prisma.SortOrder
   reminder24h?: Prisma.SortOrder
@@ -246,6 +257,7 @@ export type NotificationSettingScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"NotificationSetting"> | string
   userId?: Prisma.UuidWithAggregatesFilter<"NotificationSetting"> | string
   emailNotification?: Prisma.BoolWithAggregatesFilter<"NotificationSetting"> | boolean
+  smsNotification?: Prisma.BoolWithAggregatesFilter<"NotificationSetting"> | boolean
   pushNotification?: Prisma.BoolWithAggregatesFilter<"NotificationSetting"> | boolean
   bookingReminders?: Prisma.BoolWithAggregatesFilter<"NotificationSetting"> | boolean
   reminder24h?: Prisma.BoolWithAggregatesFilter<"NotificationSetting"> | boolean
@@ -255,6 +267,7 @@ export type NotificationSettingScalarWhereWithAggregatesInput = {
 export type NotificationSettingCreateInput = {
   id?: string
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -266,6 +279,7 @@ export type NotificationSettingUncheckedCreateInput = {
   id?: string
   userId: string
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -275,6 +289,7 @@ export type NotificationSettingUncheckedCreateInput = {
 export type NotificationSettingUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bookingReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reminder24h?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -286,6 +301,7 @@ export type NotificationSettingUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bookingReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reminder24h?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -296,6 +312,7 @@ export type NotificationSettingCreateManyInput = {
   id?: string
   userId: string
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -305,6 +322,7 @@ export type NotificationSettingCreateManyInput = {
 export type NotificationSettingUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bookingReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reminder24h?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -315,6 +333,7 @@ export type NotificationSettingUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bookingReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reminder24h?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -330,6 +349,7 @@ export type NotificationSettingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   emailNotification?: Prisma.SortOrder
+  smsNotification?: Prisma.SortOrder
   pushNotification?: Prisma.SortOrder
   bookingReminders?: Prisma.SortOrder
   reminder24h?: Prisma.SortOrder
@@ -340,6 +360,7 @@ export type NotificationSettingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   emailNotification?: Prisma.SortOrder
+  smsNotification?: Prisma.SortOrder
   pushNotification?: Prisma.SortOrder
   bookingReminders?: Prisma.SortOrder
   reminder24h?: Prisma.SortOrder
@@ -350,6 +371,7 @@ export type NotificationSettingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   emailNotification?: Prisma.SortOrder
+  smsNotification?: Prisma.SortOrder
   pushNotification?: Prisma.SortOrder
   bookingReminders?: Prisma.SortOrder
   reminder24h?: Prisma.SortOrder
@@ -391,6 +413,7 @@ export type NotificationSettingUncheckedUpdateOneWithoutUserNestedInput = {
 export type NotificationSettingCreateWithoutUserInput = {
   id?: string
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -400,6 +423,7 @@ export type NotificationSettingCreateWithoutUserInput = {
 export type NotificationSettingUncheckedCreateWithoutUserInput = {
   id?: string
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -425,6 +449,7 @@ export type NotificationSettingUpdateToOneWithWhereWithoutUserInput = {
 export type NotificationSettingUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bookingReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reminder24h?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -434,6 +459,7 @@ export type NotificationSettingUpdateWithoutUserInput = {
 export type NotificationSettingUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   emailNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pushNotification?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bookingReminders?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reminder24h?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -446,6 +472,7 @@ export type NotificationSettingSelect<ExtArgs extends runtime.Types.Extensions.I
   id?: boolean
   userId?: boolean
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -457,6 +484,7 @@ export type NotificationSettingSelectCreateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   userId?: boolean
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -468,6 +496,7 @@ export type NotificationSettingSelectUpdateManyAndReturn<ExtArgs extends runtime
   id?: boolean
   userId?: boolean
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
@@ -479,13 +508,14 @@ export type NotificationSettingSelectScalar = {
   id?: boolean
   userId?: boolean
   emailNotification?: boolean
+  smsNotification?: boolean
   pushNotification?: boolean
   bookingReminders?: boolean
   reminder24h?: boolean
   reminder1h?: boolean
 }
 
-export type NotificationSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "emailNotification" | "pushNotification" | "bookingReminders" | "reminder24h" | "reminder1h", ExtArgs["result"]["notificationSetting"]>
+export type NotificationSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "emailNotification" | "smsNotification" | "pushNotification" | "bookingReminders" | "reminder24h" | "reminder1h", ExtArgs["result"]["notificationSetting"]>
 export type NotificationSettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -505,6 +535,7 @@ export type $NotificationSettingPayload<ExtArgs extends runtime.Types.Extensions
     id: string
     userId: string
     emailNotification: boolean
+    smsNotification: boolean
     pushNotification: boolean
     bookingReminders: boolean
     reminder24h: boolean
@@ -936,6 +967,7 @@ export interface NotificationSettingFieldRefs {
   readonly id: Prisma.FieldRef<"NotificationSetting", 'String'>
   readonly userId: Prisma.FieldRef<"NotificationSetting", 'String'>
   readonly emailNotification: Prisma.FieldRef<"NotificationSetting", 'Boolean'>
+  readonly smsNotification: Prisma.FieldRef<"NotificationSetting", 'Boolean'>
   readonly pushNotification: Prisma.FieldRef<"NotificationSetting", 'Boolean'>
   readonly bookingReminders: Prisma.FieldRef<"NotificationSetting", 'Boolean'>
   readonly reminder24h: Prisma.FieldRef<"NotificationSetting", 'Boolean'>

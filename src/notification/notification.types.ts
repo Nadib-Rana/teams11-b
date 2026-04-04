@@ -8,6 +8,7 @@ export type NotificationWithUser = {
   userId: string;
   title: string;
   message: string;
+  type: string;
   channel: NotificationChannel;
   deliveryStatus: NotificationDeliveryStatus;
   retryCount: number;
