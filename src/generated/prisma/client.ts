@@ -50,6 +50,11 @@ export type User = Prisma.UserModel
  */
 export type VerificationToken = Prisma.VerificationTokenModel
 /**
+ * Model UserDevice
+ * 
+ */
+export type UserDevice = Prisma.UserDeviceModel
+/**
  * Model Customer
  * 
  */

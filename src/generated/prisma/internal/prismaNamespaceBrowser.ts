@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   VerificationToken: 'VerificationToken',
+  UserDevice: 'UserDevice',
   Customer: 'Customer',
   Vendor: 'Vendor',
   Business: 'Business',
@@ -117,6 +118,22 @@ export const VerificationTokenScalarFieldEnum = {
 } as const
 
 export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const UserDeviceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  deviceId: 'deviceId',
+  fcmToken: 'fcmToken',
+  deviceType: 'deviceType',
+  deviceName: 'deviceName',
+  isActive: 'isActive',
+  lastSeenAt: 'lastSeenAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserDeviceScalarFieldEnum = (typeof UserDeviceScalarFieldEnum)[keyof typeof UserDeviceScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {

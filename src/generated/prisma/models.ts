@@ -10,6 +10,7 @@
  */
 export type * from './models/User.js'
 export type * from './models/VerificationToken.js'
+export type * from './models/UserDevice.js'
 export type * from './models/Customer.js'
 export type * from './models/Vendor.js'
 export type * from './models/Business.js'

@@ -6,6 +6,7 @@ import { NotificationSchedulerService } from "./notification-scheduler.service";
 import { NotificationEmailService } from "./notification-email.service";
 import { NotificationSmsService } from "./notification-sms.service";
 import { NotificationPushService } from "./notification-push.service";
+import { UserDeviceService } from "./user-device.service";
 
 @Module({
   imports: [ScheduleModule],
@@ -16,7 +17,8 @@ import { NotificationPushService } from "./notification-push.service";
     NotificationEmailService,
     NotificationSmsService,
     NotificationPushService,
+    UserDeviceService,
   ],
-  exports: [NotificationService],
+  exports: [NotificationService, UserDeviceService],
 })
 export class NotificationModule {}

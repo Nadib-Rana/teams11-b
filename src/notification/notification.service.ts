@@ -151,7 +151,23 @@ export class NotificationService {
 
     await this.sendEmailNotification(userId, title, message, template, context);
     await this.sendSmsNotification(userId, title, message, "booking");
-    return this.sendPushNotification(userId, title, message);
+
+    // Send push notification with deep link
+    const deepLink = `teams11://booking/${bookingId}`;
+    return this.pushService.sendPush(
+      userId,
+      title,
+      message,
+      "booking",
+      deepLink,
+      {
+        bookingId,
+        serviceId: booking.serviceId,
+        businessId: booking.businessId,
+        date: booking.date.toISOString(),
+        startTime: booking.startTime.toISOString(),
+      },
+    );
   }
 
   async sendBookingCreatedNotification(bookingId: string) {

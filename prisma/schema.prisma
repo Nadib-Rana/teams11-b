@@ -68,6 +68,7 @@ model User {
   notificationSettings NotificationSetting?
   referralsMade        Referral[] @relation("Referrer")
   verificationTokens   VerificationToken[]
+  userDevices          UserDevice[]
 
   @@map("users")
 }
@@ -83,6 +84,23 @@ model VerificationToken {
   createdAt DateTime  @default(now())
 
   @@map("verification_tokens")
+}
+
+model UserDevice {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  user        User      @relation(fields: [userId], references: [id])
+  deviceId    String    @map("device_id") // Unique device identifier
+  fcmToken    String?   @map("fcm_token") // Firebase Cloud Messaging token
+  deviceType  String?   @map("device_type") // ios, android, web
+  deviceName  String?   @map("device_name") // Human readable device name
+  isActive    Boolean   @default(true) @map("is_active")
+  lastSeenAt  DateTime? @map("last_seen_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@unique([userId, deviceId])
+  @@map("user_devices")
 }
 
 model Customer {

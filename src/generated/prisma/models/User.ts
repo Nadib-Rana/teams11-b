@@ -221,6 +221,7 @@ export type UserWhereInput = {
   notificationSettings?: Prisma.XOR<Prisma.NotificationSettingNullableScalarRelationFilter, Prisma.NotificationSettingWhereInput> | null
   referralsMade?: Prisma.ReferralListRelationFilter
   verificationTokens?: Prisma.VerificationTokenListRelationFilter
+  userDevices?: Prisma.UserDeviceListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -240,6 +241,7 @@ export type UserOrderByWithRelationInput = {
   notificationSettings?: Prisma.NotificationSettingOrderByWithRelationInput
   referralsMade?: Prisma.ReferralOrderByRelationAggregateInput
   verificationTokens?: Prisma.VerificationTokenOrderByRelationAggregateInput
+  userDevices?: Prisma.UserDeviceOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -262,6 +264,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   notificationSettings?: Prisma.XOR<Prisma.NotificationSettingNullableScalarRelationFilter, Prisma.NotificationSettingWhereInput> | null
   referralsMade?: Prisma.ReferralListRelationFilter
   verificationTokens?: Prisma.VerificationTokenListRelationFilter
+  userDevices?: Prisma.UserDeviceListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -311,6 +314,7 @@ export type UserCreateInput = {
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -330,6 +334,7 @@ export type UserUncheckedCreateInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -349,6 +354,7 @@ export type UserUpdateInput = {
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -368,6 +374,7 @@ export type UserUncheckedUpdateInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -481,6 +488,20 @@ export type UserUpdateOneRequiredWithoutVerificationTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerificationTokensInput, Prisma.UserUpdateWithoutVerificationTokensInput>, Prisma.UserUncheckedUpdateWithoutVerificationTokensInput>
 }
 
+export type UserCreateNestedOneWithoutUserDevicesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserDevicesInput, Prisma.UserUncheckedCreateWithoutUserDevicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserDevicesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserDevicesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserDevicesInput, Prisma.UserUncheckedCreateWithoutUserDevicesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserDevicesInput
+  upsert?: Prisma.UserUpsertWithoutUserDevicesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserDevicesInput, Prisma.UserUpdateWithoutUserDevicesInput>, Prisma.UserUncheckedUpdateWithoutUserDevicesInput>
+}
+
 export type UserCreateNestedOneWithoutCustomerInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerInput, Prisma.UserUncheckedCreateWithoutCustomerInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerInput
@@ -581,6 +602,7 @@ export type UserCreateWithoutVerificationTokensInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVerificationTokensInput = {
@@ -599,6 +621,7 @@ export type UserUncheckedCreateWithoutVerificationTokensInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVerificationTokensInput = {
@@ -633,6 +656,7 @@ export type UserUpdateWithoutVerificationTokensInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerificationTokensInput = {
@@ -651,6 +675,99 @@ export type UserUncheckedUpdateWithoutVerificationTokensInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserDevicesInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  phone?: string | null
+  profileImage?: string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  customer?: Prisma.CustomerCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserDevicesInput = {
+  id?: string
+  fullName?: string | null
+  email: string
+  password: string
+  role: $Enums.UserRole
+  phone?: string | null
+  profileImage?: string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  customer?: Prisma.CustomerUncheckedCreateNestedOneWithoutUserInput
+  vendor?: Prisma.VendorUncheckedCreateNestedOneWithoutUserInput
+  staff?: Prisma.StaffUncheckedCreateNestedOneWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
+  referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserDevicesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserDevicesInput, Prisma.UserUncheckedCreateWithoutUserDevicesInput>
+}
+
+export type UserUpsertWithoutUserDevicesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserDevicesInput, Prisma.UserUncheckedUpdateWithoutUserDevicesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserDevicesInput, Prisma.UserUncheckedCreateWithoutUserDevicesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserDevicesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserDevicesInput, Prisma.UserUncheckedUpdateWithoutUserDevicesInput>
+}
+
+export type UserUpdateWithoutUserDevicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserDevicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUncheckedUpdateOneWithoutUserNestedInput
+  vendor?: Prisma.VendorUncheckedUpdateOneWithoutUserNestedInput
+  staff?: Prisma.StaffUncheckedUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
+  referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCustomerInput = {
@@ -669,6 +786,7 @@ export type UserCreateWithoutCustomerInput = {
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCustomerInput = {
@@ -687,6 +805,7 @@ export type UserUncheckedCreateWithoutCustomerInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCustomerInput = {
@@ -721,6 +840,7 @@ export type UserUpdateWithoutCustomerInput = {
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomerInput = {
@@ -739,6 +859,7 @@ export type UserUncheckedUpdateWithoutCustomerInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutVendorInput = {
@@ -757,6 +878,7 @@ export type UserCreateWithoutVendorInput = {
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutVendorInput = {
@@ -775,6 +897,7 @@ export type UserUncheckedCreateWithoutVendorInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutVendorInput = {
@@ -809,6 +932,7 @@ export type UserUpdateWithoutVendorInput = {
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVendorInput = {
@@ -827,6 +951,7 @@ export type UserUncheckedUpdateWithoutVendorInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStaffInput = {
@@ -845,6 +970,7 @@ export type UserCreateWithoutStaffInput = {
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStaffInput = {
@@ -863,6 +989,7 @@ export type UserUncheckedCreateWithoutStaffInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStaffInput = {
@@ -897,6 +1024,7 @@ export type UserUpdateWithoutStaffInput = {
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStaffInput = {
@@ -915,6 +1043,7 @@ export type UserUncheckedUpdateWithoutStaffInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -933,6 +1062,7 @@ export type UserCreateWithoutNotificationsInput = {
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -951,6 +1081,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -985,6 +1116,7 @@ export type UserUpdateWithoutNotificationsInput = {
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1003,6 +1135,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationSettingsInput = {
@@ -1021,6 +1154,7 @@ export type UserCreateWithoutNotificationSettingsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   referralsMade?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationSettingsInput = {
@@ -1039,6 +1173,7 @@ export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   referralsMade?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationSettingsInput = {
@@ -1073,6 +1208,7 @@ export type UserUpdateWithoutNotificationSettingsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
@@ -1091,6 +1227,7 @@ export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   referralsMade?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReferralsMadeInput = {
@@ -1109,6 +1246,7 @@ export type UserCreateWithoutReferralsMadeInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   notificationSettings?: Prisma.NotificationSettingCreateNestedOneWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralsMadeInput = {
@@ -1127,6 +1265,7 @@ export type UserUncheckedCreateWithoutReferralsMadeInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   notificationSettings?: Prisma.NotificationSettingUncheckedCreateNestedOneWithoutUserInput
   verificationTokens?: Prisma.VerificationTokenUncheckedCreateNestedManyWithoutUserInput
+  userDevices?: Prisma.UserDeviceUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralsMadeInput = {
@@ -1161,6 +1300,7 @@ export type UserUpdateWithoutReferralsMadeInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   notificationSettings?: Prisma.NotificationSettingUpdateOneWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralsMadeInput = {
@@ -1179,6 +1319,7 @@ export type UserUncheckedUpdateWithoutReferralsMadeInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   notificationSettings?: Prisma.NotificationSettingUncheckedUpdateOneWithoutUserNestedInput
   verificationTokens?: Prisma.VerificationTokenUncheckedUpdateManyWithoutUserNestedInput
+  userDevices?: Prisma.UserDeviceUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1190,12 +1331,14 @@ export type UserCountOutputType = {
   notifications: number
   referralsMade: number
   verificationTokens: number
+  userDevices: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   referralsMade?: boolean | UserCountOutputTypeCountReferralsMadeArgs
   verificationTokens?: boolean | UserCountOutputTypeCountVerificationTokensArgs
+  userDevices?: boolean | UserCountOutputTypeCountUserDevicesArgs
 }
 
 /**
@@ -1229,6 +1372,13 @@ export type UserCountOutputTypeCountVerificationTokensArgs<ExtArgs extends runti
   where?: Prisma.VerificationTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserDevicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserDeviceWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1247,6 +1397,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
   referralsMade?: boolean | Prisma.User$referralsMadeArgs<ExtArgs>
   verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
+  userDevices?: boolean | Prisma.User$userDevicesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1295,6 +1446,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
   referralsMade?: boolean | Prisma.User$referralsMadeArgs<ExtArgs>
   verificationTokens?: boolean | Prisma.User$verificationTokensArgs<ExtArgs>
+  userDevices?: boolean | Prisma.User$userDevicesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1310,6 +1462,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     notificationSettings: Prisma.$NotificationSettingPayload<ExtArgs> | null
     referralsMade: Prisma.$ReferralPayload<ExtArgs>[]
     verificationTokens: Prisma.$VerificationTokenPayload<ExtArgs>[]
+    userDevices: Prisma.$UserDevicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1725,6 +1878,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   notificationSettings<T extends Prisma.User$notificationSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationSettingsArgs<ExtArgs>>): Prisma.Prisma__NotificationSettingClient<runtime.Types.Result.GetResult<Prisma.$NotificationSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   referralsMade<T extends Prisma.User$referralsMadeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralsMadeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   verificationTokens<T extends Prisma.User$verificationTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verificationTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userDevices<T extends Prisma.User$userDevicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userDevicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserDevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2296,6 +2450,30 @@ export type User$verificationTokensArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.VerificationTokenScalarFieldEnum | Prisma.VerificationTokenScalarFieldEnum[]
+}
+
+/**
+ * User.userDevices
+ */
+export type User$userDevicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserDevice
+   */
+  select?: Prisma.UserDeviceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserDevice
+   */
+  omit?: Prisma.UserDeviceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserDeviceInclude<ExtArgs> | null
+  where?: Prisma.UserDeviceWhereInput
+  orderBy?: Prisma.UserDeviceOrderByWithRelationInput | Prisma.UserDeviceOrderByWithRelationInput[]
+  cursor?: Prisma.UserDeviceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserDeviceScalarFieldEnum | Prisma.UserDeviceScalarFieldEnum[]
 }
 
 /**
